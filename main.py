@@ -9,7 +9,6 @@ from functions import (AppConfig, COLORS, CcConfig, Tooltip, load_config, find_f
                        get_free_space, clean_string_regex, string_to_list)
 
 
-app_resolution = "1280x790"
 row_height = 23
 padding_x = 5
 padding_y = 1
@@ -375,7 +374,7 @@ try:
 
 except Exception as e:
     print("An error occurred, incomplete config file:", str(e))
-    CcConfig.cc_check_and_update_json_config("config.json", REQUIRED_APP_CONFIG)
+    CcConfig.cc_check_and_update_json_config("config.json", AppConfig.REQUIRED_APP_CONFIG)
 
 # System settings
 customtkinter.set_appearance_mode("Dark")

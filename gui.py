@@ -587,7 +587,7 @@ def get_information():
         if incomplete_config:
             channel_config_label.configure(text=("Incomplete channel config file! --> Adding missing key(s) to file " +
                                                  str(incomplete_string)), text_color=COLORS.red)
-            CcConfig.cc_check_and_update_json_config(ytchannel_path.get() + channel_config_path, REQUIRED_VIDEO_CHANNEL_CONFIG)
+            CcConfig.cc_check_and_update_json_config(ytchannel_path.get() + channel_config_path, AppConfig.REQUIRED_VIDEO_CHANNEL_CONFIG)
         else:
             channel_config_label.configure(text="Channel config file found!", text_color=COLORS.green)
 
@@ -1303,7 +1303,7 @@ try:
 
 except Exception as e:
     print("An error occurred, incomplete config file:", str(e))
-    CcConfig.cc_check_and_update_json_config("config.json", REQUIRED_APP_CONFIG)
+    CcConfig.cc_check_and_update_json_config("config.json", AppConfig.REQUIRED_APP_CONFIG)
 
 # System settings
 customtkinter.set_appearance_mode("Dark")
