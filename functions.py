@@ -259,3 +259,10 @@ def destroy_elements(d_elements_to_destroy):
     for element in d_elements_to_destroy:
         element.destroy()  # Remove widget from the UI
     d_elements_to_destroy.clear()
+
+
+def grid_remove_elements(d_elements_to_destroy):
+    """Remove all created widgets"""
+    for element in d_elements_to_destroy:
+        element.grid_remove()  # Remove widget from the UI
+    d_elements_to_destroy.clear()

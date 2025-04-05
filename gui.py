@@ -11,7 +11,7 @@ from pytubefix import YouTube, Channel, Playlist
 from pytubefix.cli import on_progress
 from PIL import Image
 from functions import (AppConfig, COLORS, CcConfig, JSONConfig, load_config, find_file_by_string, count_files,
-                       get_free_space, clean_string_regex, string_to_list, load_image_from_url, destroy_elements)
+                       get_free_space, clean_string_regex, string_to_list, load_image_from_url, grid_remove_elements)
 
 
 # dropdown with int for loop mode exit after int loops
@@ -968,7 +968,7 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
             update_download_log("Skipping " + str(count_skipped) + " Video(s)", COLORS.violet)
         else:
             do_not_download = 0
-            destroy_elements(elements_to_destroy_loop)
+            grid_remove_elements(elements_to_destroy_loop)
             if web_client:
                 video = YouTube(youtube_watch_url + only_video_id, 'WEB', on_progress_callback=on_progress)
             else:
