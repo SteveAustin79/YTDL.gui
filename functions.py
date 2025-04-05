@@ -10,7 +10,7 @@ from io import BytesIO
 
 class AppConfig:
     app_title = "YTDL.channels"
-    version = app_title + " v1.0.2 (20250405)"
+    version = app_title + " v1.0 (20250406)"
     logo_path = "assets/logo.png"
     channel_config_path = "/" + "_config_channel.json"
     date_format_display = "%d.%m.%Y"
