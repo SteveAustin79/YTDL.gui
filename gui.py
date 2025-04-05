@@ -11,9 +11,9 @@ from pytubefix import YouTube, Channel, Playlist
 from pytubefix.cli import on_progress
 from PIL import Image
 from io import BytesIO
-from functions import (load_config, cc_check_and_update_json_config, find_file_by_string, COLORS, count_files,
+from functions import (load_config, CcConfig, find_file_by_string, COLORS, count_files,
                        get_free_space, clean_string_regex, REQUIRED_APP_CONFIG, REQUIRED_VIDEO_CHANNEL_CONFIG,
-                       create_json_config, update_json_config, string_to_list, version, logo_path)
+                       JSONConfig, string_to_list, version, logo_path)
 
 # dropdown with int for loop mode exit after int loops
 # sys.exit button to abort download
@@ -53,32 +53,32 @@ def update_channel_config(default_max_res, limit_resolution_to, default_min_dura
             default_year_subfolders != year_subfolders_temp or default_exclude_videos != exclude_video_ids or
             default_include_videos != include_video_ids or default_filter_words != video_name_filter):
         if default_max_res != limit_resolution_to:
-            update_json_config(ytchannel_path.get() + channel_config_path, "c_max_resolution", limit_resolution_to)
+            JSONConfig.update_json_config(ytchannel_path.get() + channel_config_path, "c_max_resolution", limit_resolution_to)
         if default_min_duration_in_minutes != min_duration:
-            update_json_config(ytchannel_path.get() + channel_config_path, "c_min_duration_in_minutes",
+            JSONConfig.update_json_config(ytchannel_path.get() + channel_config_path, "c_min_duration_in_minutes",
                                int(min_duration))
         if default_max_duration_in_minutes != max_duration:
-            update_json_config(ytchannel_path.get() + channel_config_path, "c_max_duration_in_minutes",
+            JSONConfig.update_json_config(ytchannel_path.get() + channel_config_path, "c_max_duration_in_minutes",
                                int(max_duration))
         if default_minimum_year != min_year:
-            update_json_config(ytchannel_path.get() + channel_config_path, "c_minimum_year", int(min_year))
+            JSONConfig.update_json_config(ytchannel_path.get() + channel_config_path, "c_minimum_year", int(min_year))
         if default_maximum_year != max_year:
-            update_json_config(ytchannel_path.get() + channel_config_path, "c_maximum_year", int(max_year))
+            JSONConfig.update_json_config(ytchannel_path.get() + channel_config_path, "c_maximum_year", int(max_year))
         if default_only_restricted != only_restricted_videos:
-            update_json_config(ytchannel_path.get() + channel_config_path, "c_only_restricted",
+            JSONConfig.update_json_config(ytchannel_path.get() + channel_config_path, "c_only_restricted",
                                only_restricted_videos)
         if default_skip_restricted != skip_restricted:
-            update_json_config(ytchannel_path.get() + channel_config_path, "c_skip_restricted", skip_restricted)
+            JSONConfig.update_json_config(ytchannel_path.get() + channel_config_path, "c_skip_restricted", skip_restricted)
         if default_minimum_views != min_video_views:
-            update_json_config(ytchannel_path.get() + channel_config_path, "c_minimum_views", int(min_video_views))
+            JSONConfig.update_json_config(ytchannel_path.get() + channel_config_path, "c_minimum_views", int(min_video_views))
         if default_year_subfolders != year_subfolders_temp:
-            update_json_config(ytchannel_path.get() + channel_config_path, "c_year_subfolders", year_subfolders_temp)
+            JSONConfig.update_json_config(ytchannel_path.get() + channel_config_path, "c_year_subfolders", year_subfolders_temp)
         if default_exclude_videos != exclude_video_ids:
-            update_json_config(ytchannel_path.get() + channel_config_path, "c_exclude_video_ids", exclude_video_ids[:-1])
+            JSONConfig.update_json_config(ytchannel_path.get() + channel_config_path, "c_exclude_video_ids", exclude_video_ids[:-1])
         if default_include_videos != include_video_ids:
-            update_json_config(ytchannel_path.get() + channel_config_path, "c_include_video_ids", include_video_ids[:-1])
+            JSONConfig.update_json_config(ytchannel_path.get() + channel_config_path, "c_include_video_ids", include_video_ids[:-1])
         if default_filter_words != video_name_filter:
-            update_json_config(ytchannel_path.get() + channel_config_path, "c_filter_words", video_name_filter[:-1])
+            JSONConfig.update_json_config(ytchannel_path.get() + channel_config_path, "c_filter_words", video_name_filter[:-1])
         get_information()
 
 
@@ -145,7 +145,7 @@ def create_channel_config(default_max_res, limit_resolution_to, default_min_dura
             "c_include_video_ids": json_include_video_ids[:-1],
             "c_filter_words": json_video_name_filter[:-1]
         }
-        create_json_config(ytchannel_path.get() + channel_config_path, custom_values)
+        JSONConfig.create_json_config(ytchannel_path.get() + channel_config_path, custom_values)
 
         channel_config_label.configure(text="Channel config file found!", text_color=COLORS.green)
         # create_channel_config_button.grid_remove()
@@ -603,7 +603,7 @@ def get_information():
         if incomplete_config:
             channel_config_label.configure(text=("Incomplete channel config file! --> Adding missing key(s) to file " +
                                                  str(incomplete_string)), text_color=COLORS.red)
-            cc_check_and_update_json_config(ytchannel_path.get() + channel_config_path, REQUIRED_VIDEO_CHANNEL_CONFIG)
+            CcConfig.cc_check_and_update_json_config(ytchannel_path.get() + channel_config_path, REQUIRED_VIDEO_CHANNEL_CONFIG)
         else:
             channel_config_label.configure(text="Channel config file found!", text_color=COLORS.green)
 
@@ -1319,7 +1319,7 @@ try:
 
 except Exception as e:
     print("An error occurred, incomplete config file:", str(e))
-    cc_check_and_update_json_config("config.json", REQUIRED_APP_CONFIG)
+    CcConfig.cc_check_and_update_json_config("config.json", REQUIRED_APP_CONFIG)
 
 # System settings
 customtkinter.set_appearance_mode("Dark")

@@ -1,3 +1,5 @@
+from symtable import Class
+
 import customtkinter
 import json
 import os
@@ -87,110 +89,112 @@ class Tooltip:
             self.tooltip_window = None
 
 
+class CcConfig:
+    def cc_load_config(file_path: str):
+        """Loads the JSON config file or creates an empty dictionary if the file doesn't exist."""
+        if os.path.exists(file_path):
+            with open(file_path, "r", encoding="utf-8") as file:
+                try:
+                    return json.load(file)  # Load existing config
+                except json.JSONDecodeError:
+                    print("❌ Error: Invalid JSON format. Resetting to default config.")
+                    return {}  # Return an empty config if JSON is corrupted
+        return {}  # Return an empty config if file doesn't exist
+
+
+    def cc_save_config(cc_file_path: str, cc_config: str) -> None:
+        """Saves the updated config dictionary back to the JSON file."""
+        with open(cc_file_path, "w", encoding="utf-8") as cc_file:
+            json.dump(cc_config, cc_file, indent=4, ensure_ascii=False)
+
+
+    def cc_check_and_update_json_config(cc_file_path: str, cc_required_config: dict) -> None:
+        """Ensures all required keys exist in the config file, adding missing ones."""
+        cc_config = CcConfig.cc_load_config(cc_file_path)  # Load existing or empty config
+
+        # Check for missing keys and add them
+        missing_keys = []
+        for key, default_value in cc_required_config.items():
+            if key not in cc_config:
+                cc_config[key] = default_value
+                missing_keys.append(key)
+
+        if missing_keys:
+            CcConfig.cc_save_config(cc_file_path, cc_config)  # Save only if changes were made
+
+
+class JSONConfig:
+    def create_json_config(file_path, config_values=None):
+        """
+        Creates a JSON config file at the specified path with default or custom values.
+
+        Args:
+            file_path (str): The path where the JSON file will be created.
+            config_values (dict, optional): A dictionary containing key-value pairs for the config.
+                                            If None, default values are used.
+
+        Returns:
+            bool: True if the file was created successfully, False otherwise.
+        """
+
+        # Merge default config with user-defined values
+        if config_values:
+            REQUIRED_VIDEO_CHANNEL_CONFIG.update(config_values)  # Override defaults if provided
+
+        try:
+            # Ensure the directory exists
+            os.makedirs(os.path.dirname(file_path), exist_ok=True)
+
+            # Write JSON file
+            with open(file_path, "w", encoding="utf-8") as f:
+                json.dump(REQUIRED_VIDEO_CHANNEL_CONFIG, f, indent=4)
+
+            # print(f"✅ JSON config file created at: {file_path}")
+            return True
+
+        except Exception as json_e:
+            print(f"❌ Error creating JSON file: {json_e}")
+            return False
+
+
+    def update_json_config(file_path: str, parameter: str, new_value) -> bool:
+        if not os.path.exists(file_path):
+            print(f"Error: File '{file_path}' not found.")
+            return False
+
+        try:
+            # Load existing JSON file
+            with open(file_path, "r", encoding="utf-8") as f:
+                json_config = json.load(f)
+
+            # Handle nested keys (e.g., "settings.database.host")
+            keys = parameter.split(".")
+            temp = json_config
+            for key in keys[:-1]:  # Traverse to the second last key
+                temp = temp.setdefault(key, {})  # Create dict if key doesn't exist
+
+            # Update the final key
+            temp[keys[-1]] = new_value
+
+            # Save back to JSON file
+            with open(file_path, "w", encoding="utf-8") as f:
+                json.dump(json_config, f, indent=4)
+
+            # print(f"✅ Updated '{parameter}' to '{new_value}' in '{file_path}'")
+            return True
+
+        except json.JSONDecodeError:
+            print(f"Error: Invalid JSON format in '{file_path}'")
+        except Exception as ujson_e:
+            print(f"Error: {ujson_e}")
+
+        return False
+
+
 def load_config(c_file: str):
     with open(c_file, "r") as file:
         l_config = json.load(file)
     return l_config
-
-
-def cc_load_config(file_path: str):
-    """Loads the JSON config file or creates an empty dictionary if the file doesn't exist."""
-    if os.path.exists(file_path):
-        with open(file_path, "r", encoding="utf-8") as file:
-            try:
-                return json.load(file)  # Load existing config
-            except json.JSONDecodeError:
-                print("❌ Error: Invalid JSON format. Resetting to default config.")
-                return {}  # Return an empty config if JSON is corrupted
-    return {}  # Return an empty config if file doesn't exist
-
-
-def cc_save_config(cc_file_path: str, cc_config: str) -> None:
-    """Saves the updated config dictionary back to the JSON file."""
-    with open(cc_file_path, "w", encoding="utf-8") as cc_file:
-        json.dump(cc_config, cc_file, indent=4, ensure_ascii=False)
-
-
-def cc_check_and_update_json_config(cc_file_path: str, cc_required_config: dict) -> None:
-    """Ensures all required keys exist in the config file, adding missing ones."""
-    cc_config = cc_load_config(cc_file_path)  # Load existing or empty config
-
-    # Check for missing keys and add them
-    missing_keys = []
-    for key, default_value in cc_required_config.items():
-        if key not in cc_config:
-            cc_config[key] = default_value
-            missing_keys.append(key)
-
-    if missing_keys:
-        cc_save_config(cc_file_path, cc_config)  # Save only if changes were made
-
-
-def create_json_config(file_path, config_values=None):
-    """
-    Creates a JSON config file at the specified path with default or custom values.
-
-    Args:
-        file_path (str): The path where the JSON file will be created.
-        config_values (dict, optional): A dictionary containing key-value pairs for the config.
-                                        If None, default values are used.
-
-    Returns:
-        bool: True if the file was created successfully, False otherwise.
-    """
-
-    # Merge default config with user-defined values
-    if config_values:
-        REQUIRED_VIDEO_CHANNEL_CONFIG.update(config_values)  # Override defaults if provided
-
-    try:
-        # Ensure the directory exists
-        os.makedirs(os.path.dirname(file_path), exist_ok=True)
-
-        # Write JSON file
-        with open(file_path, "w", encoding="utf-8") as f:
-            json.dump(REQUIRED_VIDEO_CHANNEL_CONFIG, f, indent=4)
-
-        # print(f"✅ JSON config file created at: {file_path}")
-        return True
-
-    except Exception as json_e:
-        print(f"❌ Error creating JSON file: {json_e}")
-        return False
-
-
-def update_json_config(file_path: str, parameter: str, new_value) -> bool:
-    if not os.path.exists(file_path):
-        print(f"Error: File '{file_path}' not found.")
-        return False
-
-    try:
-        # Load existing JSON file
-        with open(file_path, "r", encoding="utf-8") as f:
-            json_config = json.load(f)
-
-        # Handle nested keys (e.g., "settings.database.host")
-        keys = parameter.split(".")
-        temp = json_config
-        for key in keys[:-1]:  # Traverse to the second last key
-            temp = temp.setdefault(key, {})  # Create dict if key doesn't exist
-
-        # Update the final key
-        temp[keys[-1]] = new_value
-
-        # Save back to JSON file
-        with open(file_path, "w", encoding="utf-8") as f:
-            json.dump(json_config, f, indent=4)
-
-        # print(f"✅ Updated '{parameter}' to '{new_value}' in '{file_path}'")
-        return True
-
-    except json.JSONDecodeError:
-        print(f"Error: Invalid JSON format in '{file_path}'")
-    except Exception as ujson_e:
-        print(f"Error: {ujson_e}")
-
-    return False
 
 
 def find_file_by_string(directory: str, search_string: str, resolution: str, mp3: bool) -> str | None:

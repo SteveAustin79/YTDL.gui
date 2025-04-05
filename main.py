@@ -5,7 +5,7 @@ import subprocess
 from pytubefix import Channel
 from PIL import Image
 from io import BytesIO
-from functions import (load_config, cc_check_and_update_json_config, find_file_by_string, Tooltip, COLORS, count_files,
+from functions import (load_config, CcConfig, find_file_by_string, Tooltip, COLORS, count_files,
                        get_free_space, clean_string_regex, REQUIRED_APP_CONFIG, string_to_list, version, logo_path)
 
 app_resolution = "1280x790"
@@ -373,7 +373,7 @@ try:
 
 except Exception as e:
     print("An error occurred, incomplete config file:", str(e))
-    cc_check_and_update_json_config("config.json", REQUIRED_APP_CONFIG)
+    CcConfig.cc_check_and_update_json_config("config.json", REQUIRED_APP_CONFIG)
 
 # System settings
 customtkinter.set_appearance_mode("Dark")
