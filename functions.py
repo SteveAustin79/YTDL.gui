@@ -1,10 +1,9 @@
-from symtable import Class
-
 import customtkinter
 import json
 import os
 import re
 import shutil
+
 
 class AppConfig:
     app_title = "YTDL.channels"
@@ -14,29 +13,27 @@ class AppConfig:
     win_width = 1280
     win_height = 800
 
+    REQUIRED_APP_CONFIG = {
+        "output_directory": "",
+        "youtube_url": "https://www.youtube.com/",
+        "youtube_watch_url": "https://www.youtube.com/watch?v=",
+        "web_client": ""
+    }
 
-REQUIRED_APP_CONFIG = {
-    "output_directory": "",
-    "youtube_url": "https://www.youtube.com/",
-    "youtube_watch_url": "https://www.youtube.com/watch?v=",
-    "web_client": ""
-}
-
-
-REQUIRED_VIDEO_CHANNEL_CONFIG = {
-    "c_max_resolution": "",
-    "c_min_duration_in_minutes": "",
-    "c_max_duration_in_minutes": "",
-    "c_minimum_year": "",
-    "c_maximum_year": "",
-    "c_only_restricted": "",
-    "c_skip_restricted": "",
-    "c_minimum_views": "",
-    "c_year_subfolders": "",
-    "c_exclude_video_ids": "",
-    "c_include_video_ids": "",
-    "c_filter_words": ""
-}
+    REQUIRED_VIDEO_CHANNEL_CONFIG = {
+        "c_max_resolution": "",
+        "c_min_duration_in_minutes": "",
+        "c_max_duration_in_minutes": "",
+        "c_minimum_year": "",
+        "c_maximum_year": "",
+        "c_only_restricted": "",
+        "c_skip_restricted": "",
+        "c_minimum_views": "",
+        "c_year_subfolders": "",
+        "c_exclude_video_ids": "",
+        "c_include_video_ids": "",
+        "c_filter_words": ""
+    }
 
 
 class COLORS:
@@ -142,7 +139,7 @@ class JSONConfig:
 
         # Merge default config with user-defined values
         if config_values:
-            REQUIRED_VIDEO_CHANNEL_CONFIG.update(config_values)  # Override defaults if provided
+            AppConfig.REQUIRED_VIDEO_CHANNEL_CONFIG.update(config_values)  # Override defaults if provided
 
         try:
             # Ensure the directory exists
@@ -150,7 +147,7 @@ class JSONConfig:
 
             # Write JSON file
             with open(file_path, "w", encoding="utf-8") as f:
-                json.dump(REQUIRED_VIDEO_CHANNEL_CONFIG, f, indent=4)
+                json.dump(AppConfig.REQUIRED_VIDEO_CHANNEL_CONFIG, f, indent=4)
 
             # print(f"✅ JSON config file created at: {file_path}")
             return True

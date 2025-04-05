@@ -11,9 +11,8 @@ from pytubefix import YouTube, Channel, Playlist
 from pytubefix.cli import on_progress
 from PIL import Image
 from io import BytesIO
-from functions import (load_config, CcConfig, find_file_by_string, COLORS, count_files,
-                       get_free_space, clean_string_regex, REQUIRED_APP_CONFIG, REQUIRED_VIDEO_CHANNEL_CONFIG,
-                       JSONConfig, string_to_list, AppConfig)
+from functions import (AppConfig, COLORS, CcConfig, JSONConfig, load_config, find_file_by_string, count_files,
+                       get_free_space, clean_string_regex, string_to_list)
 
 
 # dropdown with int for loop mode exit after int loops

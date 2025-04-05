@@ -5,8 +5,8 @@ import subprocess
 from pytubefix import Channel
 from PIL import Image
 from io import BytesIO
-from functions import (load_config, CcConfig, find_file_by_string, Tooltip, COLORS, count_files,
-                       get_free_space, clean_string_regex, REQUIRED_APP_CONFIG, string_to_list, AppConfig)
+from functions import (AppConfig, COLORS, CcConfig, Tooltip, load_config, find_file_by_string, count_files,
+                       get_free_space, clean_string_regex, string_to_list)
 
 
 app_resolution = "1280x790"
