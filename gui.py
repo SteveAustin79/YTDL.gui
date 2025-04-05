@@ -375,6 +375,8 @@ def disable_buttons():
     get_information_button.configure(state="disabled")
     video_info_channel_button.configure(state="disabled")
     create_channel_config_button.configure(state="disabled")
+    channel_dropdown.configure(state="disabled")
+    link.configure(state="disabled")
 
 
 def enable_buttons():
@@ -383,6 +385,8 @@ def enable_buttons():
     get_information_button.configure(state="normal")
     video_info_channel_button.configure(state="normal")
     create_channel_config_button.configure(state="normal")
+    channel_dropdown.configure(state="normal")
+    link.configure(state="normal")
 
 
 def get_information():
