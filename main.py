@@ -46,10 +46,6 @@ def update_log(text: str) -> None:
 
 
 def destroy_elements():
-    threading.Thread(target=destroy_elements_work, daemon=True).start()
-
-
-def destroy_elements_work():
     """Remove all created widgets"""
     for element in elements_to_destroy:
         element.destroy()  # Remove widget from the UI
@@ -57,16 +53,17 @@ def destroy_elements_work():
 
 
 def list_channels():
-    threading.Thread(target=list_channels_work, daemon=True).start()
-
-
-def list_channels_work():
     update_log("Listing channels from channels.txt...")
     update_app_title()
     destroy_elements()
 
+    threading.Thread(target=list_channels_work, daemon=True).start()
+
+
+def list_channels_work():
     row_factor = 1
-    separator1.grid(row=row_factor, column=0, columnspan=18, sticky="ew", padx=padding_x, pady=padding_y * padding_y_factor)
+    separator1.grid(row=row_factor, column=0, columnspan=18, sticky="ew", padx=padding_x,
+                    pady=padding_y * padding_y_factor)
 
     for i, channel in enumerate(channel_lines, start=1):
         update_log("Scanning channel... " + channel.replace(youtube_url, "")[1:])
@@ -74,29 +71,35 @@ def list_channels_work():
 
         # Channel Name
         button_channel_name = customtkinter.CTkButton(app, text=channel.replace(youtube_url, "")[1:], height=row_height,
-                                                      width=180, fg_color=COLORS.log_bg, command=lambda i=channel: open_script(i))
-        button_channel_name.grid(row=i+row_factor, column=0, padx=padding_x, pady=padding_y, sticky="w")
+                                                      width=180, fg_color=COLORS.log_bg,
+                                                      command=lambda i=channel: open_script(i))
+        button_channel_name.grid(row=i + row_factor, column=0, padx=padding_x, pady=padding_y, sticky="w")
         elements_to_destroy.append(button_channel_name)
 
-        if os.path.exists(output_dir + "/" + clean_string_regex(channel_object.channel_name).rstrip() + AppConfig.channel_config_path):
-            channel_config = load_config(output_dir + "/" + clean_string_regex(channel_object.channel_name).rstrip() + AppConfig.channel_config_path)
+        if os.path.exists(output_dir + "/" + clean_string_regex(
+                channel_object.channel_name).rstrip() + AppConfig.channel_config_path):
+            channel_config = load_config(output_dir + "/" + clean_string_regex(
+                channel_object.channel_name).rstrip() + AppConfig.channel_config_path)
 
             # Resolution
             label_config_resolution = customtkinter.CTkLabel(app, text="max", height=row_height, text_color=COLORS.gray)
             label_config_resolution.grid(row=i + row_factor, column=1, padx=padding_x, pady=padding_y, sticky="nswe")
             elements_to_destroy.append(label_config_resolution)
-            if channel_config["c_max_resolution"]!="":
+            if channel_config["c_max_resolution"] != "":
                 label_config_resolution.configure(text=channel_config["c_max_resolution"], text_color=COLORS.orange)
 
             # Min duration
-            label_config_min_duration = customtkinter.CTkLabel(app, text="0m", height=row_height, text_color=COLORS.gray)
+            label_config_min_duration = customtkinter.CTkLabel(app, text="0m", height=row_height,
+                                                               text_color=COLORS.gray)
             label_config_min_duration.grid(row=i + row_factor, column=2, padx=padding_x, pady=padding_y, sticky="e")
             elements_to_destroy.append(label_config_min_duration)
             if int(channel_config["c_min_duration_in_minutes"]) != 0:
-                label_config_min_duration.configure(text=str(channel_config["c_min_duration_in_minutes"]) + "m", text_color=COLORS.yellow)
+                label_config_min_duration.configure(text=str(channel_config["c_min_duration_in_minutes"]) + "m",
+                                                    text_color=COLORS.yellow)
 
             # Max duration
-            label_config_max_duration = customtkinter.CTkLabel(app, text="0m", height=row_height, text_color=COLORS.gray)
+            label_config_max_duration = customtkinter.CTkLabel(app, text="0m", height=row_height,
+                                                               text_color=COLORS.gray)
             label_config_max_duration.grid(row=i + row_factor, column=3, padx=padding_x, pady=padding_y, sticky="e")
             elements_to_destroy.append(label_config_max_duration)
             if int(channel_config["c_max_duration_in_minutes"]) != 0:
@@ -113,9 +116,11 @@ def list_channels_work():
                 label_config_skip_restricted.configure(text_color=COLORS.red)
 
             # Restricted
-            label_config_only_restricted = customtkinter.CTkLabel(app, text="R", height=row_height, text_color=COLORS.gray)
+            label_config_only_restricted = customtkinter.CTkLabel(app, text="R", height=row_height,
+                                                                  text_color=COLORS.gray)
             if channel_config["c_skip_restricted"] != "y":
-                label_config_only_restricted.grid(row=i + row_factor, column=5, padx=padding_x, pady=padding_y, sticky="nswe")
+                label_config_only_restricted.grid(row=i + row_factor, column=5, padx=padding_x, pady=padding_y,
+                                                  sticky="nswe")
                 elements_to_destroy.append(label_config_only_restricted)
             if channel_config["c_only_restricted"] == "y":
                 label_config_only_restricted.configure(text_color=COLORS.dark_red)
@@ -141,14 +146,16 @@ def list_channels_work():
             label_config_min_year.grid(row=i + row_factor, column=8, padx=padding_x, pady=padding_y, sticky="e")
             elements_to_destroy.append(label_config_min_year)
             if int(channel_config["c_minimum_year"]) != 0:
-                label_config_min_year.configure(text=str(channel_config["c_minimum_year"]), text_color=COLORS.dark_green)
+                label_config_min_year.configure(text=str(channel_config["c_minimum_year"]),
+                                                text_color=COLORS.dark_green)
 
             # Max year
             label_config_max_year = customtkinter.CTkLabel(app, text="-", height=row_height, text_color=COLORS.gray)
             label_config_max_year.grid(row=i + row_factor, column=9, padx=padding_x, pady=padding_y, sticky="e")
             elements_to_destroy.append(label_config_max_year)
             if int(channel_config["c_maximum_year"]) != 0:
-                label_config_max_year.configure(text=str(channel_config["c_maximum_year"]), text_color=COLORS.dark_green)
+                label_config_max_year.configure(text=str(channel_config["c_maximum_year"]),
+                                                text_color=COLORS.dark_green)
 
             # excludes
             label_config_excludes = customtkinter.CTkLabel(app, text="excl", height=row_height, text_color=COLORS.gray)
@@ -171,7 +178,9 @@ def list_channels_work():
             if channel_config["c_filter_words"] != "":
                 word_length = 17
                 label_config_filter_words.configure(text=channel_config["c_filter_words"][:word_length] +
-                        "..." if len(channel_config["c_filter_words"]) > word_length else channel_config["c_filter_words"], text_color=COLORS.blue)
+                                                         "..." if len(
+                    channel_config["c_filter_words"]) > word_length else channel_config["c_filter_words"],
+                                                    text_color=COLORS.blue)
                 if len(channel_config["c_filter_words"]) > word_length:
                     Tooltip(label_config_filter_words, channel_config["c_filter_words"])
             label_config_filter_words.grid(row=i + row_factor, column=12, padx=padding_x, pady=padding_y, sticky="w")
@@ -186,16 +195,16 @@ def list_channels_work():
             state_show_latest_video_checkbox = True
             channel_video_count = str(len(channel_object.video_urls))
             count_files_from_channel_dir = count_files(output_dir + "/" +
-                                    clean_string_regex(channel_object.channel_name).rstrip(),
-                                        ".mp4")
+                                                       clean_string_regex(channel_object.channel_name).rstrip(),
+                                                       ".mp4")
             if count_files_from_channel_dir >= int(channel_video_count):
                 counter_color = COLORS.dark_green
             label_video_count.configure(text=str(count_files_from_channel_dir) + " / " + channel_video_count)
         else:
             # Video count
             label_video_count.configure(text=str(count_files(output_dir + "/" +
-                                    clean_string_regex(channel_object.channel_name).rstrip(),
-                                        ".mp4")) + " / ...")
+                                                             clean_string_regex(channel_object.channel_name).rstrip(),
+                                                             ".mp4")) + " / ...")
 
         label_video_count.grid(row=i + row_factor, column=13, padx=padding_x, pady=padding_y, sticky="e")
         elements_to_destroy.append(label_video_count)
@@ -218,9 +227,11 @@ def list_channels_work():
         ch_config_exclude_list = string_to_list("")
 
         if os.path.exists(
-                output_dir + "/" + clean_string_regex(channel_object.channel_name).rstrip() + AppConfig.channel_config_path):
+                output_dir + "/" + clean_string_regex(
+                    channel_object.channel_name).rstrip() + AppConfig.channel_config_path):
             ch_config = load_config(
-                output_dir + "/" + clean_string_regex(channel_object.channel_name).rstrip() + AppConfig.channel_config_path)
+                output_dir + "/" + clean_string_regex(
+                    channel_object.channel_name).rstrip() + AppConfig.channel_config_path)
 
             ch_config_filter_words = ch_config["c_filter_words"]
             if str(ch_config["c_min_duration_in_minutes"]).strip():
@@ -311,38 +322,47 @@ def list_channels_work():
             button_channel_name.configure(text_color=color_else)
 
             if color_video_date == COLORS.red:
-                button_latest_video_date = customtkinter.CTkButton(app, text=latest_date, height=row_height, width=70, fg_color=COLORS.log_bg,
-                                                     text_color=COLORS.red, command=lambda i=latest_video_id_text: open_script(i))
-                button_latest_video_date.grid(row=i+row_factor, column=14, padx=padding_x, pady=padding_y, sticky="nswe")
+                button_latest_video_date = customtkinter.CTkButton(app, text=latest_date, height=row_height, width=70,
+                                                                   fg_color=COLORS.log_bg,
+                                                                   text_color=COLORS.red,
+                                                                   command=lambda i=latest_video_id_text: open_script(
+                                                                       i))
+                button_latest_video_date.grid(row=i + row_factor, column=14, padx=padding_x, pady=padding_y,
+                                              sticky="nswe")
                 elements_to_destroy.append(button_latest_video_date)
             else:
-                label_latest_video_date = customtkinter.CTkLabel(app, text=latest_date, text_color=color_video_date, height=row_height)
-                label_latest_video_date.grid(row=i+row_factor, column=14, padx=padding_x, pady=padding_y, sticky="nswe")
+                label_latest_video_date = customtkinter.CTkLabel(app, text=latest_date, text_color=color_video_date,
+                                                                 height=row_height)
+                label_latest_video_date.grid(row=i + row_factor, column=14, padx=padding_x, pady=padding_y,
+                                             sticky="nswe")
                 elements_to_destroy.append(label_latest_video_date)
 
             video_thumbnail_label = customtkinter.CTkLabel(app, text="")
             video_thumbnail_label.configure(image=yt_video_thumbnail, text="")
-            video_thumbnail_label.grid(row=i+row_factor, column=15, padx=int(padding_x/3), pady=0, sticky="nswe")
+            video_thumbnail_label.grid(row=i + row_factor, column=15, padx=int(padding_x / 3), pady=0, sticky="nswe")
             elements_to_destroy.append(video_thumbnail_label)
 
-            label_latest_video_id = customtkinter.CTkLabel(app, text=latest_video_id_text, text_color=color_video_id, height=row_height)
-            label_latest_video_id.grid(row=i+row_factor, column=16, padx=padding_x, pady=padding_y, sticky="we")
+            label_latest_video_id = customtkinter.CTkLabel(app, text=latest_video_id_text, text_color=color_video_id,
+                                                           height=row_height)
+            label_latest_video_id.grid(row=i + row_factor, column=16, padx=padding_x, pady=padding_y, sticky="we")
             elements_to_destroy.append(label_latest_video_id)
 
             label_latest_video_title = customtkinter.CTkLabel(app,
-                                     text=latest_video_title_text[:23] + "..." if len(latest_video_title_text) > 23 else latest_video_title_text, text_color=color_else, height=row_height)
-            label_latest_video_title.grid(row=i+row_factor, column=17, padx=padding_x, pady=padding_y, sticky="w")
+                                                              text=latest_video_title_text[:23] + "..." if len(
+                                                                  latest_video_title_text) > 23 else latest_video_title_text,
+                                                              text_color=color_else, height=row_height)
+            label_latest_video_title.grid(row=i + row_factor, column=17, padx=padding_x, pady=padding_y, sticky="w")
             elements_to_destroy.append(label_latest_video_title)
 
             label_video_count.configure(text_color=color_else)
             if counter_color != COLORS.gray:
                 label_video_count.configure(text_color=counter_color)
 
-
         if state_show_latest_video_checkbox and not state_filters_on_checkbox:
             # Latest updated
-            label_last_updated = customtkinter.CTkLabel(app, text=channel_last_updated, width=160, height=row_height, text_color=COLORS.gray)
-            label_last_updated.grid(row=i+row_factor, column=14, padx=padding_x, pady=padding_y, sticky="w")
+            label_last_updated = customtkinter.CTkLabel(app, text=channel_last_updated, width=160, height=row_height,
+                                                        text_color=COLORS.gray)
+            label_last_updated.grid(row=i + row_factor, column=14, padx=padding_x, pady=padding_y, sticky="w")
             elements_to_destroy.append(label_last_updated)
 
         update_log("")
