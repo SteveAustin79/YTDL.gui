@@ -156,7 +156,6 @@ def on_closing():
 
 
 def abort_download() -> None:
-    delete_temp_files()
     sys.exit(0)
 
 
@@ -1304,6 +1303,8 @@ try:
 except Exception as e:
     print("An error occurred, incomplete config file:", str(e))
     CcConfig.cc_check_and_update_json_config("config.json", AppConfig.REQUIRED_APP_CONFIG)
+
+delete_temp_files()
 
 # System settings
 customtkinter.set_appearance_mode("Dark")
