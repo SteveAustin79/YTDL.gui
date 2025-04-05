@@ -7,7 +7,7 @@
 ## Installation (Linux)
 1. Clone repository:
 ```diff
-git clone https://github.com/SteveAustin79/YTDLgui.git
+git clone https://github.com/SteveAustin79/YTDL.gui.git
 ```
 2. Change directory
 ```diff
@@ -40,5 +40,5 @@ venv/bin/python3 YTDLgui.py
 
 ## Update
 ```diff
-git pull https://github.com/SteveAustin79/YTDLgui.git
+git pull https://github.com/SteveAustin79/YTDL.gui.git
 ```
