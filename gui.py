@@ -391,7 +391,7 @@ def get_information():
 
     yt_channel = channel_url
     video_id_from_single_video = ""
-    # ytv = ""
+    ytv = ""
     if youtube_watch_url in yt_channel:
         if web_client:
             ytv = YouTube(yt_channel, 'WEB', on_progress_callback=on_progress)
