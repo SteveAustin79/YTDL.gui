@@ -370,6 +370,7 @@ def disable_buttons():
     create_channel_config_button.configure(state="disabled")
     channel_dropdown.configure(state="disabled")
     link.configure(state="disabled")
+    ytchannel_path.configure(state="disabled")
 
 
 def enable_buttons():
@@ -380,6 +381,7 @@ def enable_buttons():
     create_channel_config_button.configure(state="normal")
     channel_dropdown.configure(state="normal")
     link.configure(state="normal")
+    ytchannel_path.configure(state="normal")
 
 
 def get_information():
