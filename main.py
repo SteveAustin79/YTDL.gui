@@ -8,6 +8,7 @@ from functions import (AppConfig, COLORS, CcConfig, Tooltip, load_config, find_f
                        get_free_space, clean_string_regex, string_to_list, load_image_from_url, destroy_elements)
 
 
+app_title = "YTDL.channels"
 row_height = 23
 padding_x = 5
 padding_y = 1
@@ -27,7 +28,7 @@ def checkbox_filter_on_clicked():
 
 
 def update_app_title():
-    app.title(AppConfig.version + " - Free disk space: " + get_free_space(output_dir))
+    app.title(app_title + AppConfig.version + " - Free disk space: " + get_free_space(output_dir))
 
 
 def read_channel_txt_lines(filename: str) -> list[str]:

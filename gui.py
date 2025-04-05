@@ -16,6 +16,7 @@ from functions import (AppConfig, COLORS, CcConfig, JSONConfig, load_config, fin
 
 # dropdown with int for loop mode exit after int loops
 
+app_title = "YTDL.video"
 entry_width = 450
 padding_x = 6
 padding_y = 3
@@ -346,7 +347,7 @@ def update_download_log(text: str, color: str) -> None:
 
 
 def update_app_title():
-    app.title(AppConfig.version + " - Free disk space: " + get_free_space(output_dir))
+    app.title(app_title + AppConfig.version + " - Free disk space: " + get_free_space(output_dir))
 
 
 def update_video_counts(text: str):
