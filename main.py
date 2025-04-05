@@ -394,7 +394,7 @@ logo_label.grid(row=0, column=0, padx=padding_x, pady=padding_y, sticky="nw")
 
 channel_lines = read_channel_txt_lines("channels.txt")
 
-start_button = customtkinter.CTkButton(app, text="Start", command=lambda: list_channels(), width=95)
+start_button = customtkinter.CTkButton(app, text="Start", command=list_channels, width=95)
 start_button.grid(row=0, column=0, padx=padding_x, pady=padding_y + 3, sticky="e")
 
 var_latest = customtkinter.BooleanVar()
