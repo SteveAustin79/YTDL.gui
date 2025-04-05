@@ -1313,7 +1313,7 @@ customtkinter.set_default_color_theme("blue")
 # App frame
 app = customtkinter.CTk()
 # app.geometry(app_resolution + "+0+0")
-app.geometry(AppConfig.app_resolution)
+app.geometry(f"{AppConfig.win_width}x{AppConfig.win_height}")
 update_app_title()
 app.configure(bg_color=COLORS.black)
 app.protocol("WM_DELETE_WINDOW", on_closing)

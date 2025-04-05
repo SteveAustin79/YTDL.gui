@@ -10,7 +10,9 @@ class AppConfig:
     app_title = "YTDL.channels"
     version = app_title + " v1.0.2 (20250405)"
     logo_path = "assets/logo.png"
-    app_resolution = "1280x800"
+    # Set window size
+    win_width = 1280
+    win_height = 800
 
 
 REQUIRED_APP_CONFIG = {

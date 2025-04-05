@@ -386,14 +386,12 @@ app = customtkinter.CTk()
 # Get screen width & height
 screen_width = app.winfo_screenwidth()
 screen_height = app.winfo_screenheight()
-# Set window size
-win_width = 1280
-win_height = 760
-# Calculate x, y for bottom-right position
-x_offset = screen_width - win_width - 10  # Align to right
-y_offset = screen_height - win_height - 72  # Align to bottom
 
-app.geometry(f"{win_width}x{win_height}+{x_offset}+{y_offset}")
+# Calculate x, y for bottom-right position
+x_offset = screen_width - AppConfig.win_width - 10  # Align to right
+y_offset = screen_height - AppConfig.win_height - 72  # Align to bottom
+
+app.geometry(f"{AppConfig.win_width}x{AppConfig.win_height}+{x_offset}+{y_offset}")
 update_app_title()
 app.configure(bg_color=COLORS.black)
 # app.protocol("WM_DELETE_WINDOW", on_closing)
