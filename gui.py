@@ -1025,11 +1025,12 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                 str(count_files(output_dir + "/" + clean_string_regex(total_channel_name).rstrip(), ".mp4")) +
                 " / " + str(total_channel_videos) + " Videos downloaded")
 
+    enable_buttons()
     if count_this_run == 0:
         update_download_log("Nothing to do...", COLORS.green)
     else:
         update_download_log("DONE!", COLORS.green)
-    enable_buttons()
+
 
 
 def start_download(audio_or_video_bool: bool, restricted: bool, video_id: str, looper: bool, year_subfolders: bool):
