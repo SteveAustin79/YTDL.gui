@@ -1000,7 +1000,7 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                     count_skipped = 0
                     video_list.append(video.video_id)
 
-                    start_download(audio_or_video_bool, False, video.video_id, True, year_subfolders)
+                    start_download_work(audio_or_video_bool, False, video.video_id, True, year_subfolders)
                     # t_start_download = threading.Thread(target=lambda: start_download(audio_or_video_bool, False, video.video_id, True, year_subfolders))
                     # t_start_download.start()
                     # t_start_download.join()
@@ -1016,7 +1016,7 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                             count_this_run += 1
                             video_list_restricted.append(video.video_id)
 
-                            start_download(audio_or_video_bool, True, video.video_id, True, year_subfolders)
+                            start_download_work(audio_or_video_bool, True, video.video_id, True, year_subfolders)
                             # tr_start_download = threading.Thread(target=lambda: start_download(audio_or_video_bool, True, video.video_id, True, year_subfolders))
                             # tr_start_download.start()
                             # tr_start_download.join()
@@ -1036,12 +1036,9 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
 
 def start_download(audio_or_video_bool: bool, restricted: bool, video_id: str, looper: bool, year_subfolders: bool):
     disable_buttons()
-    if not looper:
-        t_start_download_b = threading.Thread(target=lambda: start_download_work(audio_or_video_bool, restricted, video_id, looper, year_subfolders), daemon=True)
-        t_start_download_b.start()
-        # t_start_download_b.join()
-    else:
-        start_download_work(audio_or_video_bool, restricted, video_id, looper, year_subfolders)
+    t_start_download_b = threading.Thread(target=lambda: start_download_work(audio_or_video_bool, restricted, video_id, looper, year_subfolders), daemon=True)
+    t_start_download_b.start()
+    # t_start_download_b.join()
 
 
 def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: str, looper: bool, year_subfolders: bool):
