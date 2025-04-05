@@ -353,7 +353,7 @@ def list_channels():
 
 def open_script(video_id):
     args = video_id
-    subprocess.Popen(["venv/scripts/python", "YTDLgui.py", args])
+    subprocess.Popen(["venv/scripts/python", "gui.py", args])
 
 
 
