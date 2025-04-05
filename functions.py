@@ -18,7 +18,7 @@ class AppConfig:
     date_format_math = "%Y-%m-%d"
     # Set window size
     win_width = 1280
-    win_height = 800
+    win_height = 790
 
     REQUIRED_APP_CONFIG = {
         "output_directory": "",

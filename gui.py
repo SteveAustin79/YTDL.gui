@@ -335,13 +335,6 @@ def check_channels_txt(filename: str, c_url: str) -> bool:
         return False
 
 
-def reset_app():
-    # update_log(log_default)
-    r_url_var = tkinter.StringVar(value="")
-    link.configure(textvariable=r_url_var)
-    destroy_elements()
-
-
 def update_download_log(text: str, color: str) -> None:
     download_log_label.configure(text=text, text_color=color)
     download_log_label.grid(row=23, column=2, padx=padding_x, pady=padding_y, sticky="w")
@@ -1075,9 +1068,9 @@ def start_download(audio_or_video_bool: bool, restricted: bool, video_id: str, l
 
 
 def download_video(audio_or_video_bool: bool, y_tube: YouTube, res: str, restricted: bool, year_subfolders: bool):
-    abort_button.configure(fg_color=COLORS.dark_red, command=abort_download)
-    abort_button.grid(row=21, column=2, padx=padding_x, pady=padding_y, sticky="e")
-    elements_to_destroy.append(abort_button)
+    # abort_button.configure(fg_color=COLORS.dark_red, command=abort_download)
+    # abort_button.grid(row=21, column=2, padx=padding_x, pady=padding_y, sticky="e")
+    # elements_to_destroy.append(abort_button)
 
     progress_percent.configure(text="0%")
     progress_percent.grid(row=22, column=1, padx=padding_x, pady=padding_y, sticky="e")
@@ -1088,7 +1081,6 @@ def download_video(audio_or_video_bool: bool, y_tube: YouTube, res: str, restric
     progress_bar.grid(row=22, column=2, padx=padding_x, pady=padding_y, sticky="w")
     elements_to_destroy.append(progress_bar)
 
-    # start_video_download_label.configure(text="")
     update_download_log("", COLORS.gray)
 
     y_tube_publish_date = y_tube.publish_date
@@ -1103,8 +1095,6 @@ def download_video(audio_or_video_bool: bool, y_tube: YouTube, res: str, restric
         publishing_date = eee
 
     update_download_log("Starting download to " + ytchannel_path.get(), COLORS.gray)
-    # download_log_label.grid(row=23, column=2, padx=padding_x, pady=padding_y, sticky="w")
-    # elements_to_destroy.append(start_video_download_label)
 
     if year_subfolders:
         year = "/" + str(y_tube_publish_date.strftime("%Y"))
@@ -1195,7 +1185,6 @@ def convert_m4a_to_mp3(video_id: str, publish_date: str, year: str, restricted: 
         sys.exit(1)
 
     update_download_log("MP3 downloaded", COLORS.green)
-
     delete_temp_files()
 
 
@@ -1284,11 +1273,6 @@ def convert_webm_to_mp4(input_file: str, output_file: str, year: str, restricted
         update_download_log("Video downloaded", COLORS.green)
 
 
-# def on_combobox_select(choice):
-#     if channel_dropdown.get() != "":
-#         get_information(True)
-
-
 
 # Load config
 config = load_config("config.json")
@@ -1324,13 +1308,9 @@ app.grid_columnconfigure(2, minsize=440)
 app.grid_columnconfigure(3, minsize=210)
 
 # Add UI elements
-
 logo = customtkinter.CTkImage(light_image=Image.open(AppConfig.logo_path), size=(87, 58)) # 180x120
 logo_label = customtkinter.CTkLabel(app, text="", image=logo)
 logo_label.grid(row=0, column=0, rowspan=2, padx=padding_x, pady=padding_y, sticky="nw")
-
-# version_button = customtkinter.CTkButton(app, text=app_title, width=tn_width, command=reset_app)
-# version_button.grid(row=0, column=0, padx=padding_x, pady=padding_y, sticky="w")
 
 # log_label = customtkinter.CTkLabel(app, text=log_default, width=235 , fg_color=COLORS.log_bg, text_color=COLORS.violet)
 # log_label.grid(row=0, column=1, padx=padding_x, pady=padding_y, sticky="w")
@@ -1411,8 +1391,5 @@ configuration_includes = customtkinter.CTkTextbox(app)
 
 if len(sys.argv) > 1 and youtube_url in str(sys.argv[1]):
     channel_dropdown.set(sys.argv[1])
-    # on_combobox_select(channel_dropdown.get())
 
 app.mainloop()
-
-
