@@ -410,8 +410,11 @@ def enable_buttons():
 
 
 def get_information():
-    disable_buttons()
-    threading.Thread(target=get_information_work, daemon=True).start()
+    if channel_dropdown.get() == "" and link.get() == "":
+        update_download_log("Empty selection", COLORS.red)
+    else:
+        disable_buttons()
+        threading.Thread(target=get_information_work, daemon=True).start()
 
 
 def get_information_work():
