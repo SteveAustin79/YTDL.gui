@@ -16,6 +16,7 @@ from functions import (AppConfig, COLORS, CcConfig, JSONConfig, load_config, fin
 
 # dropdown with int for loop mode exit after int loops
 
+app_title = "YTDL.video"
 entry_width = 450
 padding_x = 6
 padding_y = 3
@@ -219,7 +220,6 @@ def organize_files_by_year(base_directory: str) -> None:
 
                 # Move the file to the corresponding year folder
                 shutil.move(file_path, os.path.join(year_folder, file_name))
-                # print(f"Moved: {file_name} → {year}/")
     # print(print_colored_text("Created year sub folder structure!", BCOLORS.ORANGE))
 
 
@@ -297,7 +297,6 @@ def rename_files_in_temp_directory() -> None:
     for filename in os.listdir(directory):
         if ":" in filename:  # Check if filename contains ':'
             sanitized_name = filename.replace(":", "")
-            # sanitized_name = clean_string_regex(filename).rstrip()
             old_path = os.path.join(directory, filename)
             new_path = os.path.join(directory, sanitized_name)
             os.rename(old_path, new_path)
@@ -348,7 +347,7 @@ def update_download_log(text: str, color: str) -> None:
 
 
 def update_app_title():
-    app.title(AppConfig.version + " - Free disk space: " + get_free_space(output_dir))
+    app.title(app_title + AppConfig.version + " - Free disk space: " + get_free_space(output_dir))
 
 
 def update_video_counts(text: str):
@@ -468,7 +467,6 @@ def get_information_work():
     count_files_from_channel_dir = count_files(output_dir + "/" +
                                                clean_string_regex(channel_info_name).rstrip(),
                                                ".mp4")
-    # ytchannel_video_count.configure(text=str(count_files_from_channel_dir) + "/" + str(len(channel_info.video_urls)) + " Videos downloaded")
     update_video_counts(str(count_files_from_channel_dir) + " / " + str(len(channel_info.video_urls)) + " Videos downloaded")
     total_channel_videos = len(channel_info.video_urls)
     total_channel_name = channel_info_name
@@ -1007,9 +1005,6 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                     video_list.append(video.video_id)
 
                     start_download_work(audio_or_video_bool, False, video.video_id, True, year_subfolders)
-                    # t_start_download = threading.Thread(target=lambda: start_download(audio_or_video_bool, False, video.video_id, True, year_subfolders))
-                    # t_start_download.start()
-                    # t_start_download.join()
                 else:
                     if not skip_restricted_bool:
                         if (video.age_restricted and video.vid_info.get('playabilityStatus', {}).get(
@@ -1023,9 +1018,6 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                             video_list_restricted.append(video.video_id)
 
                             start_download_work(audio_or_video_bool, True, video.video_id, True, year_subfolders)
-                            # tr_start_download = threading.Thread(target=lambda: start_download(audio_or_video_bool, True, video.video_id, True, year_subfolders))
-                            # tr_start_download.start()
-                            # tr_start_download.join()
 
             update_video_counts(
                 str(count_files(output_dir + "/" + clean_string_regex(total_channel_name).rstrip(), ".mp4")) +

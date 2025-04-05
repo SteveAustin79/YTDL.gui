@@ -8,6 +8,7 @@ from functions import (AppConfig, COLORS, CcConfig, Tooltip, load_config, find_f
                        get_free_space, clean_string_regex, string_to_list, load_image_from_url, destroy_elements)
 
 
+app_title = "YTDL.channels"
 row_height = 23
 padding_x = 5
 padding_y = 1
@@ -27,7 +28,7 @@ def checkbox_filter_on_clicked():
 
 
 def update_app_title():
-    app.title(AppConfig.version + " - Free disk space: " + get_free_space(output_dir))
+    app.title(app_title + AppConfig.version + " - Free disk space: " + get_free_space(output_dir))
 
 
 def read_channel_txt_lines(filename: str) -> list[str]:
@@ -423,17 +424,10 @@ start_button.grid(row=0, column=0, padx=padding_x, pady=padding_y + 3, sticky="e
 var_latest = customtkinter.BooleanVar()
 var_filter_on = customtkinter.BooleanVar()
 
-# c_output_dir_value = tkinter.Variable(value=output_dir)
-# c_output_dir = customtkinter.CTkEntry(app, textvariable=c_output_dir_value, width=250)
-# c_output_dir.grid(row=0, column=1, columnspan=6, padx=padding_x, pady=padding_y, sticky="w")
 c_show_latest_video_date = customtkinter.CTkCheckBox(app, text="Latest Video", variable=var_latest, command=checkbox_latest_clicked)
-# if show_latest_video_date:
-#     c_show_latest_video_date.select()
 c_show_latest_video_date.grid(row=0, column=2, columnspan=6, padx=padding_x, pady=padding_y, sticky="w")
 
 c_filters_on_in_channels_list = customtkinter.CTkCheckBox(app, text="Filters On", variable=var_filter_on, command=checkbox_filter_on_clicked)
-# if default_filters_on:
-#     c_filters_on_in_channels_list.select()
 c_filters_on_in_channels_list.grid(row=0, column=2, columnspan=6, padx=padding_x, pady=padding_y, sticky="e")
 
 log_label = customtkinter.CTkLabel(app, text="", text_color=COLORS.violet, anchor="w")
