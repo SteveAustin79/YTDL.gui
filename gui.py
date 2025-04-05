@@ -1074,6 +1074,7 @@ def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: s
     if looper:
         download_video(audio_or_video_bool, y_tube, res, restricted, year_subfolders)
     else:
+        enable_buttons()
         download_button.configure(text="Download", command=lambda: download_video(audio_or_video_bool, y_tube,
                                                                                   video_resolution.get(),
                                                                                   restricted, year_subfolders))
