@@ -1,12 +1,10 @@
 import customtkinter
 import os
-import requests
 import subprocess
 from pytubefix import Channel
 from PIL import Image
-from io import BytesIO
 from functions import (AppConfig, COLORS, CcConfig, Tooltip, load_config, find_file_by_string, count_files,
-                       get_free_space, clean_string_regex, string_to_list)
+                       get_free_space, clean_string_regex, string_to_list, load_image_from_url)
 
 
 row_height = 23
@@ -48,12 +46,6 @@ def read_channel_txt_lines(filename: str) -> list[str]:
 def update_log(text: str) -> None:
     log_label.configure(text="    " + text + "    ")
     log_label.update()
-
-
-def load_image_from_url(url, size=(100, 100)):
-    response = requests.get(url)
-    image = Image.open(BytesIO(response.content))  # Convert bytes to an image
-    return customtkinter.CTkImage(light_image=image, size=size)
 
 
 def destroy_elements():

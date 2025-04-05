@@ -3,16 +3,14 @@ import re
 import pytubefix.extract
 import tkinter
 import customtkinter
-import requests
 import shutil
 import subprocess
 import sys
 from pytubefix import YouTube, Channel, Playlist
 from pytubefix.cli import on_progress
 from PIL import Image
-from io import BytesIO
 from functions import (AppConfig, COLORS, CcConfig, JSONConfig, load_config, find_file_by_string, count_files,
-                       get_free_space, clean_string_regex, string_to_list)
+                       get_free_space, clean_string_regex, string_to_list, load_image_from_url)
 
 
 # dropdown with int for loop mode exit after int loops
@@ -246,12 +244,6 @@ def on_progress(stream, chunk, bytes_remaining):
     progress_percent.configure(text=percent + "%")
     progress_bar.set(float(percent_completed) / 100)
     progress_percent.update()
-
-
-def load_image_from_url(url, size=(tn_width, tn_height)):
-    response = requests.get(url)
-    image = Image.open(BytesIO(response.content))  # Convert bytes to an image
-    return customtkinter.CTkImage(light_image=image, size=size)
 
 
 def format_time(seconds: int) -> str:

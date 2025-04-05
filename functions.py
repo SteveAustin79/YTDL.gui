@@ -2,7 +2,10 @@ import customtkinter
 import json
 import os
 import re
+import requests
 import shutil
+from PIL import Image
+from io import BytesIO
 
 
 class AppConfig:
@@ -240,4 +243,9 @@ def clean_string_regex(text: str) -> str:
 def string_to_list(input_string: str) -> list[str]:
     return [item.strip() for item in input_string.split(",")]
 
+
+def load_image_from_url(url, size=(100, 100)):
+    response = requests.get(url)
+    image = Image.open(BytesIO(response.content))  # Convert bytes to an image
+    return customtkinter.CTkImage(light_image=image, size=size)
 
