@@ -1059,6 +1059,11 @@ def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: s
             y_tube = YouTube(youtube_watch_url + video_id, on_progress_callback=on_progress)
 
     if looper:
+        yt_video_thumbnail = load_image_from_url(y_tube.thumbnail_url, size=(tn_width, tn_height))
+        video_thumbnail_label.configure(image=yt_video_thumbnail, text="")
+        video_thumbnail_label.grid(row=15, column=0, rowspan=4, padx=padding_x, pady=padding_y, sticky="e")
+        elements_to_destroy_loop.append(video_thumbnail_label)
+
         yt_video_title_label.configure(text="Title:", text_color=COLORS.gray)
         yt_video_title_label.grid(row=15, column=1, padx=padding_x, pady=padding_y, sticky="e")
         elements_to_destroy_loop.append(yt_video_title_label)
@@ -1090,11 +1095,6 @@ def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: s
         yt_video_length.configure(text=format_time(y_tube.length))
         yt_video_length.grid(row=18, column=2, padx=padding_x, pady=padding_y, sticky="w")
         elements_to_destroy_loop.append(yt_video_length)
-
-        yt_video_thumbnail = load_image_from_url(y_tube.thumbnail_url, size=(tn_width, tn_height))
-        video_thumbnail_label.configure(image=yt_video_thumbnail, text="")
-        video_thumbnail_label.grid(row=15, column=0, rowspan=4, padx=padding_x, pady=padding_y, sticky="e")
-        elements_to_destroy_loop.append(video_thumbnail_label)
 
     res = ""
     if not audio_or_video_bool:
