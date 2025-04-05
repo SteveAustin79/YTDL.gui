@@ -1266,6 +1266,7 @@ def merge_video_audio(video_id: str, publish_date: str, vid_res: str, year: str,
 
     try:
         update_download_log("Merging to MP4...", COLORS.gray)
+        abort_button.grid_remove()
         command = [
             "ffmpeg", "-loglevel", "quiet", "-stats", "-i", video_file, "-i", audio_file,
             "-c:v", "copy", "-c:a", "aac", output_file
@@ -1325,6 +1326,7 @@ def merge_webm_opus(video_id: str, publish_date: str, vid_res: str, year: str, r
 def convert_webm_to_mp4(input_file: str, output_file: str, year: str, restricted: bool) -> None:
     create_directories(restricted, year)
     update_download_log("Converting WebM to MP4... (this may take a while)", COLORS.gray)
+    abort_button.grid_remove()
     command = [
         "ffmpeg", "-loglevel", "quiet", "-stats", "-i", input_file,
         "-c:v", "libx264", "-preset", "fast", "-crf", "23",  # H.264 video encoding
