@@ -977,6 +977,7 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                 video = YouTube(youtube_watch_url + only_video_id, 'WEB', on_progress_callback=on_progress)
             else:
                 video = YouTube(youtube_watch_url + only_video_id, on_progress_callback=on_progress)
+            update_download_log("checking video..." + video.title, COLORS.violet)
             if default_filter_words == "" or any(
                     word.lower() in video.title.lower() for word in string_to_list(default_filter_words)):
                 if min_duration_bool:
