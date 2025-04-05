@@ -41,7 +41,7 @@ def read_channel_txt_lines(filename: str) -> list[str]:
 
 
 def update_log(text: str) -> None:
-    log_label.configure(text="    " + text + "    ")
+    log_label.configure(text=text)
     log_label.update()
 
 
