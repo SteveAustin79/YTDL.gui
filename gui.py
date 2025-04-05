@@ -6,6 +6,7 @@ import customtkinter
 import shutil
 import subprocess
 import sys
+import threading
 from pytubefix import YouTube, Channel, Playlist
 from pytubefix.cli import on_progress
 from PIL import Image
@@ -14,7 +15,7 @@ from functions import (AppConfig, COLORS, CcConfig, JSONConfig, load_config, fin
 
 
 # dropdown with int for loop mode exit after int loops
-# sys.exit button to abort download
+# sys.exit button to abort download - does not work, need thread
 
 entry_width = 450
 padding_x = 6
@@ -365,6 +366,10 @@ def get_yt_channel(channel_url) -> Channel:
 
 
 def get_information():
+    threading.Thread(target=get_information_work, daemon=True).start()
+
+
+def get_information_work():
     global total_channel_videos
     global total_channel_name
     looper = False
