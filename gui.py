@@ -471,8 +471,8 @@ def get_information_work():
     total_channel_name = channel_info_name
     channel_info_thumbnail = channel_info.thumbnail_url
 
-    separator1.grid(row=2, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y * padding_y_factor)
-    elements_to_destroy.append(separator1)
+    # separator1.grid(row=2, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y * padding_y_factor)
+    # elements_to_destroy.append(separator1)
 
     separator2.grid(row=6, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y * padding_y_factor)
     elements_to_destroy.append(separator2)
@@ -1416,6 +1416,8 @@ get_information_button = customtkinter.CTkButton(app, text="Get Information", co
 get_information_button.grid(row=1, column=3, padx=padding_x, pady=padding_y, sticky="w")
 
 separator1 = customtkinter.CTkFrame(app, height=2, fg_color=COLORS.separator)
+separator1.grid(row=2, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y * padding_y_factor)
+# elements_to_destroy.append(separator1)
 separator2 = customtkinter.CTkFrame(app, height=2, fg_color=COLORS.separator)
 separator3 = customtkinter.CTkFrame(app, height=2, fg_color=COLORS.separator)
 
