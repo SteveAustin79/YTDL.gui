@@ -1076,6 +1076,12 @@ def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: s
 
 
 def download_video(audio_or_video_bool: bool, y_tube: YouTube, res: str, restricted: bool, year_subfolders: bool):
+    threading.Thread(
+        target=lambda: download_video_work(audio_or_video_bool, y_tube, res, restricted, year_subfolders),
+        daemon=True).start()
+
+
+def download_video_work(audio_or_video_bool: bool, y_tube: YouTube, res: str, restricted: bool, year_subfolders: bool):
     abort_button.configure(fg_color=COLORS.dark_red, command=abort_download)
     abort_button.grid(row=21, column=2, padx=padding_x, pady=padding_y, sticky="e")
     elements_to_destroy.append(abort_button)
