@@ -57,6 +57,10 @@ def list_channels():
     update_app_title()
     destroy_elements()
 
+    start_button.grid_remove()
+    c_filters_on_in_channels_list.grid_remove()
+    c_show_latest_video_date.grid_remove()
+
     threading.Thread(target=list_channels_work, daemon=True).start()
 
 
@@ -367,6 +371,10 @@ def list_channels_work():
 
         update_log("")
     update_app_title()
+
+    start_button.grid(row=0, column=0, padx=padding_x, pady=padding_y + 3, sticky="e")
+    c_show_latest_video_date.grid(row=0, column=2, columnspan=6, padx=padding_x, pady=padding_y, sticky="w")
+    c_filters_on_in_channels_list.grid(row=0, column=2, columnspan=6, padx=padding_x, pady=padding_y, sticky="e")
 
 
 def open_script(video_id):
