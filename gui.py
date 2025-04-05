@@ -1107,24 +1107,24 @@ def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: s
         elements_to_destroy.append(avail_resolutions)
 
     if looper:
-        download_video(audio_or_video_bool, y_tube, res, restricted, year_subfolders)
+        download_video(audio_or_video_bool, y_tube, res, restricted, year_subfolders, looper)
     else:
         enable_buttons()
         download_button.configure(text="Download", command=lambda: download_video(audio_or_video_bool, y_tube,
                                                                                   video_resolution.get(),
-                                                                                  restricted, year_subfolders))
+                                                                                  restricted, year_subfolders, looper))
         download_button.grid(row=21, column=2, padx=padding_x, pady=padding_y * padding_y_factor, sticky="w")
         elements_to_destroy.append(download_button)
 
 
-# def download_video(audio_or_video_bool: bool, y_tube: YouTube, res: str, restricted: bool, year_subfolders: bool):
-#     enable_buttons()
-#     t_download_video = threading.Thread(
-#         target=lambda: download_video_work(audio_or_video_bool, y_tube, res, restricted, year_subfolders),
-#         daemon=True)
+def download_video(audio_or_video_bool: bool, y_tube: YouTube, res: str, restricted: bool, year_subfolders: bool, looper: bool):
+    enable_buttons()
+    if not looper:
+        t_download_video = threading.Thread(target=lambda: download_video_work(audio_or_video_bool, y_tube, res, restricted, year_subfolders), daemon=True)
+        t_download_video.start()
 
 
-def download_video(audio_or_video_bool: bool, y_tube: YouTube, res: str, restricted: bool, year_subfolders: bool):
+def download_video_work(audio_or_video_bool: bool, y_tube: YouTube, res: str, restricted: bool, year_subfolders: bool, looper: bool):
     abort_button.configure(fg_color=COLORS.dark_red, command=abort_download)
     abort_button.grid(row=22, column=3, rowspan=2, padx=padding_x, pady=padding_y, sticky="nw")
     elements_to_destroy.append(abort_button)
