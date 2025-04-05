@@ -879,9 +879,6 @@ def get_information():
     video_button.grid(row=13, column=2, padx=padding_x, pady=padding_y, sticky="w")
     elements_to_destroy.append(video_button)
 
-    abort_button.configure(fg_color=COLORS.dark_red, command=abort_download)
-    abort_button.grid(row=13, column=3, padx=padding_x, pady=padding_y, sticky="w")
-
     separator3.grid(row=14, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y * padding_y_factor)
     elements_to_destroy.append(separator3)
 
@@ -1075,6 +1072,10 @@ def start_download(audio_or_video_bool: bool, restricted: bool, video_id: str, l
                                                                                   restricted, year_subfolders))
         download_button.grid(row=21, column=2, padx=padding_x, pady=padding_y * padding_y_factor, sticky="w")
         elements_to_destroy.append(download_button)
+
+        abort_button.configure(fg_color=COLORS.dark_red, command=abort_download)
+        abort_button.grid(row=21, column=3, padx=padding_x, pady=padding_y, sticky="w")
+        elements_to_destroy.append(abort_button)
 
 
 def download_video(audio_or_video_bool: bool, y_tube: YouTube, res: str, restricted: bool, year_subfolders: bool):
