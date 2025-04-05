@@ -11,7 +11,7 @@ git clone https://github.com/SteveAustin79/YTDL.gui.git
 ```
 2. Change directory
 ```diff
-cd YTDL
+cd YTDL.gui
 ```
 3. Install python environment
 ```diff
@@ -35,7 +35,7 @@ nano channels.txt
 ```
 7. Run the application
 ```diff
-venv/bin/python3 YTDLgui.py
+venv/bin/python3 main.py
 ```
 
 ## Update
