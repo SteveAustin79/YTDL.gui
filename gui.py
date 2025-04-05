@@ -1027,17 +1027,17 @@ def loop_download(audio_or_video_bool, default_max_res, default_filter_words, on
     #     update_download_log("DONE!", COLORS.green)
 
 
+# def start_download(audio_or_video_bool: bool, restricted: bool, video_id: str, looper: bool, year_subfolders: bool):
+#     disable_buttons()
+#     if not looper:
+#         t_start_download = threading.Thread(target=lambda: start_download_work(audio_or_video_bool, restricted, video_id, looper, year_subfolders), daemon=True)
+#         t_start_download.start()
+#         t_start_download.join()
+#     else:
+#         start_download_work(audio_or_video_bool, restricted, video_id, looper, year_subfolders)
+
+
 def start_download(audio_or_video_bool: bool, restricted: bool, video_id: str, looper: bool, year_subfolders: bool):
-    disable_buttons()
-    if not looper:
-        t_start_download = threading.Thread(target=lambda: start_download_work(audio_or_video_bool, restricted, video_id, looper, year_subfolders), daemon=True)
-        t_start_download.start()
-        t_start_download.join()
-    else:
-        start_download_work(audio_or_video_bool, restricted, video_id, looper, year_subfolders)
-
-
-def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: str, looper: bool, year_subfolders: bool):
     update_app_title()
     if restricted:
         if web_client:
