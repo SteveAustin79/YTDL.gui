@@ -948,7 +948,7 @@ def loop_download(audio_or_video_bool, default_max_res, default_filter_words, on
                         skip_restricted_bool, year_subfolders, min_duration_bool, min_duration, max_duration_bool, max_duration,
                         min_year, max_year, min_video_views), daemon=True)
     t_loop_download.start()
-    t_loop_download.join()
+    # t_loop_download.join()
 
 
 def loop_download_work(audio_or_video_bool, default_max_res, default_filter_words, only_restricted_videos_bool,
