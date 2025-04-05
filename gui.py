@@ -1282,7 +1282,7 @@ def merge_video_audio(video_id: str, publish_date: str, vid_res: str, year: str,
             update_download_log("Video downloaded", COLORS.green)
 
         abort_button.grid_remove()
-        # enable_buttons()
+        enable_buttons()
         update_video_counts(
             str(count_files(output_dir + "/" + clean_string_regex(total_channel_name).rstrip(), ".mp4")) +
             " / " + str(total_channel_videos) + " Videos downloaded")
@@ -1344,7 +1344,7 @@ def convert_webm_to_mp4(input_file: str, output_file: str, year: str, restricted
         update_download_log("Video downloaded", COLORS.green)
 
     abort_button.grid_remove()
-    # enable_buttons()
+    enable_buttons()
     update_video_counts(
         str(count_files(output_dir + "/" + clean_string_regex(total_channel_name).rstrip(), ".mp4")) +
         " / " + str(total_channel_videos) + " Videos downloaded")
