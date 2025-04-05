@@ -47,7 +47,7 @@ def update_channel_config(default_max_res, limit_resolution_to, default_min_dura
             default_include_videos != include_video_ids or default_filter_words != video_name_filter):
 
         create_channel_config_button.grid_remove()
-        separator2.update()
+        separator1.update()
 
         if default_max_res != limit_resolution_to:
             JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.channel_config_path, "c_max_resolution", limit_resolution_to)
@@ -879,6 +879,8 @@ def get_information():
     video_button.grid(row=13, column=2, padx=padding_x, pady=padding_y, sticky="w")
     elements_to_destroy.append(video_button)
 
+    abort_button.grid(row=13, column=3, padx=padding_x, pady=padding_y, sticky="w")
+
     separator3.grid(row=14, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y * padding_y_factor)
     elements_to_destroy.append(separator3)
 
@@ -1373,6 +1375,7 @@ video_thumbnail_label = customtkinter.CTkLabel(app, text="")
 
 audio_button = customtkinter.CTkButton(app, text="Audio (mp3)")
 video_button = customtkinter.CTkButton(app, text="Video (mp4)")
+abort_button = customtkinter.CTkButton(app, text="Abort")
 
 video_resolution_label = customtkinter.CTkLabel(app, text="")
 video_resolution = customtkinter.CTkComboBox(app)
