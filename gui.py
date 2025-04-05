@@ -11,7 +11,7 @@ from pytubefix import YouTube, Channel, Playlist
 from pytubefix.cli import on_progress
 from PIL import Image
 from functions import (AppConfig, COLORS, CcConfig, JSONConfig, load_config, find_file_by_string, count_files,
-                       get_free_space, clean_string_regex, string_to_list, load_image_from_url)
+                       get_free_space, clean_string_regex, string_to_list, load_image_from_url, destroy_elements)
 
 
 # dropdown with int for loop mode exit after int loops
@@ -31,6 +31,7 @@ video_list = []
 video_list_restricted = []
 video_watch_urls = []
 elements_to_destroy = []
+elements_to_destroy_loop = []
 
 
 def update_channel_config(default_max_res, limit_resolution_to, default_min_duration_in_minutes, min_duration,
@@ -967,6 +968,7 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
             update_download_log("Skipping " + str(count_skipped) + " Video(s)", COLORS.violet)
         else:
             do_not_download = 0
+            destroy_elements(elements_to_destroy_loop)
             if web_client:
                 video = YouTube(youtube_watch_url + only_video_id, 'WEB', on_progress_callback=on_progress)
             else:
@@ -1059,40 +1061,40 @@ def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: s
     if looper:
         yt_video_title_label.configure(text="Title:", text_color=COLORS.gray)
         yt_video_title_label.grid(row=15, column=1, padx=padding_x, pady=padding_y, sticky="e")
-        # elements_to_destroy.append(yt_video_title_label)
+        elements_to_destroy_loop.append(yt_video_title_label)
         yt_video_title.configure(text=str(y_tube.title)[:video_title_width] +
                         "..." if len(str(y_tube.title)) > video_title_width else str(y_tube.title), text_color=COLORS.white, font=("Arial", 15, "bold"))
         if restricted:
             yt_video_title.configure(text_color=COLORS.red)
             # log_label.configure(text="Restricted Video!", text_color=COLORS.red)
         yt_video_title.grid(row=15, column=2, columnspan=2, padx=padding_x, pady=padding_y, sticky="w")
-        # elements_to_destroy.append(yt_video_title)
+        elements_to_destroy_loop.append(yt_video_title)
 
         yt_video_views_label.configure(text="Views:", text_color=COLORS.gray)
         yt_video_views_label.grid(row=16, column=1, padx=padding_x, pady=padding_y, sticky="e")
-        # elements_to_destroy.append(yt_video_views_label)
+        elements_to_destroy_loop.append(yt_video_views_label)
         yt_video_views.configure(text=format_view_count(y_tube.views))
         yt_video_views.grid(row=16, column=2, padx=padding_x, pady=padding_y, sticky="w")
-        # elements_to_destroy.append(yt_video_views)
+        elements_to_destroy_loop.append(yt_video_views)
 
         yt_video_date_label.configure(text="Date:", text_color=COLORS.gray)
         yt_video_date_label.grid(row=17, column=1, padx=padding_x, pady=padding_y, sticky="e")
-        # elements_to_destroy.append(yt_video_date_label)
+        elements_to_destroy_loop.append(yt_video_date_label)
         yt_video_date.configure(text=y_tube.publish_date.strftime(AppConfig.date_format_display))
         yt_video_date.grid(row=17, column=2, padx=padding_x, pady=padding_y, sticky="w")
-        # elements_to_destroy.append(yt_video_date)
+        elements_to_destroy_loop.append(yt_video_date)
 
         yt_video_length_label.configure(text="Length:", text_color=COLORS.gray)
         yt_video_length_label.grid(row=18, column=1, padx=padding_x, pady=padding_y, sticky="e")
-        # elements_to_destroy.append(yt_video_length_label)
+        elements_to_destroy_loop.append(yt_video_length_label)
         yt_video_length.configure(text=format_time(y_tube.length))
         yt_video_length.grid(row=18, column=2, padx=padding_x, pady=padding_y, sticky="w")
-        # elements_to_destroy.append(yt_video_length)
+        elements_to_destroy_loop.append(yt_video_length)
 
         yt_video_thumbnail = load_image_from_url(y_tube.thumbnail_url, size=(tn_width, tn_height))
         video_thumbnail_label.configure(image=yt_video_thumbnail, text="")
         video_thumbnail_label.grid(row=15, column=0, rowspan=4, padx=padding_x, pady=padding_y, sticky="e")
-        # elements_to_destroy.append(video_thumbnail_label)
+        elements_to_destroy_loop.append(video_thumbnail_label)
 
     res = ""
     if not audio_or_video_bool:
@@ -1101,14 +1103,14 @@ def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: s
             res = limit_resolution(res, str(configuration_resolution.get()))
         video_resolution_label.configure(text="Resolution:", text_color=COLORS.gray)
         video_resolution_label.grid(row=19, column=1, padx=padding_x, pady=padding_y, sticky="e")
-        elements_to_destroy.append(video_resolution_label)
+        elements_to_destroy_loop.append(video_resolution_label)
         video_resolution.configure(values=print_resolutions(y_tube))
         video_resolution.set(str(res))
         video_resolution.grid(row=19, column=2, padx=padding_x, pady=padding_y, sticky="w")
-        elements_to_destroy.append(video_resolution)
+        elements_to_destroy_loop.append(video_resolution)
         avail_resolutions.configure(text=str(print_resolutions(y_tube)), text_color=COLORS.gray)
         avail_resolutions.grid(row=20, column=2, padx=padding_x, pady=padding_y, sticky="w")
-        elements_to_destroy.append(avail_resolutions)
+        elements_to_destroy_loop.append(avail_resolutions)
 
     if looper:
         download_video(audio_or_video_bool, y_tube, res, restricted, year_subfolders, looper)
@@ -1133,16 +1135,16 @@ def download_video(audio_or_video_bool: bool, y_tube: YouTube, res: str, restric
 def download_video_work(audio_or_video_bool: bool, y_tube: YouTube, res: str, restricted: bool, year_subfolders: bool):
     abort_button.configure(fg_color=COLORS.dark_red, command=abort_download)
     abort_button.grid(row=22, column=3, rowspan=2, padx=padding_x, pady=padding_y, sticky="nw")
-    elements_to_destroy.append(abort_button)
+    elements_to_destroy_loop.append(abort_button)
 
     progress_percent.configure(text="0%")
     progress_percent.grid(row=22, column=1, padx=padding_x, pady=padding_y, sticky="e")
-    elements_to_destroy.append(progress_percent)
+    elements_to_destroy_loop.append(progress_percent)
 
     progress_bar.set(0)
     progress_bar.configure(progress_color=COLORS.green)
     progress_bar.grid(row=22, column=2, padx=padding_x, pady=padding_y, sticky="w")
-    elements_to_destroy.append(progress_bar)
+    elements_to_destroy_loop.append(progress_bar)
 
     update_download_log("", COLORS.gray)
 
