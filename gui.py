@@ -972,7 +972,7 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
         else:
             do_not_download = 0
             grid_remove_elements(elements_to_destroy_loop)
-            update_download_log("checking channel... " + video.author, COLORS.violet)
+            update_download_log("checking channel...", COLORS.violet)
             if web_client:
                 video = YouTube(youtube_watch_url + only_video_id, 'WEB', on_progress_callback=on_progress)
             else:
