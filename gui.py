@@ -296,9 +296,9 @@ def rename_files_in_temp_directory() -> None:
     for filename in os.listdir(directory):
         if ":" in filename:  # Check if filename contains ':'
             sanitized_name = filename.replace(":", "")
-            sanitized_name = clean_string_regex(sanitized_name)
+            sanitized_name_b = clean_string_regex(sanitized_name)
             old_path = os.path.join(directory, filename)
-            new_path = os.path.join(directory, sanitized_name)
+            new_path = os.path.join(directory, sanitized_name_b)
             os.rename(old_path, new_path)
 
 
