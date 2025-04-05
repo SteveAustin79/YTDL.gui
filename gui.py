@@ -26,7 +26,6 @@ video_title_width = 84
 log_default = "    "
 total_channel_videos = 0
 total_channel_name = ""
-t_loop_download = threading.Thread()
 
 video_list = []
 video_list_restricted = []
@@ -941,18 +940,18 @@ def limit_resolution(resolution: str, limit: str) -> str:
     return max_resolution
 
 
+# def loop_download(audio_or_video_bool, default_max_res, default_filter_words, only_restricted_videos_bool,
+#                         skip_restricted_bool, year_subfolders, min_duration_bool, min_duration, max_duration_bool, max_duration,
+#                         min_year, max_year, min_video_views):
+#     global t_loop_download
+#     disable_buttons()
+#     t_loop_download = threading.Thread(target=lambda: loop_download_work(audio_or_video_bool, default_max_res, default_filter_words, only_restricted_videos_bool,
+#                         skip_restricted_bool, year_subfolders, min_duration_bool, min_duration, max_duration_bool, max_duration,
+#                         min_year, max_year, min_video_views), daemon=True)
+#     t_loop_download.start()
+
+
 def loop_download(audio_or_video_bool, default_max_res, default_filter_words, only_restricted_videos_bool,
-                        skip_restricted_bool, year_subfolders, min_duration_bool, min_duration, max_duration_bool, max_duration,
-                        min_year, max_year, min_video_views):
-    global t_loop_download
-    disable_buttons()
-    t_loop_download = threading.Thread(target=lambda: loop_download_work(audio_or_video_bool, default_max_res, default_filter_words, only_restricted_videos_bool,
-                        skip_restricted_bool, year_subfolders, min_duration_bool, min_duration, max_duration_bool, max_duration,
-                        min_year, max_year, min_video_views), daemon=True)
-    t_loop_download.start()
-
-
-def loop_download_work(audio_or_video_bool, default_max_res, default_filter_words, only_restricted_videos_bool,
                         skip_restricted_bool, year_subfolders, min_duration_bool, min_duration, max_duration_bool, max_duration,
                         min_year, max_year, min_video_views):
     count_restricted_videos = 0
@@ -1017,8 +1016,6 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
             update_video_counts(
                 str(count_files(output_dir + "/" + clean_string_regex(total_channel_name).rstrip(), ".mp4")) +
                 " / " + str(total_channel_videos) + " Videos downloaded")
-
-            t_loop_download.join()
 
     # if count_this_run == 0:
     #     update_download_log("Nothing to do...", COLORS.green)
