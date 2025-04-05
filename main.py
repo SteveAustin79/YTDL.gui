@@ -8,6 +8,7 @@ from io import BytesIO
 from functions import (load_config, CcConfig, find_file_by_string, Tooltip, COLORS, count_files,
                        get_free_space, clean_string_regex, REQUIRED_APP_CONFIG, string_to_list, version, logo_path)
 
+
 app_resolution = "1280x790"
 row_height = 23
 padding_x = 5
@@ -24,6 +25,7 @@ elements_to_destroy = []
 def checkbox_latest_clicked():
     if var_latest.get():
         var_filter_on.set(False)
+
 
 def checkbox_filter_on_clicked():
     if var_filter_on.get():

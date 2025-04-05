@@ -15,6 +15,7 @@ from functions import (load_config, CcConfig, find_file_by_string, COLORS, count
                        get_free_space, clean_string_regex, REQUIRED_APP_CONFIG, REQUIRED_VIDEO_CHANNEL_CONFIG,
                        JSONConfig, string_to_list, version, logo_path)
 
+
 # dropdown with int for loop mode exit after int loops
 # sys.exit button to abort download
 
@@ -150,21 +151,6 @@ def create_channel_config(default_max_res, limit_resolution_to, default_min_dura
         channel_config_label.configure(text="Channel config file found!", text_color=COLORS.green)
         # create_channel_config_button.grid_remove()
         create_channel_config_button.configure(text="Update channel config")
-
-
-# def on_change(*args):
-    # print("Entry changed:", entry_field.get())
-    # update channel config file
-    # if os.path.exists(ytchannel_path.get() + channel_config_path):
-    #     create_channel_config_button.configure(text="Update channel config")
-    # if value again like stored config, hide button
-    # if (default_max_res != configuration_resolution.get() or default_min_duration_in_minutes != configuration_min_duration.get() or
-    #         default_max_duration_in_minutes != configuration_max_duration.get() or default_minimum_year != configuration_min_year.get() or
-    #         default_maximum_year != configuration_max_year.get() or default_only_restricted != "y" if configuration_only_restricted.get() == 1 else "" or
-    #         default_skip_restricted != "y" if configuration_skip_restricted.get() == 1 else "" or default_minimum_views != configuration_min_views.get() or
-    #         default_year_subfolders != "y" if configuration_year_subs.get() == 1 else "" or default_exclude_videos != configuration_excludes.get("0.0", "end") or
-    #         default_include_videos != configuration_includes.get("0.0", "end") or default_filter_words != configuration_filter_words.get("0.0", "end")):
-    #     create_channel_config_button.grid(row=5, column=3, padx=padding_x, pady=padding_y, sticky="w")
 
 
 def on_closing():
