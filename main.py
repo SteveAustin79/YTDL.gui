@@ -52,14 +52,26 @@ def destroy_elements():
     elements_to_destroy.clear()
 
 
+def remove_button_and_checkboxes():
+    start_button.grid_remove()
+    c_filters_on_in_channels_list.grid_remove()
+    c_show_latest_video_date.grid_remove()
+    log_label.grid(row=0, column=2, columnspan=17, padx=padding_x, pady=padding_y, sticky="w")
+
+
+def add_button_and_checkboxes():
+    start_button.grid(row=0, column=0, padx=padding_x, pady=padding_y + 3, sticky="e")
+    c_show_latest_video_date.grid(row=0, column=2, columnspan=6, padx=padding_x, pady=padding_y, sticky="w")
+    c_filters_on_in_channels_list.grid(row=0, column=2, columnspan=6, padx=padding_x, pady=padding_y, sticky="e")
+    log_label.grid(row=0, column=9, columnspan=8, padx=padding_x, pady=padding_y, sticky="w")
+
+
 def list_channels():
     update_log("Listing channels from channels.txt...")
     update_app_title()
     destroy_elements()
 
-    start_button.grid_remove()
-    c_filters_on_in_channels_list.grid_remove()
-    c_show_latest_video_date.grid_remove()
+    remove_button_and_checkboxes()
 
     threading.Thread(target=list_channels_work, daemon=True).start()
 
@@ -372,9 +384,7 @@ def list_channels_work():
         update_log("")
     update_app_title()
 
-    start_button.grid(row=0, column=0, padx=padding_x, pady=padding_y + 3, sticky="e")
-    c_show_latest_video_date.grid(row=0, column=2, columnspan=6, padx=padding_x, pady=padding_y, sticky="w")
-    c_filters_on_in_channels_list.grid(row=0, column=2, columnspan=6, padx=padding_x, pady=padding_y, sticky="e")
+    add_button_and_checkboxes()
 
 
 def open_script(video_id):
