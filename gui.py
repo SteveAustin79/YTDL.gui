@@ -346,13 +346,6 @@ def update_download_log(text: str, color: str) -> None:
     download_log_label.update()
 
 
-def destroy_elements():
-    """Remove all created widgets"""
-    for element in elements_to_destroy:
-        element.destroy()  # Remove widget from the UI
-    elements_to_destroy.clear()
-
-
 def update_app_title():
     app.title(AppConfig.version + " - Free disk space: " + get_free_space(output_dir))
 

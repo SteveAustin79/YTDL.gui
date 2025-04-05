@@ -253,3 +253,9 @@ def load_image_from_url(url, size=(100, 100)):
     image = Image.open(BytesIO(response.content))  # Convert bytes to an image
     return customtkinter.CTkImage(light_image=image, size=size)
 
+
+def destroy_elements(d_elements_to_destroy):
+    """Remove all created widgets"""
+    for element in d_elements_to_destroy:
+        element.destroy()  # Remove widget from the UI
+    d_elements_to_destroy.clear()

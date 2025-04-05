@@ -5,7 +5,7 @@ import threading
 from pytubefix import Channel
 from PIL import Image
 from functions import (AppConfig, COLORS, CcConfig, Tooltip, load_config, find_file_by_string, count_files,
-                       get_free_space, clean_string_regex, string_to_list, load_image_from_url)
+                       get_free_space, clean_string_regex, string_to_list, load_image_from_url, destroy_elements)
 
 
 row_height = 23
@@ -45,13 +45,6 @@ def update_log(text: str) -> None:
     log_label.update()
 
 
-def destroy_elements():
-    """Remove all created widgets"""
-    for element in elements_to_destroy:
-        element.destroy()  # Remove widget from the UI
-    elements_to_destroy.clear()
-
-
 def remove_button_and_checkboxes():
     start_button.grid_remove()
     c_filters_on_in_channels_list.grid_remove()
@@ -69,10 +62,8 @@ def add_button_and_checkboxes():
 def list_channels():
     update_log("Listing channels from channels.txt...")
     update_app_title()
-    destroy_elements()
-
+    destroy_elements(elements_to_destroy)
     remove_button_and_checkboxes()
-
     threading.Thread(target=list_channels_work, daemon=True).start()
 
 
@@ -300,16 +291,6 @@ def list_channels_work():
                         and ch_config_min_year <= int(str(youtube_vo_publish_date.strftime("%Y"))) <= ch_config_max_year
                         and youtube_vo_views >= ch_config_min_views
                         and youtube_vo_age_restricted in ch_config_restricted):
-                    # "c_min_duration_in_minutes": 0,   OK      OK
-                    # "c_max_duration_in_minutes": 0,   OK      OK
-                    # "c_minimum_year": 0,              OK      OK
-                    # "c_maximum_year": 0,              OK      OK
-                    # "c_only_restricted": "",          OK      OK
-                    # "c_skip_restricted": "",          OK      OK
-                    # "c_minimum_views": 0,             OK      OK
-                    # "c_exclude_video_ids": "",        OK      OK
-                    # "c_include_video_ids": "",                OK
-                    # "c_filter_words": ""              OK      OK
 
                     yt_video_thumbnail = load_image_from_url(youtube_video_object.thumbnail_url, size=(32, 18))
 
