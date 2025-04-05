@@ -1405,7 +1405,7 @@ channel_dropdown = customtkinter.CTkComboBox(app, values=read_channel_txt_lines(
 channel_dropdown.grid(row=0, column=2, padx=padding_x, pady=padding_y, sticky="w")
 
 title = customtkinter.CTkLabel(app, text="YouTube Channel, Video-, or Playlist URL:", text_color=COLORS.gray)
-title.grid(row=1, column=1, padx=padding_x, pady=padding_y, sticky="e")
+title.grid(row=1, column=1, padx=padding_x, pady=padding_y, sticky="se")
 
 if len(sys.argv) > 1 and not youtube_url in str(sys.argv[1]):
     url_var = tkinter.StringVar(value=sys.argv[1])
@@ -1413,10 +1413,10 @@ else:
     url_var = tkinter.StringVar(value="")
 
 link = customtkinter.CTkEntry(app, width=entry_width, textvariable=url_var)
-link.grid(row=1, column=2, padx=padding_x, pady=padding_y, sticky="w")
+link.grid(row=1, column=2, padx=padding_x, pady=padding_y, sticky="sw")
 
 get_information_button = customtkinter.CTkButton(app, text="Get Information", command=get_information)
-get_information_button.grid(row=1, column=3, padx=padding_x, pady=padding_y, sticky="w")
+get_information_button.grid(row=1, column=3, padx=padding_x, pady=padding_y, sticky="sw")
 
 separator1 = customtkinter.CTkFrame(app, height=2, fg_color=COLORS.separator)
 separator1.grid(row=2, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y * padding_y_factor)
