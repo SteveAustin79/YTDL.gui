@@ -155,6 +155,11 @@ def on_closing():
     app.destroy()  # Ensures the window closes properly
 
 
+def abort_download() -> None:
+    delete_temp_files()
+    sys.exit(0)
+
+
 def clean_youtube_urls(to_clean_video_list: list) -> list[str]:
     prefix = youtube_watch_url
     return [to_clean_video.replace(prefix, "") for to_clean_video in to_clean_video_list]
@@ -883,11 +888,6 @@ def get_information_work():
     if count_files_from_channel_dir >= len(video_watch_urls):
         video_button.grid_remove()
         audio_button.grid_remove()
-
-
-def abort_download() -> None:
-    print("EXIT")
-    sys.exit(0)
 
 
 def print_resolutions(yt: YouTube) -> list[str]:
