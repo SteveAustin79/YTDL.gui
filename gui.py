@@ -999,7 +999,9 @@ def loop_download(audio_or_video_bool, default_max_res, default_filter_words, on
                     count_this_run += 1
                     count_skipped = 0
                     video_list.append(video.video_id)
-                    start_download(audio_or_video_bool, False, video.video_id, True, year_subfolders)
+                    t_start_download = threading.Thread(target=lambda: start_download(audio_or_video_bool, False, video.video_id, True, year_subfolders))
+                    t_start_download.start()
+                    t_start_download.join()
                 else:
                     if not skip_restricted_bool:
                         if (video.age_restricted and video.vid_info.get('playabilityStatus', {}).get(
@@ -1011,7 +1013,9 @@ def loop_download(audio_or_video_bool, default_max_res, default_filter_words, on
                             count_ok_videos += 1
                             count_this_run += 1
                             video_list_restricted.append(video.video_id)
-                            start_download(audio_or_video_bool, True, video.video_id, True, year_subfolders)
+                            t_start_download = threading.Thread(target=lambda: start_download(audio_or_video_bool, True, video.video_id, True, year_subfolders))
+                            t_start_download.start()
+                            t_start_download.join()
 
             update_video_counts(
                 str(count_files(output_dir + "/" + clean_string_regex(total_channel_name).rstrip(), ".mp4")) +
