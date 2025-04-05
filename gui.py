@@ -474,10 +474,10 @@ def get_information_work():
     # separator1.grid(row=2, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y * padding_y_factor)
     # elements_to_destroy.append(separator1)
 
-    separator2.grid(row=6, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y * padding_y_factor)
+    separator2.grid(row=6, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y)
     elements_to_destroy.append(separator2)
 
-    separator3.grid(row=14, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y * padding_y_factor)
+    separator3.grid(row=14, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y)
     elements_to_destroy.append(separator3)
 
     video_info_channel.grid(row=3, column=1, padx=padding_x, pady=padding_y, sticky="nw")
@@ -1419,7 +1419,7 @@ get_information_button = customtkinter.CTkButton(app, text="Get Information", co
 get_information_button.grid(row=1, column=3, padx=padding_x, pady=padding_y, sticky="sw")
 
 separator1 = customtkinter.CTkFrame(app, height=2, fg_color=COLORS.separator)
-separator1.grid(row=2, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y * padding_y_factor)
+separator1.grid(row=2, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y)
 # elements_to_destroy.append(separator1)
 separator2 = customtkinter.CTkFrame(app, height=2, fg_color=COLORS.separator)
 separator3 = customtkinter.CTkFrame(app, height=2, fg_color=COLORS.separator)
