@@ -1126,6 +1126,8 @@ def download_video(audio_or_video_bool: bool, y_tube: YouTube, res: str, restric
     if not looper:
         t_download_video = threading.Thread(target=lambda: download_video_work(audio_or_video_bool, y_tube, res, restricted, year_subfolders), daemon=True)
         t_download_video.start()
+    else:
+        download_video_work(audio_or_video_bool, y_tube, res, restricted, year_subfolders)
 
 
 def download_video_work(audio_or_video_bool: bool, y_tube: YouTube, res: str, restricted: bool, year_subfolders: bool):
