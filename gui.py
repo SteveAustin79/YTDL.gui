@@ -26,6 +26,7 @@ video_title_width = 84
 log_default = "    "
 total_channel_videos = 0
 total_channel_name = ""
+t_loop_download = threading.Thread()
 
 video_list = []
 video_list_restricted = []
@@ -943,10 +944,12 @@ def limit_resolution(resolution: str, limit: str) -> str:
 def loop_download(audio_or_video_bool, default_max_res, default_filter_words, only_restricted_videos_bool,
                         skip_restricted_bool, year_subfolders, min_duration_bool, min_duration, max_duration_bool, max_duration,
                         min_year, max_year, min_video_views):
+    global t_loop_download
     disable_buttons()
-    threading.Thread(target=lambda: loop_download_work(audio_or_video_bool, default_max_res, default_filter_words, only_restricted_videos_bool,
+    t_loop_download = threading.Thread(target=lambda: loop_download_work(audio_or_video_bool, default_max_res, default_filter_words, only_restricted_videos_bool,
                         skip_restricted_bool, year_subfolders, min_duration_bool, min_duration, max_duration_bool, max_duration,
-                        min_year, max_year, min_video_views), daemon=True).start()
+                        min_year, max_year, min_video_views), daemon=True)
+    t_loop_download.start()
 
 
 def loop_download_work(audio_or_video_bool, default_max_res, default_filter_words, only_restricted_videos_bool,
@@ -962,7 +965,7 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
         if find_file_by_string(ytchannel_path.get(), only_video_id, default_max_res, audio_or_video_bool) is not None:
             count_ok_videos += 1
             count_skipped += 1
-            update_download_log("Skipping " + str(count_skipped) + " Videos", COLORS.violet)
+            update_download_log("Skipping " + str(count_skipped) + " Video(s)", COLORS.violet)
         else:
             do_not_download = 0
             if web_client:
@@ -1015,21 +1018,24 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                 str(count_files(output_dir + "/" + clean_string_regex(total_channel_name).rstrip(), ".mp4")) +
                 " / " + str(total_channel_videos) + " Videos downloaded")
 
+            t_loop_download.join()
+
     # if count_this_run == 0:
     #     update_download_log("Nothing to do...", COLORS.green)
     # else:
     #     update_download_log("DONE!", COLORS.green)
 
 
+# def start_download(audio_or_video_bool: bool, restricted: bool, video_id: str, looper: bool, year_subfolders: bool):
+#     disable_buttons()
+#     if not looper:
+#         t_start_download = threading.Thread(target=lambda: start_download_work(audio_or_video_bool, restricted, video_id, looper, year_subfolders), daemon=True)
+#         t_start_download.start()
+#     else:
+#         start_download_work(audio_or_video_bool, restricted, video_id, looper, year_subfolders)
+
+
 def start_download(audio_or_video_bool: bool, restricted: bool, video_id: str, looper: bool, year_subfolders: bool):
-    disable_buttons()
-    if not looper:
-        threading.Thread(target=lambda: start_download_work(audio_or_video_bool, restricted, video_id, looper, year_subfolders), daemon=True).start()
-    else:
-        start_download_work(audio_or_video_bool, restricted, video_id, looper, year_subfolders)
-
-
-def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: str, looper: bool, year_subfolders: bool):
     update_app_title()
     if restricted:
         if web_client:
@@ -1109,14 +1115,14 @@ def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: s
         elements_to_destroy.append(download_button)
 
 
+# def download_video(audio_or_video_bool: bool, y_tube: YouTube, res: str, restricted: bool, year_subfolders: bool):
+#     enable_buttons()
+#     t_download_video = threading.Thread(
+#         target=lambda: download_video_work(audio_or_video_bool, y_tube, res, restricted, year_subfolders),
+#         daemon=True)
+
+
 def download_video(audio_or_video_bool: bool, y_tube: YouTube, res: str, restricted: bool, year_subfolders: bool):
-    enable_buttons()
-    threading.Thread(
-        target=lambda: download_video_work(audio_or_video_bool, y_tube, res, restricted, year_subfolders),
-        daemon=True).start()
-
-
-def download_video_work(audio_or_video_bool: bool, y_tube: YouTube, res: str, restricted: bool, year_subfolders: bool):
     abort_button.configure(fg_color=COLORS.dark_red, command=abort_download)
     abort_button.grid(row=22, column=3, rowspan=2, padx=padding_x, pady=padding_y, sticky="nw")
     elements_to_destroy.append(abort_button)
