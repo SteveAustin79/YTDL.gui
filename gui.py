@@ -976,10 +976,10 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
         update_download_log("Skipping " + str(count_skipped) + " Videos", COLORS.violet)
 
 
-    if count_this_run == 0:
-        update_download_log("Nothing to do...", COLORS.green)
-    else:
-        update_download_log("DONE!", COLORS.green)
+    # if count_this_run == 0:
+    #     update_download_log("Nothing to do...", COLORS.green)
+    # else:
+    #     update_download_log("DONE!", COLORS.green)
 
 
 def start_download(audio_or_video_bool: bool, restricted: bool, video_id: str, looper: bool, year_subfolders: bool):
@@ -1210,9 +1210,6 @@ def merge_video_audio(video_id: str, publish_date: str, vid_res: str, year: str,
     create_directories(restricted, year)
     output_file = (ytchannel_path.get() + str(year) + restricted_path + publish_date + " - " + vid_res
                    + " - " + clean_string_regex(os.path.splitext(video_file)[0]) + " - " + video_id + ".mp4")
-
-    print(video_file)
-    print(audio_file)
 
     try:
         update_download_log("Merging to MP4...", COLORS.gray)
