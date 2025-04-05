@@ -370,6 +370,8 @@ def get_yt_channel(channel_url) -> Channel:
 
 
 def get_information():
+    get_information_button.grid_remove()
+    separator1.update()
     threading.Thread(target=get_information_work, daemon=True).start()
 
 
@@ -887,6 +889,8 @@ def get_information_work():
     if count_files_from_channel_dir >= len(video_watch_urls):
         video_button.grid_remove()
         audio_button.grid_remove()
+
+    get_information_button.grid(row=1, column=3, padx=padding_x, pady=padding_y, sticky="w")
 
 
 def print_resolutions(yt: YouTube) -> list[str]:
