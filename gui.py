@@ -1032,7 +1032,7 @@ def start_download(audio_or_video_bool: bool, restricted: bool, video_id: str, l
     if not looper:
         t_start_download_b = threading.Thread(target=lambda: start_download_work(audio_or_video_bool, restricted, video_id, looper, year_subfolders), daemon=True)
         t_start_download_b.start()
-        t_start_download_b.join()
+        # t_start_download_b.join()
     else:
         start_download_work(audio_or_video_bool, restricted, video_id, looper, year_subfolders)
 
