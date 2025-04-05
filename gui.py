@@ -1073,15 +1073,16 @@ def start_download(audio_or_video_bool: bool, restricted: bool, video_id: str, l
         download_button.grid(row=21, column=2, padx=padding_x, pady=padding_y * padding_y_factor, sticky="w")
         elements_to_destroy.append(download_button)
 
-        abort_button.configure(fg_color=COLORS.dark_red, command=abort_download)
-        abort_button.grid(row=21, column=3, padx=padding_x, pady=padding_y, sticky="w")
-        elements_to_destroy.append(abort_button)
-
 
 def download_video(audio_or_video_bool: bool, y_tube: YouTube, res: str, restricted: bool, year_subfolders: bool):
+    abort_button.configure(fg_color=COLORS.dark_red, command=abort_download)
+    abort_button.grid(row=21, column=2, padx=padding_x, pady=padding_y, sticky="e")
+    elements_to_destroy.append(abort_button)
+
     progress_percent.configure(text="0%")
     progress_percent.grid(row=22, column=1, padx=padding_x, pady=padding_y, sticky="e")
     elements_to_destroy.append(progress_percent)
+
     progress_bar.set(0)
     progress_bar.configure(progress_color=COLORS.green)
     progress_bar.grid(row=22, column=2, padx=padding_x, pady=padding_y, sticky="w")
