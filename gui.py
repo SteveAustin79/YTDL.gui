@@ -879,7 +879,7 @@ def get_information():
     video_button.grid(row=13, column=2, padx=padding_x, pady=padding_y, sticky="w")
     elements_to_destroy.append(video_button)
 
-    abort_button.configure(fg_color=COLORS.dark_red)
+    abort_button.configure(fg_color=COLORS.dark_red, command=abort_download)
     abort_button.grid(row=13, column=3, padx=padding_x, pady=padding_y, sticky="w")
 
     separator3.grid(row=14, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y * padding_y_factor)
@@ -888,6 +888,10 @@ def get_information():
     if count_files_from_channel_dir >= len(video_watch_urls):
         video_button.grid_remove()
         audio_button.grid_remove()
+
+
+def abort_download() -> None:
+    sys.exit()
 
 
 def print_resolutions(yt: YouTube) -> list[str]:
