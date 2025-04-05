@@ -48,6 +48,8 @@ def update_channel_config(default_max_res, limit_resolution_to, default_min_dura
             default_year_subfolders != year_subfolders_temp or default_exclude_videos != exclude_video_ids or
             default_include_videos != include_video_ids or default_filter_words != video_name_filter):
 
+        app.focus_set()
+
         if default_max_res != limit_resolution_to:
             JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.channel_config_path, "c_max_resolution", limit_resolution_to)
         if default_min_duration_in_minutes != min_duration:
