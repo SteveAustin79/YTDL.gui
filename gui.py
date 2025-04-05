@@ -992,8 +992,8 @@ def loop_download(audio_or_video_bool, default_max_res, default_filter_words, on
         update_download_log("DONE!", COLORS.green)
 
 
-def start_download():
-    threading.Thread(target=start_download_work, daemon=True).start()
+def start_download(audio_or_video_bool: bool, restricted: bool, video_id: str, looper: bool, year_subfolders: bool):
+    threading.Thread(target=lambda: start_download_work(audio_or_video_bool, restricted, video_id, looper, year_subfolders), daemon=True).start()
 
 
 def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: str, looper: bool, year_subfolders: bool):
