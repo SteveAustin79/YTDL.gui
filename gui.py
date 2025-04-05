@@ -1115,7 +1115,7 @@ def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: s
     if looper:
         download_video(audio_or_video_bool, y_tube, res, restricted, year_subfolders, looper)
     else:
-        enable_buttons()
+        # enable_buttons()
         download_button.configure(text="Download", command=lambda: download_video(audio_or_video_bool, y_tube,
                                                                                   video_resolution.get(),
                                                                                   restricted, year_subfolders, looper))
@@ -1125,7 +1125,7 @@ def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: s
 
 def download_video(audio_or_video_bool: bool, y_tube: YouTube, res: str, restricted: bool, year_subfolders: bool, looper: bool):
     if not looper:
-        enable_buttons()
+        # enable_buttons()
         t_download_video = threading.Thread(target=lambda: download_video_work(audio_or_video_bool, y_tube, res, restricted, year_subfolders), daemon=True)
         t_download_video.start()
     else:
