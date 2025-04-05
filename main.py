@@ -423,17 +423,10 @@ start_button.grid(row=0, column=0, padx=padding_x, pady=padding_y + 3, sticky="e
 var_latest = customtkinter.BooleanVar()
 var_filter_on = customtkinter.BooleanVar()
 
-# c_output_dir_value = tkinter.Variable(value=output_dir)
-# c_output_dir = customtkinter.CTkEntry(app, textvariable=c_output_dir_value, width=250)
-# c_output_dir.grid(row=0, column=1, columnspan=6, padx=padding_x, pady=padding_y, sticky="w")
 c_show_latest_video_date = customtkinter.CTkCheckBox(app, text="Latest Video", variable=var_latest, command=checkbox_latest_clicked)
-# if show_latest_video_date:
-#     c_show_latest_video_date.select()
 c_show_latest_video_date.grid(row=0, column=2, columnspan=6, padx=padding_x, pady=padding_y, sticky="w")
 
 c_filters_on_in_channels_list = customtkinter.CTkCheckBox(app, text="Filters On", variable=var_filter_on, command=checkbox_filter_on_clicked)
-# if default_filters_on:
-#     c_filters_on_in_channels_list.select()
 c_filters_on_in_channels_list.grid(row=0, column=2, columnspan=6, padx=padding_x, pady=padding_y, sticky="e")
 
 log_label = customtkinter.CTkLabel(app, text="", text_color=COLORS.violet, anchor="w")
