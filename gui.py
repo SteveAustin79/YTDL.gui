@@ -1241,6 +1241,8 @@ def merge_video_audio(video_id: str, publish_date: str, vid_res: str, year: str,
         else:
             update_download_log("Video downloaded", COLORS.green)
 
+        abort_button.grid_remove()
+
         delete_temp_files()
 
     except Exception as ee:
@@ -1296,6 +1298,8 @@ def convert_webm_to_mp4(input_file: str, output_file: str, year: str, restricted
         update_download_log("Restricted Video downloaded", COLORS.green)
     else:
         update_download_log("Video downloaded", COLORS.green)
+
+    abort_button.grid_remove()
 
 
 
