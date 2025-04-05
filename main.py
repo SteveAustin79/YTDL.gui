@@ -391,7 +391,7 @@ win_width = 1280
 win_height = 760
 # Calculate x, y for bottom-right position
 x_offset = screen_width - win_width - 10  # Align to right
-y_offset = screen_height - win_height - 74  # Align to bottom
+y_offset = screen_height - win_height - 72  # Align to bottom
 
 app.geometry(f"{win_width}x{win_height}+{x_offset}+{y_offset}")
 update_app_title()
