@@ -6,7 +6,7 @@ from pytubefix import Channel
 from PIL import Image
 from io import BytesIO
 from functions import (load_config, CcConfig, find_file_by_string, Tooltip, COLORS, count_files,
-                       get_free_space, clean_string_regex, REQUIRED_APP_CONFIG, string_to_list, version, logo_path)
+                       get_free_space, clean_string_regex, REQUIRED_APP_CONFIG, string_to_list, AppConfig)
 
 
 app_resolution = "1280x790"
@@ -33,7 +33,7 @@ def checkbox_filter_on_clicked():
 
 
 def update_app_title():
-    app.title(version + " - Free disk space: " + get_free_space(output_dir))
+    app.title(AppConfig.version + " - Free disk space: " + get_free_space(output_dir))
 
 
 def read_channel_txt_lines(filename: str) -> list[str]:
@@ -398,7 +398,7 @@ update_app_title()
 app.configure(bg_color=COLORS.black)
 # app.protocol("WM_DELETE_WINDOW", on_closing)
 
-logo = customtkinter.CTkImage(light_image=Image.open(logo_path), size=(60, 40)) # 180x120
+logo = customtkinter.CTkImage(light_image=Image.open(AppConfig.logo_path), size=(60, 40)) # 180x120
 logo_label = customtkinter.CTkLabel(app, text="", image=logo)
 logo_label.grid(row=0, column=0, padx=padding_x, pady=padding_y, sticky="nw")
 

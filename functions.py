@@ -6,10 +6,11 @@ import os
 import re
 import shutil
 
-
-app_title = "YTDL.channels"
-version = app_title + " v1.0.1 (20250405)"
-logo_path = "assets/logo.png"
+class AppConfig:
+    app_title = "YTDL.channels"
+    version = app_title + " v1.0.2 (20250405)"
+    logo_path = "assets/logo.png"
+    app_resolution = "1280x800"
 
 
 REQUIRED_APP_CONFIG = {

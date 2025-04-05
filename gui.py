@@ -13,13 +13,12 @@ from PIL import Image
 from io import BytesIO
 from functions import (load_config, CcConfig, find_file_by_string, COLORS, count_files,
                        get_free_space, clean_string_regex, REQUIRED_APP_CONFIG, REQUIRED_VIDEO_CHANNEL_CONFIG,
-                       JSONConfig, string_to_list, version, logo_path)
+                       JSONConfig, string_to_list, AppConfig)
 
 
 # dropdown with int for loop mode exit after int loops
 # sys.exit button to abort download
 
-app_resolution = "1280x790"
 entry_width = 450
 padding_x = 6
 padding_y = 3
@@ -366,7 +365,7 @@ def destroy_elements():
 
 
 def update_app_title():
-    app.title(version + " - Free disk space: " + get_free_space(output_dir))
+    app.title(AppConfig.version + " - Free disk space: " + get_free_space(output_dir))
 
 
 def update_video_counts(text: str):
@@ -1314,7 +1313,7 @@ customtkinter.set_default_color_theme("blue")
 # App frame
 app = customtkinter.CTk()
 # app.geometry(app_resolution + "+0+0")
-app.geometry(app_resolution)
+app.geometry(AppConfig.app_resolution)
 update_app_title()
 app.configure(bg_color=COLORS.black)
 app.protocol("WM_DELETE_WINDOW", on_closing)
@@ -1325,7 +1324,7 @@ app.grid_columnconfigure(3, minsize=210)
 
 # Add UI elements
 
-logo = customtkinter.CTkImage(light_image=Image.open(logo_path), size=(87, 58)) # 180x120
+logo = customtkinter.CTkImage(light_image=Image.open(AppConfig.logo_path), size=(87, 58)) # 180x120
 logo_label = customtkinter.CTkLabel(app, text="", image=logo)
 logo_label.grid(row=0, column=0, rowspan=2, padx=padding_x, pady=padding_y, sticky="nw")
 
