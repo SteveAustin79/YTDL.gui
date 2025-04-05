@@ -48,7 +48,7 @@ def update_channel_config(default_max_res, limit_resolution_to, default_min_dura
             default_year_subfolders != year_subfolders_temp or default_exclude_videos != exclude_video_ids or
             default_include_videos != include_video_ids or default_filter_words != video_name_filter):
 
-        create_channel_config_button.grid_remove()
+        # create_channel_config_button.grid_remove()
         separator1.update()
 
         if default_max_res != limit_resolution_to:
