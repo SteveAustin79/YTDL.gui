@@ -369,6 +369,19 @@ def get_yt_channel(channel_url) -> Channel:
     return channel
 
 
+def disable_buttons():
+    video_button.configure(state="disabled")
+    audio_button.configure(state="disabled")
+    get_information_button.configure(state="disabled")
+    video_info_channel_button.configure(state="disabled")
+
+def enable_buttons():
+    video_button.configure(state="normal")
+    audio_button.configure(state="normal")
+    get_information_button.configure(state="normal")
+    video_info_channel_button.configure(state="normal")
+
+
 def get_information():
     get_information_button.grid_remove()
     separator1.update()
@@ -901,8 +914,7 @@ def limit_resolution(resolution: str, limit: str) -> str:
 def loop_download(audio_or_video_bool, default_max_res, default_filter_words, only_restricted_videos_bool,
                         skip_restricted_bool, year_subfolders, min_duration_bool, min_duration, max_duration_bool, max_duration,
                         min_year, max_year, min_video_views):
-    video_button.configure(state="disabled")
-    audio_button.configure(state="disabled")
+    disable_buttons()
     threading.Thread(target=lambda: loop_download_work(audio_or_video_bool, default_max_res, default_filter_words, only_restricted_videos_bool,
                         skip_restricted_bool, year_subfolders, min_duration_bool, min_duration, max_duration_bool, max_duration,
                         min_year, max_year, min_video_views), daemon=True).start()
@@ -983,8 +995,7 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
 
 
 def start_download(audio_or_video_bool: bool, restricted: bool, video_id: str, looper: bool, year_subfolders: bool):
-    video_button.configure(state="disabled")
-    audio_button.configure(state="disabled")
+    disable_buttons()
     threading.Thread(target=lambda: start_download_work(audio_or_video_bool, restricted, video_id, looper, year_subfolders), daemon=True).start()
 
 
@@ -1068,8 +1079,7 @@ def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: s
 
 
 def download_video(audio_or_video_bool: bool, y_tube: YouTube, res: str, restricted: bool, year_subfolders: bool):
-    video_button.configure(state="normal")
-    audio_button.configure(state="normal")
+    enable_buttons()
     threading.Thread(
         target=lambda: download_video_work(audio_or_video_bool, y_tube, res, restricted, year_subfolders),
         daemon=True).start()
