@@ -46,6 +46,10 @@ def update_log(text: str) -> None:
 
 
 def destroy_elements():
+    threading.Thread(target=destroy_elements_work, daemon=True).start()
+
+
+def destroy_elements_work():
     """Remove all created widgets"""
     for element in elements_to_destroy:
         element.destroy()  # Remove widget from the UI
