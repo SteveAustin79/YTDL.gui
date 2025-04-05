@@ -371,6 +371,18 @@ def disable_buttons():
     channel_dropdown.configure(state="disabled")
     link.configure(state="disabled")
     ytchannel_path.configure(state="disabled")
+    configuration_resolution.configure(state="disabled")
+    configuration_min_duration.configure(state="disabled")
+    configuration_max_duration.configure(state="disabled")
+    configuration_min_year.configure(state="disabled")
+    configuration_max_year.configure(state="disabled")
+    configuration_only_restricted.configure(state="disabled")
+    configuration_skip_restricted.configure(state="disabled")
+    configuration_min_views.configure(state="disabled")
+    configuration_year_subs.configure(state="disabled")
+    configuration_excludes.configure(state="disabled")
+    configuration_includes.configure(state="disabled")
+    configuration_filter_words.configure(state="disabled")
 
 
 def enable_buttons():
@@ -382,6 +394,18 @@ def enable_buttons():
     channel_dropdown.configure(state="normal")
     link.configure(state="normal")
     ytchannel_path.configure(state="normal")
+    configuration_resolution.configure(state="normal")
+    configuration_min_duration.configure(state="normal")
+    configuration_max_duration.configure(state="normal")
+    configuration_min_year.configure(state="normal")
+    configuration_max_year.configure(state="normal")
+    configuration_only_restricted.configure(state="normal")
+    configuration_skip_restricted.configure(state="normal")
+    configuration_min_views.configure(state="normal")
+    configuration_year_subs.configure(state="normal")
+    configuration_excludes.configure(state="normal")
+    configuration_includes.configure(state="normal")
+    configuration_filter_words.configure(state="normal")
 
 
 def get_information():
