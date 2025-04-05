@@ -908,7 +908,9 @@ def get_information_work():
     video_button.grid(row=13, column=2, padx=padding_x, pady=padding_y, sticky="w")
     elements_to_destroy.append(video_button)
 
-
+    ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON
+    ##### AUDIO OR VIDEO BUTTON #####                             AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON
+    ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON
 
     if count_files_from_channel_dir >= len(video_watch_urls):
         video_button.grid_remove()
@@ -974,6 +976,7 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                 video = YouTube(youtube_watch_url + only_video_id, 'WEB', on_progress_callback=on_progress)
             else:
                 video = YouTube(youtube_watch_url + only_video_id, on_progress_callback=on_progress)
+            update_download_log("checking channel... " + video.author, COLORS.violet)
             if default_filter_words == "" or any(
                     word.lower() in video.title.lower() for word in string_to_list(default_filter_words)):
                 if min_duration_bool:
@@ -1106,6 +1109,10 @@ def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: s
         avail_resolutions.configure(text=str(print_resolutions(y_tube)), text_color=COLORS.gray)
         avail_resolutions.grid(row=20, column=2, padx=padding_x, pady=padding_y, sticky="w")
         elements_to_destroy_loop.append(avail_resolutions)
+
+    ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON
+    ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON                       ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON
+    ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON
 
     if looper:
         download_video(audio_or_video_bool, y_tube, res, restricted, year_subfolders, looper)
