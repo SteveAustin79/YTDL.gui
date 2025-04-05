@@ -15,7 +15,6 @@ from functions import (AppConfig, COLORS, CcConfig, JSONConfig, load_config, fin
 
 
 # dropdown with int for loop mode exit after int loops
-# sys.exit button to abort download - does not work, need thread
 
 entry_width = 450
 padding_x = 6

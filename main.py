@@ -1,6 +1,7 @@
 import customtkinter
 import os
 import subprocess
+import threading
 from pytubefix import Channel
 from PIL import Image
 from functions import (AppConfig, COLORS, CcConfig, Tooltip, load_config, find_file_by_string, count_files,
@@ -52,6 +53,10 @@ def destroy_elements():
 
 
 def list_channels():
+    threading.Thread(target=list_channels_work, daemon=True).start()
+
+
+def list_channels_work():
     update_log("Listing channels from channels.txt...")
     update_app_title()
     destroy_elements()
