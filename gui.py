@@ -1362,7 +1362,7 @@ separator3 = customtkinter.CTkFrame(app, height=2, fg_color=COLORS.separator)
 
 video_info_channel = customtkinter.CTkLabel(app, text="", font=("Arial", 16, "bold"))
 video_info_channel_url = customtkinter.CTkLabel(app, text="", text_color=COLORS.gray)
-video_info_channel_button = customtkinter.CTkButton(app, text="Add channel to channels.txt")
+video_info_channel_button = customtkinter.CTkButton(app, text="Add to channels.txt")
 after_adding_to_channels_txt_label = customtkinter.CTkLabel(app, text="", text_color=COLORS.gray)
 
 ytchannel_path_label = customtkinter.CTkLabel(app, text="Save Path:", text_color=COLORS.gray)
