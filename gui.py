@@ -1113,7 +1113,7 @@ def download_video(audio_or_video_bool: bool, y_tube: YouTube, res: str, restric
 
 def download_video_work(audio_or_video_bool: bool, y_tube: YouTube, res: str, restricted: bool, year_subfolders: bool):
     abort_button.configure(fg_color=COLORS.dark_red, command=abort_download)
-    abort_button.grid(row=21, column=2, padx=padding_x, pady=padding_y, sticky="e")
+    abort_button.grid(row=22, column=3, padx=padding_x, pady=padding_y, sticky="w")
     elements_to_destroy.append(abort_button)
 
     progress_percent.configure(text="0%")
