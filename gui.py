@@ -891,6 +891,7 @@ def get_information():
 
 
 def abort_download() -> None:
+    print("EXIT")
     sys.exit()
 
 
