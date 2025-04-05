@@ -374,12 +374,15 @@ def disable_buttons():
     audio_button.configure(state="disabled")
     get_information_button.configure(state="disabled")
     video_info_channel_button.configure(state="disabled")
+    create_channel_config_button.configure(state="disabled")
+
 
 def enable_buttons():
     video_button.configure(state="normal")
     audio_button.configure(state="normal")
     get_information_button.configure(state="normal")
     video_info_channel_button.configure(state="normal")
+    create_channel_config_button.configure(state="normal")
 
 
 def get_information():
