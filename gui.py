@@ -892,7 +892,7 @@ def get_information():
 
 def abort_download() -> None:
     print("EXIT")
-    sys.exit()
+    sys.exit(0)
 
 
 def print_resolutions(yt: YouTube) -> list[str]:
