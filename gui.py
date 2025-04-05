@@ -992,8 +992,11 @@ def loop_download(audio_or_video_bool, default_max_res, default_filter_words, on
         update_download_log("DONE!", COLORS.green)
 
 
+def start_download():
+    threading.Thread(target=start_download_work, daemon=True).start()
 
-def start_download(audio_or_video_bool: bool, restricted: bool, video_id: str, looper: bool, year_subfolders: bool):
+
+def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: str, looper: bool, year_subfolders: bool):
     update_app_title()
     if restricted:
         if web_client:
@@ -1073,9 +1076,9 @@ def start_download(audio_or_video_bool: bool, restricted: bool, video_id: str, l
 
 
 def download_video(audio_or_video_bool: bool, y_tube: YouTube, res: str, restricted: bool, year_subfolders: bool):
-    # abort_button.configure(fg_color=COLORS.dark_red, command=abort_download)
-    # abort_button.grid(row=21, column=2, padx=padding_x, pady=padding_y, sticky="e")
-    # elements_to_destroy.append(abort_button)
+    abort_button.configure(fg_color=COLORS.dark_red, command=abort_download)
+    abort_button.grid(row=21, column=2, padx=padding_x, pady=padding_y, sticky="e")
+    elements_to_destroy.append(abort_button)
 
     progress_percent.configure(text="0%")
     progress_percent.grid(row=22, column=1, padx=padding_x, pady=padding_y, sticky="e")
