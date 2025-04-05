@@ -756,23 +756,14 @@ def get_information_work():
         include_list = clean_youtube_urls(string_to_list(default_include_videos))
 
     only_restricted_videos_bool = False
-    # if default_only_restricted == "y":
     if configuration_only_restricted.get() == 1:
         only_restricted_videos_bool = True
 
     skip_restricted_bool = False
-    # if default_skip_restricted == "y":
     if configuration_skip_restricted.get() == 1:
         skip_restricted_bool = True
 
     count_total_videos = 0
-    # count_restricted_videos = 0
-    # count_ok_videos = 0
-    # count_this_run = 0
-    # count_skipped = 0
-
-    # video_name_filter = string_to_list(default_filter_words)
-    # video_name_filter = string_to_list(configuration_filter_words.get("0.0", "end"))
 
     # Create empty lists
     video_list.clear()
@@ -791,16 +782,9 @@ def get_information_work():
                         video_watch_urls.append(url.watch_url)
                 # else:
                 video_watch_urls.append(url.watch_url)
-            # print(f"\rFetching " + str(count_total_videos) + " videos", end="", flush=True)
-        # print(f"\rTotal {count_total_videos} Video(s) by: \033[96m{channelYT_name}\033[0m", end="", flush=True)
     video_math = customtkinter.CTkLabel(app, text=str(len(video_watch_urls)) + " (total videos minus excludes)", text_color=COLORS.gray)
     video_math.grid(row=5, column=1, padx=padding_x, pady=padding_y, sticky="sw")
     elements_to_destroy.append(video_math)
-
-    # update_log(str(len(video_watch_urls)) + " Videos")
-    # ytchannel_video_count.configure(text=str(len(video_watch_urls)) + " Videos")
-    # ytchannel_video_count.configure(text=str(count_total_videos) + " Videos")
-    # ytchannel_video_count.configure(text=str(len(channel_info.video_urls)) + " Videos")
 
     # channel_videos_combobox = customtkinter.CTkComboBox(app, values=video_watch_urls)
     # channel_videos_combobox.grid(row=10, column=2, columnspan=2, padx=padding_x, pady=padding_y, sticky="se")
@@ -846,10 +830,6 @@ def get_information_work():
         video_thumbnail_label.configure(image=yt_video_thumbnail, text="")
         video_thumbnail_label.grid(row=15, column=0, rowspan=4, padx=padding_x, pady=padding_y, sticky="e")
         elements_to_destroy.append(video_thumbnail_label)
-
-    # audio_or_video_entry.grid(row=5, column=1, padx=padding, pady=padding, sticky="w")
-    # audio_or_video_entry_var = tkinter.StringVar(value=default_value_mp3)
-    # audio_or_video_entry.configure(textvariable=audio_or_video_entry_var)
 
     separator2.grid(row=6, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y * padding_y_factor)
     elements_to_destroy.append(separator2)
@@ -930,7 +910,6 @@ def loop_download(audio_or_video_bool, default_max_res, default_filter_words, on
         if find_file_by_string(ytchannel_path.get(), only_video_id, default_max_res, audio_or_video_bool) is not None:
             count_ok_videos += 1
             count_skipped += 1
-            # update_download_log("Skipping " + str(count_skipped) + " Videos", COLORS.violet)
         else:
             do_not_download = 0
             if web_client:
@@ -982,9 +961,7 @@ def loop_download(audio_or_video_bool, default_max_res, default_filter_words, on
             update_video_counts(
                 str(count_files(output_dir + "/" + clean_string_regex(total_channel_name).rstrip(), ".mp4")) +
                 " / " + str(total_channel_videos) + " Videos downloaded")
-        # update counts
-        # print("OK: " + str(count_ok_videos) + " - ThisRun: " + str(count_this_run) + " - Skipped: " + str(count_skipped) +
-        #         " - R: " + str(count_restricted_videos))
+
         update_download_log("Skipping " + str(count_skipped) + " Videos", COLORS.violet)
 
 
