@@ -1390,8 +1390,8 @@ app.configure(bg_color=COLORS.black)
 app.protocol("WM_DELETE_WINDOW", on_closing)
 app.grid_columnconfigure(0, minsize=250)
 app.grid_columnconfigure(1, minsize=300)
-app.grid_columnconfigure(2, minsize=470)
-app.grid_columnconfigure(3, minsize=240)
+app.grid_columnconfigure(2, minsize=480)
+app.grid_columnconfigure(3, minsize=250)
 
 # Add UI elements
 logo = customtkinter.CTkImage(light_image=Image.open(AppConfig.logo_path), size=(87, 58)) # 180x120
