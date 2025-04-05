@@ -962,6 +962,7 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
         if find_file_by_string(ytchannel_path.get(), only_video_id, default_max_res, audio_or_video_bool) is not None:
             count_ok_videos += 1
             count_skipped += 1
+            update_download_log("Skipping " + str(count_skipped) + " Videos", COLORS.violet)
         else:
             do_not_download = 0
             if web_client:
@@ -1013,9 +1014,6 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
             update_video_counts(
                 str(count_files(output_dir + "/" + clean_string_regex(total_channel_name).rstrip(), ".mp4")) +
                 " / " + str(total_channel_videos) + " Videos downloaded")
-
-        update_download_log("Skipping " + str(count_skipped) + " Videos", COLORS.violet)
-
 
     # if count_this_run == 0:
     #     update_download_log("Nothing to do...", COLORS.green)
