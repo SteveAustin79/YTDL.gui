@@ -472,6 +472,12 @@ def get_information_work():
     separator1.grid(row=2, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y * padding_y_factor)
     elements_to_destroy.append(separator1)
 
+    separator2.grid(row=6, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y * padding_y_factor)
+    elements_to_destroy.append(separator2)
+
+    separator3.grid(row=14, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y * padding_y_factor)
+    elements_to_destroy.append(separator3)
+
     video_info_channel.grid(row=3, column=1, padx=padding_x, pady=padding_y, sticky="nw")
     elements_to_destroy.append(video_info_channel)
     video_info_channel.configure(text=channel_info_name[:29] + "..." if len(channel_info_name) > 29 else channel_info_name)
@@ -870,8 +876,7 @@ def get_information_work():
         video_thumbnail_label.grid(row=15, column=0, rowspan=4, padx=padding_x, pady=padding_y, sticky="e")
         elements_to_destroy.append(video_thumbnail_label)
 
-    separator2.grid(row=6, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y * padding_y_factor)
-    elements_to_destroy.append(separator2)
+
 
     audio_button.grid(row=13, column=1, padx=padding_x, pady=padding_y, sticky="e")
     elements_to_destroy.append(audio_button)
@@ -901,8 +906,7 @@ def get_information_work():
     video_button.grid(row=13, column=2, padx=padding_x, pady=padding_y, sticky="w")
     elements_to_destroy.append(video_button)
 
-    separator3.grid(row=14, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y * padding_y_factor)
-    elements_to_destroy.append(separator3)
+
 
     if count_files_from_channel_dir >= len(video_watch_urls):
         video_button.grid_remove()
