@@ -900,6 +900,14 @@ def limit_resolution(resolution: str, limit: str) -> str:
 def loop_download(audio_or_video_bool, default_max_res, default_filter_words, only_restricted_videos_bool,
                         skip_restricted_bool, year_subfolders, min_duration_bool, min_duration, max_duration_bool, max_duration,
                         min_year, max_year, min_video_views):
+    threading.Thread(target=lambda: loop_download_work(audio_or_video_bool, default_max_res, default_filter_words, only_restricted_videos_bool,
+                        skip_restricted_bool, year_subfolders, min_duration_bool, min_duration, max_duration_bool, max_duration,
+                        min_year, max_year, min_video_views), daemon=True).start()
+
+
+def loop_download_work(audio_or_video_bool, default_max_res, default_filter_words, only_restricted_videos_bool,
+                        skip_restricted_bool, year_subfolders, min_duration_bool, min_duration, max_duration_bool, max_duration,
+                        min_year, max_year, min_video_views):
     count_restricted_videos = 0
     count_ok_videos = 0
     count_this_run = 0
