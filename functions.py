@@ -12,6 +12,10 @@ class AppConfig:
     app_title = "YTDL.channels"
     version = app_title + " v1.0.2 (20250405)"
     logo_path = "assets/logo.png"
+    channel_config_path = "/" + "_config_channel.json"
+    date_format_display = "%d.%m.%Y"
+    date_time_format = "%d.%m.%Y %H:%M:%S"
+    date_format_math = "%Y-%m-%d"
     # Set window size
     win_width = 1280
     win_height = 800

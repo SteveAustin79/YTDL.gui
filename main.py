@@ -11,10 +11,6 @@ row_height = 23
 padding_x = 5
 padding_y = 1
 padding_y_factor = 2
-channel_config_path = "/" + "_config_channel.json"
-date_format_display = "%d.%m.%Y"
-date_time_format = "%d.%m.%Y %H:%M:%S"
-date_format_math = "%Y-%m-%d"
 
 elements_to_destroy = []
 
@@ -73,8 +69,8 @@ def list_channels():
         button_channel_name.grid(row=i+row_factor, column=0, padx=padding_x, pady=padding_y, sticky="w")
         elements_to_destroy.append(button_channel_name)
 
-        if os.path.exists(output_dir + "/" + clean_string_regex(channel_object.channel_name).rstrip() + channel_config_path):
-            channel_config = load_config(output_dir + "/" + clean_string_regex(channel_object.channel_name).rstrip() + channel_config_path)
+        if os.path.exists(output_dir + "/" + clean_string_regex(channel_object.channel_name).rstrip() + AppConfig.channel_config_path):
+            channel_config = load_config(output_dir + "/" + clean_string_regex(channel_object.channel_name).rstrip() + AppConfig.channel_config_path)
 
             # Resolution
             label_config_resolution = customtkinter.CTkLabel(app, text="max", height=row_height, text_color=COLORS.gray)
@@ -213,9 +209,9 @@ def list_channels():
         ch_config_exclude_list = string_to_list("")
 
         if os.path.exists(
-                output_dir + "/" + clean_string_regex(channel_object.channel_name).rstrip() + channel_config_path):
+                output_dir + "/" + clean_string_regex(channel_object.channel_name).rstrip() + AppConfig.channel_config_path):
             ch_config = load_config(
-                output_dir + "/" + clean_string_regex(channel_object.channel_name).rstrip() + channel_config_path)
+                output_dir + "/" + clean_string_regex(channel_object.channel_name).rstrip() + AppConfig.channel_config_path)
 
             ch_config_filter_words = ch_config["c_filter_words"]
             if str(ch_config["c_min_duration_in_minutes"]).strip():
@@ -282,8 +278,8 @@ def list_channels():
                     yt_video_thumbnail = load_image_from_url(youtube_video_object.thumbnail_url, size=(32, 18))
 
                     latest_video_title_text = youtube_vo_title
-                    latest_date_math = youtube_vo_publish_date.strftime(date_format_math)
-                    latest_date = youtube_vo_publish_date.strftime(date_format_display)
+                    latest_date_math = youtube_vo_publish_date.strftime(AppConfig.date_format_math)
+                    latest_date = youtube_vo_publish_date.strftime(AppConfig.date_format_display)
                     latest_video_id_text = youtube_vo_video_id
 
                     if youtube_vo_age_restricted:
