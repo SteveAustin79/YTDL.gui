@@ -56,7 +56,7 @@ def remove_button_and_checkboxes():
     start_button.grid_remove()
     c_filters_on_in_channels_list.grid_remove()
     c_show_latest_video_date.grid_remove()
-    log_label.grid(row=0, column=2, columnspan=17, padx=padding_x, pady=padding_y, sticky="w")
+    log_label.grid(row=0, column=1, columnspan=18, padx=padding_x, pady=padding_y, sticky="w")
 
 
 def add_button_and_checkboxes():
