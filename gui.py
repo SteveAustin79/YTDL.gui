@@ -414,6 +414,7 @@ def get_information():
         update_download_log("Empty selection", COLORS.red)
     else:
         disable_buttons()
+        update_download_log("", COLORS.gray)
         threading.Thread(target=get_information_work, daemon=True).start()
 
 
