@@ -1211,6 +1211,9 @@ def merge_video_audio(video_id: str, publish_date: str, vid_res: str, year: str,
     output_file = (ytchannel_path.get() + str(year) + restricted_path + publish_date + " - " + vid_res
                    + " - " + clean_string_regex(os.path.splitext(video_file)[0]) + " - " + video_id + ".mp4")
 
+    print(video_file)
+    print(audio_file)
+
     try:
         update_download_log("Merging to MP4...", COLORS.gray)
         command = [
