@@ -459,17 +459,9 @@ def get_information_work():
             video_id_from_single_video += p_video.video_id + ","
         video_id_from_single_video = video_id_from_single_video[:-1]
     else:
-        channel_in_link_field = True
+        looper = True
 
     channel_info = get_yt_channel(yt_channel)
-
-    if channel_in_link_field:
-        first_video = channel_info.video_urls[0]
-        print(first_video)
-        if web_client:
-            ytv = YouTube(first_video, 'WEB', on_progress_callback=on_progress)
-        else:
-            ytv = YouTube(first_video)
 
     channel_info_name = channel_info.channel_name
     channel_info_url = channel_info.channel_url
