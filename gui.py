@@ -998,7 +998,7 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                     if int(video.publish_date.strftime("%Y")) >= int(max_year):
                         do_not_download = 1
                 if int(min_video_views) > 0:
-                    if video.views <= min_video_views:
+                    if video.views <= int(min_video_views):
                         do_not_download = 1
 
                 v_title_text_length = 32
