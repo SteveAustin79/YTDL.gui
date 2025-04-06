@@ -15,6 +15,8 @@ from functions import (AppConfig, COLORS, CcConfig, JSONConfig, load_config, fin
 
 
 # dropdown with int for loop mode exit after int loops
+# copy video id field
+# delete party converted file in channel target dir if aborted during conversion
 
 app_title = "YTDL.video"
 entry_width = 460
@@ -1395,7 +1397,7 @@ customtkinter.set_default_color_theme("blue")
 # App frame
 app = customtkinter.CTk()
 # app.geometry(app_resolution + "+0+0")
-app.geometry(f"{AppConfig.win_width}x{AppConfig.win_height}")
+app.geometry(f"{AppConfig.win_width}x{AppConfig.win_height}" + "+0+0")
 update_app_title()
 app.configure(bg_color=COLORS.black)
 app.protocol("WM_DELETE_WINDOW", on_closing)
