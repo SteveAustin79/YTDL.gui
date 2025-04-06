@@ -345,9 +345,10 @@ def list_channels_work():
             label_latest_video_id.grid(row=i + row_factor, column=16, padx=padding_x, pady=padding_y, sticky="we")
             elements_to_destroy.append(label_latest_video_id)
 
+            title_width = 30
             label_latest_video_title = customtkinter.CTkLabel(app,
-                                                              text=latest_video_title_text[:23] + "..." if len(
-                                                                  latest_video_title_text) > 23 else latest_video_title_text,
+                                                              text=latest_video_title_text[:title_width] + "..." if len(
+                                                                  latest_video_title_text) > title_width else latest_video_title_text,
                                                               text_color=color_else, height=row_height)
             label_latest_video_title.grid(row=i + row_factor, column=17, padx=padding_x, pady=padding_y, sticky="w")
             elements_to_destroy.append(label_latest_video_title)
