@@ -700,7 +700,7 @@ def get_information_work():
     configuration_year_subs.grid(row=7, column=3, padx=padding_x, pady=padding_y, sticky="w")
     elements_to_destroy.append(configuration_year_subs)
 
-    configuration_min_duration_label = customtkinter.CTkLabel(app, text="Min. duration:")
+    configuration_min_duration_label = customtkinter.CTkLabel(app, text="Min. duration (m):")
     configuration_min_duration_label.grid(row=8, column=0, padx=padding_x, pady=padding_y, sticky="e")
     elements_to_destroy.append(configuration_min_duration_label)
     min_duration_value = tkinter.StringVar(value=default_min_duration_in_minutes)
@@ -709,7 +709,7 @@ def get_information_work():
     configuration_min_duration.grid(row=8, column=1, padx=padding_x, pady=padding_y, sticky="w")
     elements_to_destroy.append(configuration_min_duration)
 
-    configuration_max_duration_label = customtkinter.CTkLabel(app, text="Max. duration:")
+    configuration_max_duration_label = customtkinter.CTkLabel(app, text="Max. duration (m):")
     configuration_max_duration_label.grid(row=8, column=1, padx=padding_x, pady=padding_y, sticky="e")
     elements_to_destroy.append(configuration_max_duration_label)
     max_duration_value = tkinter.StringVar(value=default_max_duration_in_minutes)
