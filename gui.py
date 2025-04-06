@@ -976,7 +976,7 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
         if find_file_by_string(ytchannel_path.get(), only_video_id, default_max_res, audio_or_video_bool) is not None:
             count_ok_videos += 1
             count_skipped += 1
-            update_download_log("Skipping " + str(count_skipped) + " already downloaded Video(s)", COLORS.violet)
+            update_download_log("Skipping  " + str(count_skipped) + "  already downloaded Video(s)", COLORS.violet)
         else:
             do_not_download = 0
             grid_remove_elements(elements_to_destroy_loop)
