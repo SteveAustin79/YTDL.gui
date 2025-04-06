@@ -1024,8 +1024,8 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
 
                             start_download_work(audio_or_video_bool, True, video.video_id, True, year_subfolders)
 
-                update_download_log("Checking:      R " + str(video.age_restricted) + "      " +
-                                    format_time(video.length) + "      " + v_title, (COLORS.red if do_not_download == 1 else COLORS.violet))
+                update_download_log("Checking:      R " + str(video.age_restricted) + "      " + format_time(video.length) +
+                                    "      " + v_title, (COLORS.dark_red if do_not_download == 1 else COLORS.violet))
 
             update_video_counts(
                 str(count_files(output_dir + "/" + clean_string_regex(total_channel_name).rstrip(), ".mp4")) +
