@@ -47,6 +47,7 @@ cd YTDL.gui
 3. Install python environment
 ```diff
 python3 -m venv venv
+venv/scripts/activate
 ```
 4. Install dependencies
 ```diff
