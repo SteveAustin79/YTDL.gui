@@ -419,12 +419,13 @@ def get_information():
 def get_information_work():
     global total_channel_videos
     global total_channel_name
+    channel_in_link_field = False
+
+    update_app_title()
     looper = False
     if channel_dropdown.get() != "":
-        looper = True
-    update_app_title()
-    if channel_dropdown.get() != "":
         channel_url = channel_dropdown.get()
+        looper = True
     else:
         channel_url = link.get()
 
@@ -433,7 +434,7 @@ def get_information_work():
 
     yt_channel = channel_url
     video_id_from_single_video = ""
-    ytv = ""
+    # ytv = ""
     if youtube_watch_url in yt_channel:
         if web_client:
             ytv = YouTube(yt_channel, 'WEB', on_progress_callback=on_progress)
@@ -457,6 +458,8 @@ def get_information_work():
         for p_video in playlist.videos:
             video_id_from_single_video += p_video.video_id + ","
         video_id_from_single_video = video_id_from_single_video[:-1]
+    else:
+        looper = True
 
     channel_info = get_yt_channel(yt_channel)
 
@@ -700,7 +703,7 @@ def get_information_work():
     configuration_year_subs.grid(row=7, column=3, padx=padding_x, pady=padding_y, sticky="w")
     elements_to_destroy.append(configuration_year_subs)
 
-    configuration_min_duration_label = customtkinter.CTkLabel(app, text="Min. duration:")
+    configuration_min_duration_label = customtkinter.CTkLabel(app, text="Min. duration (m):")
     configuration_min_duration_label.grid(row=8, column=0, padx=padding_x, pady=padding_y, sticky="e")
     elements_to_destroy.append(configuration_min_duration_label)
     min_duration_value = tkinter.StringVar(value=default_min_duration_in_minutes)
@@ -709,7 +712,7 @@ def get_information_work():
     configuration_min_duration.grid(row=8, column=1, padx=padding_x, pady=padding_y, sticky="w")
     elements_to_destroy.append(configuration_min_duration)
 
-    configuration_max_duration_label = customtkinter.CTkLabel(app, text="Max. duration:")
+    configuration_max_duration_label = customtkinter.CTkLabel(app, text="Max. duration (m):")
     configuration_max_duration_label.grid(row=8, column=1, padx=padding_x, pady=padding_y, sticky="e")
     elements_to_destroy.append(configuration_max_duration_label)
     max_duration_value = tkinter.StringVar(value=default_max_duration_in_minutes)
@@ -761,7 +764,7 @@ def get_information_work():
     configuration_filter_words_label = customtkinter.CTkLabel(app, text="Filter words:")
     configuration_filter_words_label.grid(row=10, column=0, padx=padding_x, pady=padding_y, sticky="en")
     elements_to_destroy.append(configuration_filter_words_label)
-    configuration_filter_words.configure(width=170, height=60, fg_color=("white", "gray20"),  # Match Entry background color
+    configuration_filter_words.configure(width=170, height=50, fg_color=("white", "gray20"),  # Match Entry background color
                                                         border_color=("gray60", "gray40"),  # Match Entry border color
                                                         border_width=2, corner_radius=6)
     configuration_filter_words.delete("0.0", "end")
@@ -773,7 +776,7 @@ def get_information_work():
     configuration_excludes_label = customtkinter.CTkLabel(app, text="Excludes:")
     configuration_excludes_label.grid(row=10, column=1, padx=padding_x, pady=padding_y, sticky="en")
     elements_to_destroy.append(configuration_excludes_label)
-    configuration_excludes.configure(width=300, height=60, fg_color=("white", "gray20"),  # Match Entry background color
+    configuration_excludes.configure(width=300, height=50, fg_color=("white", "gray20"),  # Match Entry background color
                                                         border_color=("gray60", "gray40"),  # Match Entry border color
                                                         border_width=2, corner_radius=6)
     configuration_excludes.delete("0.0", "end")
@@ -785,7 +788,7 @@ def get_information_work():
     configuration_includes_label = customtkinter.CTkLabel(app, text="Includes:")
     configuration_includes_label.grid(row=10, column=2, padx=padding_x, pady=padding_y, sticky="en")
     elements_to_destroy.append(configuration_includes_label)
-    configuration_includes.configure(width=170, height=60, fg_color=("white", "gray20"),  # Match Entry background color
+    configuration_includes.configure(width=170, height=50, fg_color=("white", "gray20"),  # Match Entry background color
                                                         border_color=("gray60", "gray40"),  # Match Entry border color
                                                         border_width=2, corner_radius=6)
     configuration_includes.delete("0.0", "end")
@@ -962,8 +965,10 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
     count_ok_videos = 0
     count_this_run = 0
     count_skipped = 0
+    v_counter = 0
 
     for url in video_watch_urls:
+        v_counter += 1
         only_video_id = pytubefix.extract.video_id(url)
         if find_file_by_string(ytchannel_path.get(), only_video_id, default_max_res, audio_or_video_bool) is not None:
             count_ok_videos += 1
@@ -977,9 +982,7 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                 video = YouTube(youtube_watch_url + only_video_id, 'WEB', on_progress_callback=on_progress)
             else:
                 video = YouTube(youtube_watch_url + only_video_id, on_progress_callback=on_progress)
-            v_title_text_length = 45
-            v_title = video.title[:v_title_text_length] + "..." if len(video.title) > v_title_text_length else video.title
-            update_download_log("Checking:         R " + str(video.age_restricted) + "         " + v_title, COLORS.violet)
+
             if default_filter_words == "" or any(
                     word.lower() in video.title.lower() for word in string_to_list(default_filter_words)):
                 if min_duration_bool:
@@ -998,8 +1001,15 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                     if int(video.publish_date.strftime("%Y")) >= int(max_year):
                         do_not_download = 1
                 if int(min_video_views) > 0:
-                    if video.views <= min_video_views:
+                    if video.views <= int(min_video_views):
                         do_not_download = 1
+
+                v_title_text_length = 25
+                v_title = video.title[:v_title_text_length] + "..." if len(video.title) > v_title_text_length else video.title
+                update_download_log("Find match:  " + str(v_counter) + "/" + str(len(video_watch_urls)) + "  |  " +
+                                    str(video.publish_date.strftime("%Y")) + "  |  " + ("R" if video.age_restricted else "_") +
+                                    "  |  " + format_time(video.length) + "  |  " + v_title, (COLORS.violet if do_not_download == 1 else COLORS.green))
+
                 if (not video.age_restricted and
                         video.vid_info.get('playabilityStatus', {}).get('status') != 'UNPLAYABLE' and
                         video.vid_info.get('playabilityStatus', {}).get('status') != 'LIVE_STREAM_OFFLINE' and
@@ -1023,6 +1033,7 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                             video_list_restricted.append(video.video_id)
 
                             start_download_work(audio_or_video_bool, True, video.video_id, True, year_subfolders)
+
 
             update_video_counts(
                 str(count_files(output_dir + "/" + clean_string_regex(total_channel_name).rstrip(), ".mp4")) +
