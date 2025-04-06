@@ -1432,7 +1432,7 @@ separator1 = customtkinter.CTkFrame(app, height=2, fg_color=COLORS.separator)
 separator1.grid(row=2, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y)
 # elements_to_destroy.append(separator1)
 
-channel_frame = customtkinter.CTkFrame(app, fg_color="#232323")
+channel_frame = customtkinter.CTkFrame(app, fg_color="#121212")
 channel_frame.grid(row=3, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y)
 
 separator2 = customtkinter.CTkFrame(channel_frame, height=2, fg_color=COLORS.separator)
