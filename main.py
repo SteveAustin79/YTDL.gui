@@ -342,7 +342,7 @@ def list_channels_work():
 
             label_latest_video_id = customtkinter.CTkLabel(app, text=latest_video_id_text, text_color=color_video_id,
                                                            height=row_height)
-            label_latest_video_id.grid(row=i + row_factor, column=16, padx=padding_x, pady=padding_y, sticky="we")
+            label_latest_video_id.grid(row=i + row_factor, column=16, padx=padding_x, pady=padding_y, sticky="w")
             elements_to_destroy.append(label_latest_video_id)
 
             title_width = 30
