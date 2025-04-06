@@ -881,7 +881,7 @@ def get_information_work():
 
 
 
-    audio_button.grid(row=13, column=1, padx=padding_x, pady=padding_y, sticky="e")
+    audio_button.grid(row=13, column=1, padx=padding_x, pady=padding_y * padding_y_factor, sticky="e")
     elements_to_destroy.append(audio_button)
 
     if looper:
@@ -906,7 +906,7 @@ def get_information_work():
                                                               False, True if configuration_year_subs.get() == 1 else False))
         video_button.configure(command=lambda: start_download(False, restricted_video, ytv.video_id,
                                                               False, True if configuration_year_subs.get() == 1 else False))
-    video_button.grid(row=13, column=2, padx=padding_x, pady=padding_y, sticky="w")
+    video_button.grid(row=13, column=2, padx=padding_x, pady=padding_y * padding_y_factor, sticky="w")
     elements_to_destroy.append(video_button)
 
     ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON
