@@ -425,6 +425,7 @@ customtkinter.set_default_color_theme("blue")
 
 # App frame
 app = customtkinter.CTk()
+app.iconbitmap(AppConfig.icon_path)
 # Get screen width & height
 screen_width = app.winfo_screenwidth()
 screen_height = app.winfo_screenheight()

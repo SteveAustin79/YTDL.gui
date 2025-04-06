@@ -1396,6 +1396,7 @@ customtkinter.set_default_color_theme("blue")
 
 # App frame
 app = customtkinter.CTk()
+app.iconbitmap(AppConfig.icon_path)
 # app.geometry(app_resolution + "+0+0")
 app.geometry(f"{AppConfig.win_width}x{AppConfig.win_height}" + "+0+0")
 update_app_title()
