@@ -9,7 +9,7 @@ from io import BytesIO
 
 
 class AppConfig:
-    version = " v1.0.3 (20250406)"
+    version = " v1.0.4 (20250406)"
     logo_path = "assets/logo.png"
     channel_config_path = "/" + "_config_channel.json"
     date_format_display = "%d.%m.%Y"
