@@ -977,7 +977,7 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                 video = YouTube(youtube_watch_url + only_video_id, 'WEB', on_progress_callback=on_progress)
             else:
                 video = YouTube(youtube_watch_url + only_video_id, on_progress_callback=on_progress)
-            v_title_text_length = 45
+            v_title_text_length = 39
             v_title = video.title[:v_title_text_length] + "..." if len(video.title) > v_title_text_length else video.title
             update_download_log("Checking:       R " + str(video.age_restricted) + "       " +
                                 format_time(video.length) + "       " + v_title, COLORS.violet)
