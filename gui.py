@@ -1000,6 +1000,10 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                 if int(min_video_views) > 0:
                     if video.views <= min_video_views:
                         do_not_download = 1
+
+                update_download_log("Checking:      R " + str(video.age_restricted) + "      " + format_time(video.length) +
+                    "      " + v_title, (COLORS.dark_red if do_not_download == 1 else COLORS.violet))
+
                 if (not video.age_restricted and
                         video.vid_info.get('playabilityStatus', {}).get('status') != 'UNPLAYABLE' and
                         video.vid_info.get('playabilityStatus', {}).get('status') != 'LIVE_STREAM_OFFLINE' and
@@ -1008,9 +1012,6 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                     count_this_run += 1
                     count_skipped = 0
                     video_list.append(video.video_id)
-
-                    update_download_log("Checking:      R " + str(video.age_restricted) + "      " + format_time(video.length) +
-                        "      " + v_title, (COLORS.dark_red if do_not_download == 1 else COLORS.violet))
 
                     start_download_work(audio_or_video_bool, False, video.video_id, True, year_subfolders)
                 else:
@@ -1024,9 +1025,6 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                             count_ok_videos += 1
                             count_this_run += 1
                             video_list_restricted.append(video.video_id)
-
-                            update_download_log("Checking:      R " + str(video.age_restricted) + "      " + format_time(video.length) +
-                                "      " + v_title, (COLORS.dark_red if do_not_download == 1 else COLORS.violet))
 
                             start_download_work(audio_or_video_bool, True, video.video_id, True, year_subfolders)
 
