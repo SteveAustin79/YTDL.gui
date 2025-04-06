@@ -1003,7 +1003,7 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
 
                 v_title_text_length = 39
                 v_title = video.title[:v_title_text_length] + "..." if len(video.title) > v_title_text_length else video.title
-                update_download_log("Find match:  " + v_counter + "/" + str(len(video_watch_urls)) + "  |  " +
+                update_download_log("Find match:  " + str(v_counter) + "/" + str(len(video_watch_urls)) + "  |  " +
                                     str(video.publish_date.strftime("%Y")) + "  |  " + ("R" if video.age_restricted else "_") +
                                     "  |  " + format_time(video.length) + "  |  " + v_title, (COLORS.violet if do_not_download == 1 else COLORS.green))
 
