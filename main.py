@@ -360,8 +360,11 @@ def list_channels_work():
             # Latest updated
             label_last_updated = customtkinter.CTkLabel(app, text=channel_last_updated, width=160, height=row_height,
                                                         text_color=COLORS.gray)
-            label_last_updated.grid(row=i + row_factor, column=14, padx=padding_x, pady=padding_y, sticky="w")
+            label_last_updated.grid(row=i + row_factor + 1, column=0, columnspan=18, padx=padding_x, pady=padding_y, sticky="w")
             elements_to_destroy.append(label_last_updated)
+
+        separator_label = customtkinter.CTkFrame(app, height=1, fg_color=COLORS.separator)
+
 
         update_log("")
     update_app_title()
