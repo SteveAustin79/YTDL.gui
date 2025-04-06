@@ -370,7 +370,6 @@ def list_channels_work():
         separator_label.grid(row=i + row_factor, column=0, columnspan=18, sticky="ew", padx=padding_x, pady=padding_y)
         elements_to_destroy.append(separator_label)
 
-
         update_log("")
     update_app_title()
 
