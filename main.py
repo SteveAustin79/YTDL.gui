@@ -453,6 +453,25 @@ log_label.grid(row=0, column=9, columnspan=8, padx=padding_x, pady=padding_y, st
 
 # separator1 = customtkinter.CTkFrame(app, height=2, fg_color=COLORS.separator)
 
+header_frame.grid_columnconfigure(0, minsize=210)    # Channel Name
+header_frame.grid_columnconfigure(1, minsize=50)     # Resolution
+header_frame.grid_columnconfigure(2, minsize=50)     # Min duration
+header_frame.grid_columnconfigure(3, minsize=50)     # Max duration
+header_frame.grid_columnconfigure(4, minsize=25)     # Skip restricted
+header_frame.grid_columnconfigure(5, minsize=25)     # Restricted
+header_frame.grid_columnconfigure(6, minsize=60)     # Min views
+header_frame.grid_columnconfigure(7, minsize=25)     # Year subs
+header_frame.grid_columnconfigure(8, minsize=50)     # Min year
+header_frame.grid_columnconfigure(9, minsize=50)     # Max year
+header_frame.grid_columnconfigure(10, minsize=50)     # excludes
+header_frame.grid_columnconfigure(11, minsize=50)     # includes
+header_frame.grid_columnconfigure(12, minsize=80)    # Filter words
+header_frame.grid_columnconfigure(13, minsize=90)     # Video count
+header_frame.grid_columnconfigure(14, minsize=100)    # Latest updated 160 / Latest video date
+header_frame.grid_columnconfigure(15, minsize=0)    # Thumbnail 40
+header_frame.grid_columnconfigure(16, minsize=110)    # Latest video ID
+header_frame.grid_columnconfigure(17, minsize=200)    # Latest video title 164
+
 app.grid_columnconfigure(0, minsize=210)    # Channel Name
 app.grid_columnconfigure(1, minsize=50)     # Resolution
 app.grid_columnconfigure(2, minsize=50)     # Min duration
