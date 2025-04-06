@@ -70,8 +70,8 @@ def list_channels():
 
 def list_channels_work():
     row_factor = 1
-    separator1.grid(row=row_factor, column=0, columnspan=18, sticky="ew", padx=padding_x,
-                    pady=padding_y * padding_y_factor)
+    # separator1.grid(row=row_factor, column=0, columnspan=18, sticky="ew", padx=padding_x,
+    #                 pady=padding_y * padding_y_factor)
 
     for i, channel in enumerate(channel_lines, start=1):
         update_log("Scanning channel... " + channel.replace(youtube_url, "")[1:])
@@ -427,31 +427,31 @@ update_app_title()
 app.configure(bg_color=COLORS.black)
 # app.protocol("WM_DELETE_WINDOW", on_closing)
 
-# header_frame = customtkinter.CTkFrame(app)
-# header_frame.configure(row=0, column=0, padx=padding_x, pady=padding_y, sticky="nw")
+header_frame = customtkinter.CTkFrame(app, fg_color=COLORS.frame_bg)
+header_frame.configure(row=0, column=0, columnspan=18, padx=padding_x, pady=padding_y, sticky="nw")
 
 logo = customtkinter.CTkImage(light_image=Image.open(AppConfig.logo_path), size=(60, 40)) # 180x120
-logo_label = customtkinter.CTkLabel(app, text="", image=logo)
+logo_label = customtkinter.CTkLabel(header_frame, text="", image=logo)
 logo_label.grid(row=0, column=0, padx=padding_x, pady=padding_y, sticky="nw")
 
 channel_lines = read_channel_txt_lines("channels.txt")
 
-start_button = customtkinter.CTkButton(app, text="Start", command=list_channels, width=95)
+start_button = customtkinter.CTkButton(header_frame, text="Start", command=list_channels, width=95)
 start_button.grid(row=0, column=0, padx=padding_x, pady=padding_y + 3, sticky="e")
 
 var_latest = customtkinter.BooleanVar()
 var_filter_on = customtkinter.BooleanVar()
 
-c_show_latest_video_date = customtkinter.CTkCheckBox(app, text="Latest Video", variable=var_latest, command=checkbox_latest_clicked)
+c_show_latest_video_date = customtkinter.CTkCheckBox(header_frame, text="Latest Video", variable=var_latest, command=checkbox_latest_clicked)
 c_show_latest_video_date.grid(row=0, column=2, columnspan=6, padx=padding_x, pady=padding_y, sticky="w")
 
-c_filters_on_in_channels_list = customtkinter.CTkCheckBox(app, text="Filters On", variable=var_filter_on, command=checkbox_filter_on_clicked)
+c_filters_on_in_channels_list = customtkinter.CTkCheckBox(header_frame, text="Filters On", variable=var_filter_on, command=checkbox_filter_on_clicked)
 c_filters_on_in_channels_list.grid(row=0, column=2, columnspan=6, padx=padding_x, pady=padding_y, sticky="e")
 
-log_label = customtkinter.CTkLabel(app, text="", text_color=COLORS.violet, anchor="w")
+log_label = customtkinter.CTkLabel(header_frame, text="", text_color=COLORS.violet, anchor="w")
 log_label.grid(row=0, column=9, columnspan=8, padx=padding_x, pady=padding_y, sticky="w")
 
-separator1 = customtkinter.CTkFrame(app, height=2, fg_color=COLORS.separator)
+# separator1 = customtkinter.CTkFrame(app, height=2, fg_color=COLORS.separator)
 
 app.grid_columnconfigure(0, minsize=210)    # Channel Name
 app.grid_columnconfigure(1, minsize=50)     # Resolution
