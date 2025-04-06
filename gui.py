@@ -1434,6 +1434,10 @@ separator1.grid(row=2, column=0, columnspan=4, sticky="ew", padx=padding_x, pady
 
 channel_frame = customtkinter.CTkFrame(app, fg_color="#121212")
 channel_frame.grid(row=3, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y)
+channel_frame.grid_columnconfigure(0, minsize=250)
+channel_frame.grid_columnconfigure(1, minsize=300)
+channel_frame.grid_columnconfigure(2, minsize=480)
+channel_frame.grid_columnconfigure(3, minsize=250)
 
 separator2 = customtkinter.CTkFrame(channel_frame, height=2, fg_color=COLORS.separator)
 separator3 = customtkinter.CTkFrame(app, height=2, fg_color=COLORS.separator)
