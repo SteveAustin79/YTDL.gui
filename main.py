@@ -367,6 +367,7 @@ def list_channels_work():
 
         separator_label = customtkinter.CTkFrame(app, height=2, fg_color=COLORS.separator)
         separator_label.grid(row=i + row_factor + 1, column=0, columnspan=18, sticky="ew", padx=padding_x, pady=padding_y)
+        elements_to_destroy.append(separator_label)
         row_factor += 1
 
         update_log("")
