@@ -1434,20 +1434,39 @@ separator1.grid(row=2, column=0, columnspan=4, sticky="ew", padx=padding_x, pady
 separator2 = customtkinter.CTkFrame(app, height=2, fg_color=COLORS.separator)
 separator3 = customtkinter.CTkFrame(app, height=2, fg_color=COLORS.separator)
 
-video_info_channel = customtkinter.CTkLabel(app, text="", font=("Arial", 16, "bold"))
-video_info_channel_url = customtkinter.CTkLabel(app, text="", text_color=COLORS.gray)
-video_info_channel_button = customtkinter.CTkButton(app, text="Add to channels.txt")
-after_adding_to_channels_txt_label = customtkinter.CTkLabel(app, text="", text_color=COLORS.gray)
+channel_frame = customtkinter.CTkFrame(app)
+channel_frame.grid(row=0, column=0, sticky="ew", padx=padding_x, pady=padding_y)
 
-ytchannel_path_label = customtkinter.CTkLabel(app, text="Save Path:", text_color=COLORS.gray)
-ytchannel_path = customtkinter.CTkEntry(app, width=entry_width)
+video_info_channel = customtkinter.CTkLabel(channel_frame, text="", font=("Arial", 16, "bold"))
+video_info_channel_url = customtkinter.CTkLabel(channel_frame, text="", text_color=COLORS.gray)
+video_info_channel_button = customtkinter.CTkButton(channel_frame, text="Add to channels.txt")
+after_adding_to_channels_txt_label = customtkinter.CTkLabel(channel_frame, text="", text_color=COLORS.gray)
 
-ytchannel_video_count = customtkinter.CTkLabel(app, text="")
+ytchannel_path_label = customtkinter.CTkLabel(channel_frame, text="Save Path:", text_color=COLORS.gray)
+ytchannel_path = customtkinter.CTkEntry(channel_frame, width=entry_width)
 
-channel_config_label = customtkinter.CTkLabel(app, text="")
-create_channel_config_button = customtkinter.CTkButton(app)
+ytchannel_video_count = customtkinter.CTkLabel(channel_frame, text="")
 
-channel_thumbnail_label = customtkinter.CTkLabel(app, text="")
+channel_config_label = customtkinter.CTkLabel(channel_frame, text="")
+create_channel_config_button = customtkinter.CTkButton(channel_frame)
+
+channel_thumbnail_label = customtkinter.CTkLabel(channel_frame, text="")
+
+configuration_resolution = customtkinter.CTkComboBox(channel_frame)
+configuration_min_duration = customtkinter.CTkEntry(channel_frame)
+configuration_min_views = customtkinter.CTkEntry(channel_frame)
+configuration_year_subs = customtkinter.CTkCheckBox(channel_frame)
+configuration_max_duration = customtkinter.CTkEntry(channel_frame)
+configuration_skip_restricted = customtkinter.CTkCheckBox(channel_frame)
+configuration_only_restricted = customtkinter.CTkCheckBox(channel_frame)
+configuration_min_year = customtkinter.CTkEntry(channel_frame)
+configuration_max_year = customtkinter.CTkEntry(channel_frame)
+configuration_filter_words = customtkinter.CTkTextbox(channel_frame)
+configuration_excludes = customtkinter.CTkTextbox(channel_frame)
+configuration_includes = customtkinter.CTkTextbox(channel_frame)
+
+audio_button = customtkinter.CTkButton(channel_frame, text="Audio (mp3)")
+video_button = customtkinter.CTkButton(channel_frame, text="Video (mp4)")
 
 yt_video_title_label = customtkinter.CTkLabel(app, text="")
 yt_video_views_label = customtkinter.CTkLabel(app, text="")
@@ -1459,8 +1478,6 @@ yt_video_date = customtkinter.CTkLabel(app, text="")
 yt_video_length = customtkinter.CTkLabel(app, text="")
 video_thumbnail_label = customtkinter.CTkLabel(app, text="")
 
-audio_button = customtkinter.CTkButton(app, text="Audio (mp3)")
-video_button = customtkinter.CTkButton(app, text="Video (mp4)")
 abort_button = customtkinter.CTkButton(app, text="Abort")
 
 video_resolution_label = customtkinter.CTkLabel(app, text="")
@@ -1473,19 +1490,6 @@ progress_percent = customtkinter.CTkLabel(app, text="")
 progress_bar = customtkinter.CTkProgressBar(app, width=entry_width)
 
 download_log_label = customtkinter.CTkLabel(app, text="")
-
-configuration_resolution = customtkinter.CTkComboBox(app)
-configuration_min_duration = customtkinter.CTkEntry(app)
-configuration_min_views = customtkinter.CTkEntry(app)
-configuration_year_subs = customtkinter.CTkCheckBox(app)
-configuration_max_duration = customtkinter.CTkEntry(app)
-configuration_skip_restricted = customtkinter.CTkCheckBox(app)
-configuration_only_restricted = customtkinter.CTkCheckBox(app)
-configuration_min_year = customtkinter.CTkEntry(app)
-configuration_max_year = customtkinter.CTkEntry(app)
-configuration_filter_words = customtkinter.CTkTextbox(app)
-configuration_excludes = customtkinter.CTkTextbox(app)
-configuration_includes = customtkinter.CTkTextbox(app)
 
 if len(sys.argv) > 1 and youtube_url in str(sys.argv[1]):
     channel_dropdown.set(sys.argv[1])
