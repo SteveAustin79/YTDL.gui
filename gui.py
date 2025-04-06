@@ -1001,7 +1001,7 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                     if video.views <= min_video_views:
                         do_not_download = 1
 
-                v_title_text_length = 35
+                v_title_text_length = 32
                 v_title = video.title[:v_title_text_length] + "..." if len(video.title) > v_title_text_length else video.title
                 update_download_log("Find match:  " + str(v_counter) + "/" + str(len(video_watch_urls)) + "  |  " +
                                     str(video.publish_date.strftime("%Y")) + "  |  " + ("R" if video.age_restricted else "_") +
