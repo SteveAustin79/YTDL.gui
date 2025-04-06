@@ -81,7 +81,7 @@ def list_channels():
 
 def list_channels_work():
     row_factor = 1
-    separator1.grid(row=row_factor, column=0, columnspan=18, sticky="ew", padx=padding_x, pady=padding_y * padding_y_factor)
+    separator1.grid(row=row_factor, column=0, columnspan=18, sticky="ew", padx=0, pady=padding_y * padding_y_factor)
 
     for i, channel in enumerate(channel_lines, start=1):
         update_log("Scanning channel... " + channel.replace(youtube_url, "")[1:])
