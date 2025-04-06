@@ -279,10 +279,10 @@ def list_channels_work():
                 youtube_vo_age_restricted = youtube_video_object.age_restricted
                 youtube_vo_publish_date = youtube_video_object.publish_date
 
-                update_log("Find match:  " + str(counter) + "/" + str(len(size)) + "   |   " +
-                           ("R" if youtube_vo_age_restricted else "_") + "   |   " +
-                           str(youtube_vo_publish_date.strftime(AppConfig.date_format_display)) + "   |   " +
-                                                format_time(youtube_vo_length) + "   |   " + youtube_vo_title)
+                update_log("Find match:  " + str(counter) + "/" + str(len(size)) + "      |      " +
+                           ("R" if youtube_vo_age_restricted else "_") + "      |      " +
+                           str(youtube_vo_publish_date.strftime(AppConfig.date_format_display)) + "      |      " +
+                                                format_time(youtube_vo_length) + "      |      " + youtube_vo_title)
                 # update_download_log("Find match:  " + str(v_counter) + "/" + str(len(video_watch_urls)) + "  |  " +
                 #                     ("R" if video.age_restricted else "_") + "  |  " +
                 #                     str(video.publish_date.strftime(AppConfig.date_format_display)) + "  |  " +
