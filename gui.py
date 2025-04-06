@@ -1001,8 +1001,9 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                     if video.views <= min_video_views:
                         do_not_download = 1
 
-                update_download_log("Filtering...      " + str(video.publish_date.strftime("%Y")) + "    " + str(video.age_restricted) + "      " + format_time(video.length) +
-                    "      " + v_title, (COLORS.violet if do_not_download == 1 else COLORS.green))
+                update_download_log("Filtering...    " + str(video.publish_date.strftime("%Y")) + "    " +
+                                    str(video.age_restricted) + "    " + format_time(video.length) +
+                    "    " + v_title, (COLORS.violet if do_not_download == 1 else COLORS.green))
 
                 if (not video.age_restricted and
                         video.vid_info.get('playabilityStatus', {}).get('status') != 'UNPLAYABLE' and
