@@ -510,7 +510,7 @@ def get_information_work():
 
     yt_channel_thumbnail = load_image_from_url(channel_info_thumbnail, size=(tn_height, tn_height))
     channel_thumbnail_label.configure(image=yt_channel_thumbnail)
-    channel_thumbnail_label.grid(row=3, column=0, rowspan=3, padx=padding_x, pady=padding_y * padding_y_factor, sticky="ne")
+    channel_thumbnail_label.grid(row=3, column=0, rowspan=3, padx=padding_x, pady=padding_y * padding_y_factor * 2, sticky="ne")
     elements_to_destroy.append(channel_thumbnail_label)
 
     default_max_res = "max"
