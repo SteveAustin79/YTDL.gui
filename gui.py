@@ -1002,7 +1002,7 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                         do_not_download = 1
 
                 update_download_log("Filtering...    " + str(video.publish_date.strftime("%Y")) + "    " +
-                                    str(video.age_restricted) + "    " + format_time(video.length) +
+                                    ("R" if video.age_restricted else "_") + "    " + format_time(video.length) +
                     "    " + v_title, (COLORS.violet if do_not_download == 1 else COLORS.green))
 
                 if (not video.age_restricted and
