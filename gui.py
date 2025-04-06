@@ -1432,7 +1432,7 @@ get_information_button.grid(row=1, column=3, padx=padding_x, pady=padding_y, sti
 # separator1.grid(row=2, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y)
 
 channel_frame = customtkinter.CTkFrame(app, fg_color="#171717")
-channel_frame.grid(row=3, column=0, columnspan=4, sticky="ew", padx=0, pady=0)
+channel_frame.grid(row=3, column=0, columnspan=4, sticky="ew", padx=0, pady=padding_y * padding_y_factor)
 channel_frame.grid_columnconfigure(0, minsize=250)
 channel_frame.grid_columnconfigure(1, minsize=300)
 channel_frame.grid_columnconfigure(2, minsize=480)
