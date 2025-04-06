@@ -459,6 +459,6 @@ app.grid_columnconfigure(13, minsize=90)     # Video count
 app.grid_columnconfigure(14, minsize=100)    # Latest updated 160 / Latest video date
 app.grid_columnconfigure(15, minsize=0)    # Thumbnail 40
 app.grid_columnconfigure(16, minsize=110)    # Latest video ID
-app.grid_columnconfigure(17, minsize=200)    # Latest video title 164
+app.grid_columnconfigure(17, minsize=204)    # Latest video title 164
 
 app.mainloop()
