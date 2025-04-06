@@ -279,7 +279,7 @@ def format_view_count(number: int) -> str:
     elif number >= 1_000_000:  # Millions
         return f"{number / 1_000_000:.1f}M"
     elif number >= 100_000:
-        return f"{number / 100_000:.0f}K"
+        return f"{number / 1_000:.0f}K"
     elif number >= 1_000:  # Thousands
         return f"{number / 1_000:.1f}K"
     else:
