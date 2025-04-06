@@ -1435,7 +1435,7 @@ separator2 = customtkinter.CTkFrame(app, height=2, fg_color=COLORS.separator)
 separator3 = customtkinter.CTkFrame(app, height=2, fg_color=COLORS.separator)
 
 channel_frame = customtkinter.CTkFrame(app)
-channel_frame.grid(row=0, column=0, sticky="ew", padx=padding_x, pady=padding_y)
+channel_frame.grid(row=3, column=0, sticky="ew", padx=padding_x, pady=padding_y)
 
 video_info_channel = customtkinter.CTkLabel(channel_frame, text="", font=("Arial", 16, "bold"))
 video_info_channel_url = customtkinter.CTkLabel(channel_frame, text="", text_color=COLORS.gray)
