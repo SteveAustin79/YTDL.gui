@@ -266,7 +266,7 @@ def list_channels_work():
             color_video_date = COLORS.gray
             latest_video_title_text = ""
             latest_date = ""
-            yt_video_thumbnail = ""
+            # yt_video_thumbnail = ""
             size = channel_object.video_urls
             for video_iter in channel_object.videos:
                 counter += 1
@@ -293,7 +293,7 @@ def list_channels_work():
                         and youtube_vo_views >= ch_config_min_views
                         and youtube_vo_age_restricted in ch_config_restricted):
 
-                    yt_video_thumbnail = load_image_from_url(youtube_video_object.thumbnail_url, size=(32, 18))
+                    # yt_video_thumbnail = load_image_from_url(youtube_video_object.thumbnail_url, size=(32, 18))
 
                     latest_video_title_text = youtube_vo_title
                     latest_date_math = youtube_vo_publish_date.strftime(AppConfig.date_format_math)
@@ -335,10 +335,10 @@ def list_channels_work():
                                              sticky="nswe")
                 elements_to_destroy.append(label_latest_video_date)
 
-            video_thumbnail_label = customtkinter.CTkLabel(app, text="")
-            video_thumbnail_label.configure(image=yt_video_thumbnail, text="")
-            video_thumbnail_label.grid(row=i + row_factor, column=15, padx=int(padding_x / 3), pady=0, sticky="nswe")
-            elements_to_destroy.append(video_thumbnail_label)
+            # video_thumbnail_label = customtkinter.CTkLabel(app, text="")
+            # video_thumbnail_label.configure(image=yt_video_thumbnail, text="")
+            # video_thumbnail_label.grid(row=i + row_factor, column=15, padx=int(padding_x / 3), pady=0, sticky="nswe")
+            # elements_to_destroy.append(video_thumbnail_label)
 
             label_latest_video_id = customtkinter.CTkLabel(app, text=latest_video_id_text, text_color=color_video_id,
                                                            height=row_height)
@@ -360,8 +360,15 @@ def list_channels_work():
             # Latest updated
             label_last_updated = customtkinter.CTkLabel(app, text=channel_last_updated, width=160, height=row_height,
                                                         text_color=COLORS.gray)
-            label_last_updated.grid(row=i + row_factor, column=14, padx=padding_x, pady=padding_y, sticky="w")
             elements_to_destroy.append(label_last_updated)
+
+            label_last_updated.grid(row=i + row_factor, column=0, padx=padding_x, pady=padding_y, sticky="w")
+            elements_to_destroy.append(label_last_updated)
+
+        row_factor += 1
+        separator_label = customtkinter.CTkFrame(app, height=2, fg_color=COLORS.separator)
+        separator_label.grid(row=i + row_factor, column=0, columnspan=18, sticky="ew", padx=padding_x, pady=padding_y)
+        elements_to_destroy.append(separator_label)
 
         update_log("")
     update_app_title()
@@ -450,8 +457,8 @@ app.grid_columnconfigure(11, minsize=50)     # includes
 app.grid_columnconfigure(12, minsize=80)    # Filter words
 app.grid_columnconfigure(13, minsize=90)     # Video count
 app.grid_columnconfigure(14, minsize=100)    # Latest updated 160 / Latest video date
-app.grid_columnconfigure(15, minsize=40)    # Thumbnail 45
+app.grid_columnconfigure(15, minsize=0)    # Thumbnail 40
 app.grid_columnconfigure(16, minsize=110)    # Latest video ID
-app.grid_columnconfigure(17, minsize=164)    # Latest video title
+app.grid_columnconfigure(17, minsize=200)    # Latest video title 164
 
 app.mainloop()

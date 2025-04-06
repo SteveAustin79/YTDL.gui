@@ -17,7 +17,7 @@ from functions import (AppConfig, COLORS, CcConfig, JSONConfig, load_config, fin
 # dropdown with int for loop mode exit after int loops
 
 app_title = "YTDL.video"
-entry_width = 450
+entry_width = 460
 padding_x = 6
 padding_y = 3
 padding_y_factor = 2
@@ -48,8 +48,7 @@ def update_channel_config(default_max_res, limit_resolution_to, default_min_dura
             default_year_subfolders != year_subfolders_temp or default_exclude_videos != exclude_video_ids or
             default_include_videos != include_video_ids or default_filter_words != video_name_filter):
 
-        create_channel_config_button.grid_remove()
-        separator1.update()
+        app.focus_set()
 
         if default_max_res != limit_resolution_to:
             JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.channel_config_path, "c_max_resolution", limit_resolution_to)
@@ -472,13 +471,13 @@ def get_information_work():
     total_channel_name = channel_info_name
     channel_info_thumbnail = channel_info.thumbnail_url
 
-    separator1.grid(row=2, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y * padding_y_factor)
-    elements_to_destroy.append(separator1)
+    # separator1.grid(row=2, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y * padding_y_factor)
+    # elements_to_destroy.append(separator1)
 
-    separator2.grid(row=6, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y * padding_y_factor)
+    separator2.grid(row=6, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y)
     elements_to_destroy.append(separator2)
 
-    separator3.grid(row=14, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y * padding_y_factor)
+    separator3.grid(row=14, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y)
     elements_to_destroy.append(separator3)
 
     video_info_channel.grid(row=3, column=1, padx=padding_x, pady=padding_y, sticky="nw")
@@ -909,7 +908,9 @@ def get_information_work():
     video_button.grid(row=13, column=2, padx=padding_x, pady=padding_y, sticky="w")
     elements_to_destroy.append(video_button)
 
-
+    ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON
+    ##### AUDIO OR VIDEO BUTTON #####                             AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON
+    ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON
 
     if count_files_from_channel_dir >= len(video_watch_urls):
         video_button.grid_remove()
@@ -971,10 +972,14 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
         else:
             do_not_download = 0
             grid_remove_elements(elements_to_destroy_loop)
+            # update_download_log("checking videos...", COLORS.violet)
             if web_client:
                 video = YouTube(youtube_watch_url + only_video_id, 'WEB', on_progress_callback=on_progress)
             else:
                 video = YouTube(youtube_watch_url + only_video_id, on_progress_callback=on_progress)
+            v_title_text_length = 45
+            v_title = video.title[:v_title_text_length] + "..." if len(video.title) > v_title_text_length else video.title
+            update_download_log("Checking:         R " + str(video.age_restricted) + "         " + v_title, COLORS.violet)
             if default_filter_words == "" or any(
                     word.lower() in video.title.lower() for word in string_to_list(default_filter_words)):
                 if min_duration_bool:
@@ -1107,6 +1112,10 @@ def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: s
         avail_resolutions.configure(text=str(print_resolutions(y_tube)), text_color=COLORS.gray)
         avail_resolutions.grid(row=20, column=2, padx=padding_x, pady=padding_y, sticky="w")
         elements_to_destroy_loop.append(avail_resolutions)
+
+    ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON
+    ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON                       ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON
+    ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON
 
     if looper:
         download_video(audio_or_video_bool, y_tube, res, restricted, year_subfolders, looper)
@@ -1266,6 +1275,7 @@ def merge_video_audio(video_id: str, publish_date: str, vid_res: str, year: str,
 
     try:
         update_download_log("Merging to MP4...", COLORS.gray)
+        abort_button.grid_remove()
         command = [
             "ffmpeg", "-loglevel", "quiet", "-stats", "-i", video_file, "-i", audio_file,
             "-c:v", "copy", "-c:a", "aac", output_file
@@ -1325,6 +1335,7 @@ def merge_webm_opus(video_id: str, publish_date: str, vid_res: str, year: str, r
 def convert_webm_to_mp4(input_file: str, output_file: str, year: str, restricted: bool) -> None:
     create_directories(restricted, year)
     update_download_log("Converting WebM to MP4... (this may take a while)", COLORS.gray)
+    abort_button.grid_remove()
     command = [
         "ffmpeg", "-loglevel", "quiet", "-stats", "-i", input_file,
         "-c:v", "libx264", "-preset", "fast", "-crf", "23",  # H.264 video encoding
@@ -1378,9 +1389,9 @@ update_app_title()
 app.configure(bg_color=COLORS.black)
 app.protocol("WM_DELETE_WINDOW", on_closing)
 app.grid_columnconfigure(0, minsize=250)
-app.grid_columnconfigure(1, minsize=280)
-app.grid_columnconfigure(2, minsize=440)
-app.grid_columnconfigure(3, minsize=210)
+app.grid_columnconfigure(1, minsize=300)
+app.grid_columnconfigure(2, minsize=480)
+app.grid_columnconfigure(3, minsize=250)
 
 # Add UI elements
 logo = customtkinter.CTkImage(light_image=Image.open(AppConfig.logo_path), size=(87, 58)) # 180x120
@@ -1394,7 +1405,7 @@ channel_dropdown = customtkinter.CTkComboBox(app, values=read_channel_txt_lines(
 channel_dropdown.grid(row=0, column=2, padx=padding_x, pady=padding_y, sticky="w")
 
 title = customtkinter.CTkLabel(app, text="YouTube Channel, Video-, or Playlist URL:", text_color=COLORS.gray)
-title.grid(row=1, column=1, padx=padding_x, pady=padding_y, sticky="e")
+title.grid(row=1, column=1, padx=padding_x, pady=padding_y, sticky="se")
 
 if len(sys.argv) > 1 and not youtube_url in str(sys.argv[1]):
     url_var = tkinter.StringVar(value=sys.argv[1])
@@ -1402,12 +1413,14 @@ else:
     url_var = tkinter.StringVar(value="")
 
 link = customtkinter.CTkEntry(app, width=entry_width, textvariable=url_var)
-link.grid(row=1, column=2, padx=padding_x, pady=padding_y, sticky="w")
+link.grid(row=1, column=2, padx=padding_x, pady=padding_y, sticky="sw")
 
 get_information_button = customtkinter.CTkButton(app, text="Get Information", command=get_information)
-get_information_button.grid(row=1, column=3, padx=padding_x, pady=padding_y, sticky="w")
+get_information_button.grid(row=1, column=3, padx=padding_x, pady=padding_y, sticky="sw")
 
 separator1 = customtkinter.CTkFrame(app, height=2, fg_color=COLORS.separator)
+separator1.grid(row=2, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y)
+# elements_to_destroy.append(separator1)
 separator2 = customtkinter.CTkFrame(app, height=2, fg_color=COLORS.separator)
 separator3 = customtkinter.CTkFrame(app, height=2, fg_color=COLORS.separator)
 
