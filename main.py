@@ -5,7 +5,7 @@ import threading
 from pytubefix import Channel
 from PIL import Image
 from functions import (AppConfig, COLORS, CcConfig, Tooltip, load_config, find_file_by_string, count_files, format_time,
-                       get_free_space, clean_string_regex, string_to_list, destroy_elements, format_view_count)
+                       get_free_space, clean_string_regex, string_to_list, destroy_elements)
 
 
 app_title = "YTDL.channels"
@@ -39,6 +39,17 @@ def read_channel_txt_lines(filename: str) -> list[str]:
     except FileNotFoundError:
         print("❌ Error: File not found.")
         return []
+
+
+def format_view_count(number: int) -> str:
+    if number >= 1_000_000_000:  # Billions
+        return f"{number / 1_000_000_000:.1f}B"
+    elif number >= 1_000_000:  # Millions
+        return f"{number / 1_000_000:.1f}M"
+    elif number >= 1_000:  # Thousands
+        return f"{number / 1_000:.0f}K"
+    else:
+        return str(number)
 
 
 def update_log(text: str) -> None:

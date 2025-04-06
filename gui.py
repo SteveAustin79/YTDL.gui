@@ -11,8 +11,7 @@ from pytubefix import YouTube, Channel, Playlist
 from pytubefix.cli import on_progress
 from PIL import Image
 from functions import (AppConfig, COLORS, CcConfig, JSONConfig, load_config, find_file_by_string, count_files, format_time,
-                       get_free_space, clean_string_regex, string_to_list, load_image_from_url, grid_remove_elements,
-                       format_view_count)
+                       get_free_space, clean_string_regex, string_to_list, load_image_from_url, grid_remove_elements)
 
 
 # dropdown with int for loop mode exit after int loops
@@ -257,6 +256,17 @@ def delete_temp_files() -> None:
         os.remove(video_file)
     if audio_file and os.path.exists(audio_file):
         os.remove(audio_file)
+
+
+def format_view_count(number: int) -> str:
+    if number >= 1_000_000_000:  # Billions
+        return f"{number / 1_000_000_000:.1f}B"
+    elif number >= 1_000_000:  # Millions
+        return f"{number / 1_000_000:.1f}M"
+    elif number >= 1_000:  # Thousands
+        return f"{number / 1_000:.1f}K"
+    else:
+        return str(number)
 
 
 def find_media_files(fmf_path: str) -> tuple[str | None, str | None]:
