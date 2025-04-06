@@ -70,8 +70,8 @@ def list_channels():
 
 def list_channels_work():
     row_factor = 1
-    # separator1.grid(row=row_factor, column=0, columnspan=18, sticky="ew", padx=padding_x,
-    #                 pady=padding_y * padding_y_factor)
+    separator1.grid(row=row_factor, column=0, columnspan=18, sticky="ew", padx=padding_x,
+                    pady=padding_y * padding_y_factor)
 
     for i, channel in enumerate(channel_lines, start=1):
         update_log("Scanning channel... " + channel.replace(youtube_url, "")[1:])
@@ -451,7 +451,7 @@ c_filters_on_in_channels_list.grid(row=0, column=2, columnspan=6, padx=padding_x
 log_label = customtkinter.CTkLabel(header_frame, text="", text_color=COLORS.violet, anchor="w")
 log_label.grid(row=0, column=9, columnspan=8, padx=padding_x, pady=padding_y, sticky="w")
 
-# separator1 = customtkinter.CTkFrame(app, height=2, fg_color=COLORS.separator)
+separator1 = customtkinter.CTkFrame(app, height=2, fg_color=COLORS.separator)
 
 header_frame.grid_columnconfigure(0, minsize=210)    # Channel Name
 header_frame.grid_columnconfigure(1, minsize=50)     # Resolution
