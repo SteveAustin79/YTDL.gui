@@ -484,15 +484,15 @@ def get_information_work():
     # separator3.grid(row=14, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y)
     # elements_to_destroy.append(separator3)
 
-    video_info_channel.grid(row=3, column=1, padx=padding_x, pady=padding_y * padding_y_factor * 2, sticky="nw")
+    video_info_channel.grid(row=3, column=1, padx=padding_x, pady=padding_y * padding_y_factor, sticky="nw")
     elements_to_destroy.append(video_info_channel)
     video_info_channel.configure(text=channel_info_name[:29] + "..." if len(channel_info_name) > 29 else channel_info_name)
-    video_info_channel_url.grid(row=3, column=2, padx=padding_x, pady=padding_y * padding_y_factor * 2, sticky="nw")
+    video_info_channel_url.grid(row=3, column=2, padx=padding_x, pady=padding_y * padding_y_factor, sticky="nw")
     elements_to_destroy.append(video_info_channel_url)
     video_info_channel_url.configure(text=channel_info_url)
     if not check_channels_txt("channels.txt", channel_info_url):
         video_info_channel_button.configure(command=lambda: add_url_in_order("channels.txt", channel_info_url))
-        video_info_channel_button.grid(row=3, column=3, padx=padding_x, pady=padding_y * padding_y_factor * 2, sticky="nw")
+        video_info_channel_button.grid(row=3, column=3, padx=padding_x, pady=padding_y * padding_y_factor, sticky="nw")
         elements_to_destroy.append(video_info_channel_button)
 
     ytchannel_video_count.grid(row=4, column=1, padx=padding_x, pady=padding_y, sticky="nw")
