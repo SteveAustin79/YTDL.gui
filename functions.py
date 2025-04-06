@@ -57,9 +57,9 @@ class COLORS:
     pink        = "#ff83a6"
     yellow      = "#fffb8c"
     violet      = "#c7a8ff"
-    log_bg      = "#171717"
+    log_bg      = "#191919"
     separator   = "#414141"
-    frame_bg    = "#141414"
+    frame_bg    = "#131313"
 
 
 class Tooltip:
@@ -271,3 +271,15 @@ def grid_remove_elements(d_elements_to_destroy):
     for element in d_elements_to_destroy:
         element.grid_remove()  # Remove widget from the UI
     d_elements_to_destroy.clear()
+
+
+def format_view_count(number: int) -> str:
+    if number >= 1_000_000_000:  # Billions
+        return f"{number / 1_000_000_000:.1f}B"
+    elif number >= 1_000_000:  # Millions
+        return f"{number / 1_000_000:.1f}M"
+    elif number >= 1_000:  # Thousands
+        return f"{number / 1_000:.1f}K"
+    else:
+        return str(number)
+

@@ -11,7 +11,8 @@ from pytubefix import YouTube, Channel, Playlist
 from pytubefix.cli import on_progress
 from PIL import Image
 from functions import (AppConfig, COLORS, CcConfig, JSONConfig, load_config, find_file_by_string, count_files, format_time,
-                       get_free_space, clean_string_regex, string_to_list, load_image_from_url, grid_remove_elements)
+                       get_free_space, clean_string_regex, string_to_list, load_image_from_url, grid_remove_elements,
+                       format_view_count)
 
 
 # dropdown with int for loop mode exit after int loops
@@ -248,17 +249,6 @@ def on_progress(stream, chunk, bytes_remaining):
     progress_percent.configure(text=percent + "%")
     progress_bar.set(float(percent_completed) / 100)
     progress_percent.update()
-
-
-def format_view_count(number: int) -> str:
-    if number >= 1_000_000_000:  # Billions
-        return f"{number / 1_000_000_000:.1f}B"
-    elif number >= 1_000_000:  # Millions
-        return f"{number / 1_000_000:.1f}M"
-    elif number >= 1_000:  # Thousands
-        return f"{number / 1_000:.1f}K"
-    else:
-        return str(number)
 
 
 def delete_temp_files() -> None:

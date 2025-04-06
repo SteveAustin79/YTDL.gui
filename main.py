@@ -5,7 +5,7 @@ import threading
 from pytubefix import Channel
 from PIL import Image
 from functions import (AppConfig, COLORS, CcConfig, Tooltip, load_config, find_file_by_string, count_files, format_time,
-                       get_free_space, clean_string_regex, string_to_list, destroy_elements)
+                       get_free_space, clean_string_regex, string_to_list, destroy_elements, format_view_count)
 
 
 app_title = "YTDL.channels"
@@ -139,7 +139,7 @@ def list_channels_work():
             label_config_min_views.grid(row=i + row_factor, column=6, padx=padding_x, pady=padding_y, sticky="e")
             elements_to_destroy.append(label_config_min_views)
             if int(channel_config["c_minimum_views"]) != 0:
-                label_config_min_views.configure(text=str(channel_config["c_minimum_views"]),
+                label_config_min_views.configure(text=format_view_count(int(channel_config["c_minimum_views"])),
                                                  text_color=COLORS.yellow)
 
             # Year subs
@@ -352,7 +352,7 @@ def list_channels_work():
             label_latest_video_id.grid(row=i + row_factor, column=16, padx=padding_x, pady=padding_y, sticky="w")
             elements_to_destroy.append(label_latest_video_id)
 
-            title_width = 30
+            title_width = 29
             label_latest_video_title = customtkinter.CTkLabel(app,
                                                               text=latest_video_title_text[:title_width] + "..." if len(
                                                                   latest_video_title_text) > title_width else latest_video_title_text,
