@@ -10,7 +10,7 @@ import threading
 from pytubefix import YouTube, Channel, Playlist
 from pytubefix.cli import on_progress
 from PIL import Image
-from functions import (AppConfig, COLORS, CcConfig, JSONConfig, load_config, find_file_by_string, count_files,
+from functions import (AppConfig, COLORS, CcConfig, JSONConfig, load_config, find_file_by_string, count_files, format_time,
                        get_free_space, clean_string_regex, string_to_list, load_image_from_url, grid_remove_elements)
 
 
@@ -248,11 +248,6 @@ def on_progress(stream, chunk, bytes_remaining):
     progress_percent.configure(text=percent + "%")
     progress_bar.set(float(percent_completed) / 100)
     progress_percent.update()
-
-
-def format_time(seconds: int) -> str:
-    minutes, seconds = divmod(seconds, 60)
-    return f"{minutes}m{seconds}s"
 
 
 def format_view_count(number: int) -> str:

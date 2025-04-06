@@ -4,8 +4,8 @@ import subprocess
 import threading
 from pytubefix import Channel
 from PIL import Image
-from functions import (AppConfig, COLORS, CcConfig, Tooltip, load_config, find_file_by_string, count_files,
-                       get_free_space, clean_string_regex, string_to_list, load_image_from_url, destroy_elements)
+from functions import (AppConfig, COLORS, CcConfig, Tooltip, load_config, find_file_by_string, count_files, format_time,
+                       get_free_space, clean_string_regex, string_to_list, destroy_elements)
 
 
 app_title = "YTDL.channels"
@@ -279,8 +279,15 @@ def list_channels_work():
                 youtube_vo_age_restricted = youtube_video_object.age_restricted
                 youtube_vo_publish_date = youtube_video_object.publish_date
 
-                update_log("Find match: " + str(counter) + "/" + str(len(size)) + "        " +
-                           youtube_vo_title)
+                update_log("Find match:  " + str(counter) + "/" + str(len(size)) + "  |  " +
+                           ("R" if youtube_vo_age_restricted else "_") + "  |  " +
+                           str(youtube_vo_publish_date.strftime(AppConfig.date_format_display)) + "  |  " +
+                                                format_time(youtube_vo_length) + "  |  " + youtube_vo_title)
+                # update_download_log("Find match:  " + str(v_counter) + "/" + str(len(video_watch_urls)) + "  |  " +
+                #                     ("R" if video.age_restricted else "_") + "  |  " +
+                #                     str(video.publish_date.strftime(AppConfig.date_format_display)) + "  |  " +
+                #                     format_time(video.length) + "  |  " +
+                #                     v_title, (COLORS.violet if do_not_download == 1 else COLORS.green))
 
                 if (youtube_vo_vid_info.get('playabilityStatus', {}).get('status') != 'UNPLAYABLE' and
                         youtube_vo_vid_info.get('playabilityStatus', {}).get(

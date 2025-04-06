@@ -237,6 +237,11 @@ def get_free_space(path: str) -> str:
     return formatted_space
 
 
+def format_time(seconds: int) -> str:
+    f_min, f_sec = divmod(seconds, 60)
+    return f"{f_min}m{f_sec}s"
+
+
 def clean_string_regex(text: str) -> str:
     new_text = text.replace(":", "")
     pattern = r"[^a-zA-Z0-9 ]"
