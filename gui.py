@@ -484,15 +484,15 @@ def get_information_work():
     # separator3.grid(row=14, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y)
     # elements_to_destroy.append(separator3)
 
-    video_info_channel.grid(row=3, column=1, padx=padding_x, pady=padding_y * padding_y_factor, sticky="nw")
+    video_info_channel.grid(row=3, column=1, padx=padding_x, pady=padding_y * padding_y_factor * 2, sticky="nw")
     elements_to_destroy.append(video_info_channel)
     video_info_channel.configure(text=channel_info_name[:29] + "..." if len(channel_info_name) > 29 else channel_info_name)
-    video_info_channel_url.grid(row=3, column=2, padx=padding_x, pady=padding_y * padding_y_factor, sticky="nw")
+    video_info_channel_url.grid(row=3, column=2, padx=padding_x, pady=padding_y * padding_y_factor * 2, sticky="nw")
     elements_to_destroy.append(video_info_channel_url)
     video_info_channel_url.configure(text=channel_info_url)
     if not check_channels_txt("channels.txt", channel_info_url):
         video_info_channel_button.configure(command=lambda: add_url_in_order("channels.txt", channel_info_url))
-        video_info_channel_button.grid(row=3, column=3, padx=padding_x, pady=padding_y * padding_y_factor, sticky="nw")
+        video_info_channel_button.grid(row=3, column=3, padx=padding_x, pady=padding_y * padding_y_factor * 2, sticky="nw")
         elements_to_destroy.append(video_info_channel_button)
 
     ytchannel_video_count.grid(row=4, column=1, padx=padding_x, pady=padding_y, sticky="nw")
@@ -884,7 +884,7 @@ def get_information_work():
 
 
 
-    audio_button.grid(row=13, column=1, padx=padding_x, pady=padding_y * padding_y_factor, sticky="e")
+    audio_button.grid(row=13, column=1, padx=padding_x, pady=padding_y * padding_y_factor * 2, sticky="e")
     elements_to_destroy.append(audio_button)
 
     if looper:
@@ -909,7 +909,7 @@ def get_information_work():
                                                               False, True if configuration_year_subs.get() == 1 else False))
         video_button.configure(command=lambda: start_download(False, restricted_video, ytv.video_id,
                                                               False, True if configuration_year_subs.get() == 1 else False))
-    video_button.grid(row=13, column=2, padx=padding_x, pady=padding_y * padding_y_factor, sticky="w")
+    video_button.grid(row=13, column=2, padx=padding_x, pady=padding_y * padding_y_factor * 2, sticky="w")
     elements_to_destroy.append(video_button)
 
     ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON
