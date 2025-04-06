@@ -977,8 +977,6 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                 video = YouTube(youtube_watch_url + only_video_id, 'WEB', on_progress_callback=on_progress)
             else:
                 video = YouTube(youtube_watch_url + only_video_id, on_progress_callback=on_progress)
-            v_title_text_length = 40
-            v_title = video.title[:v_title_text_length] + "..." if len(video.title) > v_title_text_length else video.title
 
             if default_filter_words == "" or any(
                     word.lower() in video.title.lower() for word in string_to_list(default_filter_words)):
@@ -1001,7 +999,9 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                     if video.views <= min_video_views:
                         do_not_download = 1
 
-                update_download_log("Filtering...     " + str(video.publish_date.strftime("%Y")) + "   |   " +
+                v_title_text_length = 40
+                v_title = video.title[:v_title_text_length] + "..." if len(video.title) > v_title_text_length else video.title
+                update_download_log("Filtering     " + str(video.publish_date.strftime("%Y")) + "   |   " +
                                     ("R" if video.age_restricted else "_") + "   |   " + format_time(video.length) +
                     "   |   " + v_title, (COLORS.violet if do_not_download == 1 else COLORS.green))
 
