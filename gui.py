@@ -761,7 +761,7 @@ def get_information_work():
     configuration_filter_words_label = customtkinter.CTkLabel(app, text="Filter words:")
     configuration_filter_words_label.grid(row=10, column=0, padx=padding_x, pady=padding_y, sticky="en")
     elements_to_destroy.append(configuration_filter_words_label)
-    configuration_filter_words.configure(width=170, height=60, fg_color=("white", "gray20"),  # Match Entry background color
+    configuration_filter_words.configure(width=170, height=50, fg_color=("white", "gray20"),  # Match Entry background color
                                                         border_color=("gray60", "gray40"),  # Match Entry border color
                                                         border_width=2, corner_radius=6)
     configuration_filter_words.delete("0.0", "end")
@@ -773,7 +773,7 @@ def get_information_work():
     configuration_excludes_label = customtkinter.CTkLabel(app, text="Excludes:")
     configuration_excludes_label.grid(row=10, column=1, padx=padding_x, pady=padding_y, sticky="en")
     elements_to_destroy.append(configuration_excludes_label)
-    configuration_excludes.configure(width=300, height=60, fg_color=("white", "gray20"),  # Match Entry background color
+    configuration_excludes.configure(width=300, height=50, fg_color=("white", "gray20"),  # Match Entry background color
                                                         border_color=("gray60", "gray40"),  # Match Entry border color
                                                         border_width=2, corner_radius=6)
     configuration_excludes.delete("0.0", "end")
@@ -785,7 +785,7 @@ def get_information_work():
     configuration_includes_label = customtkinter.CTkLabel(app, text="Includes:")
     configuration_includes_label.grid(row=10, column=2, padx=padding_x, pady=padding_y, sticky="en")
     elements_to_destroy.append(configuration_includes_label)
-    configuration_includes.configure(width=170, height=60, fg_color=("white", "gray20"),  # Match Entry background color
+    configuration_includes.configure(width=170, height=50, fg_color=("white", "gray20"),  # Match Entry background color
                                                         border_color=("gray60", "gray40"),  # Match Entry border color
                                                         border_width=2, corner_radius=6)
     configuration_includes.delete("0.0", "end")
