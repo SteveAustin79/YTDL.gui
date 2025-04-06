@@ -475,7 +475,7 @@ def get_information_work():
     # separator1.grid(row=2, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y * padding_y_factor)
     # elements_to_destroy.append(separator1)
 
-    separator2.grid(row=6, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y)
+    separator2.grid(row=6, column=0, columnspan=4, sticky="ew", padx=0, pady=padding_y)
     elements_to_destroy.append(separator2)
 
     # separator3.grid(row=14, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y)
