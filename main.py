@@ -481,7 +481,7 @@ header_frame.grid_columnconfigure(13, minsize=90)     # Video count
 header_frame.grid_columnconfigure(14, minsize=100)    # Latest updated 160 / Latest video date
 header_frame.grid_columnconfigure(15, minsize=0)    # Thumbnail 40
 header_frame.grid_columnconfigure(16, minsize=110)    # Latest video ID
-header_frame.grid_columnconfigure(17, minsize=220)    # Latest video title 164
+header_frame.grid_columnconfigure(17, minsize=215)    # Latest video title 164
 
 app.grid_columnconfigure(0, minsize=210)    # Channel Name
 app.grid_columnconfigure(1, minsize=50)     # Resolution
