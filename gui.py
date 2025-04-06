@@ -478,8 +478,8 @@ def get_information_work():
     separator2.grid(row=6, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y)
     elements_to_destroy.append(separator2)
 
-    separator3.grid(row=14, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y)
-    elements_to_destroy.append(separator3)
+    # separator3.grid(row=14, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y)
+    # elements_to_destroy.append(separator3)
 
     video_info_channel.grid(row=3, column=1, padx=padding_x, pady=padding_y, sticky="nw")
     elements_to_destroy.append(video_info_channel)
@@ -1428,9 +1428,8 @@ link.grid(row=1, column=2, padx=padding_x, pady=padding_y, sticky="sw")
 get_information_button = customtkinter.CTkButton(app, text="Get Information", command=get_information)
 get_information_button.grid(row=1, column=3, padx=padding_x, pady=padding_y, sticky="sw")
 
-separator1 = customtkinter.CTkFrame(app, height=2, fg_color=COLORS.separator)
-separator1.grid(row=2, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y)
-# elements_to_destroy.append(separator1)
+# separator1 = customtkinter.CTkFrame(app, height=2, fg_color=COLORS.separator)
+# separator1.grid(row=2, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y)
 
 channel_frame = customtkinter.CTkFrame(app, fg_color="#121212")
 channel_frame.grid(row=3, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y)
@@ -1440,7 +1439,7 @@ channel_frame.grid_columnconfigure(2, minsize=480)
 channel_frame.grid_columnconfigure(3, minsize=250)
 
 separator2 = customtkinter.CTkFrame(channel_frame, height=2, fg_color=COLORS.separator)
-separator3 = customtkinter.CTkFrame(app, height=2, fg_color=COLORS.separator)
+# separator3 = customtkinter.CTkFrame(app, height=2, fg_color=COLORS.separator)
 
 video_info_channel = customtkinter.CTkLabel(channel_frame, text="", font=("Arial", 16, "bold"))
 video_info_channel_url = customtkinter.CTkLabel(channel_frame, text="", text_color=COLORS.gray)
