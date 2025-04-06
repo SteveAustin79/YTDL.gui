@@ -419,12 +419,12 @@ def get_information():
 def get_information_work():
     global total_channel_videos
     global total_channel_name
+
+    update_app_title()
     looper = False
     if channel_dropdown.get() != "":
-        looper = True
-    update_app_title()
-    if channel_dropdown.get() != "":
         channel_url = channel_dropdown.get()
+        looper = True
     else:
         channel_url = link.get()
 
@@ -457,6 +457,7 @@ def get_information_work():
         for p_video in playlist.videos:
             video_id_from_single_video += p_video.video_id + ","
         video_id_from_single_video = video_id_from_single_video[:-1]
+    # else if channel url is in link field
 
     channel_info = get_yt_channel(yt_channel)
 
@@ -1001,7 +1002,7 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                     if video.views <= int(min_video_views):
                         do_not_download = 1
 
-                v_title_text_length = 29
+                v_title_text_length = 25
                 v_title = video.title[:v_title_text_length] + "..." if len(video.title) > v_title_text_length else video.title
                 update_download_log("Find match:  " + str(v_counter) + "/" + str(len(video_watch_urls)) + "  |  " +
                                     str(video.publish_date.strftime("%Y")) + "  |  " + ("R" if video.age_restricted else "_") +
