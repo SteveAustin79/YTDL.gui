@@ -465,6 +465,7 @@ def get_information_work():
 
     if channel_in_link_field:
         first_video = channel_info.video_urls[0]
+        print(first_video)
         if web_client:
             ytv = YouTube(first_video, 'WEB', on_progress_callback=on_progress)
         else:
