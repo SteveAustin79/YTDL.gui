@@ -427,6 +427,9 @@ update_app_title()
 app.configure(bg_color=COLORS.black)
 # app.protocol("WM_DELETE_WINDOW", on_closing)
 
+# header_frame = customtkinter.CTkFrame(app)
+# header_frame.configure(row=0, column=0, padx=padding_x, pady=padding_y, sticky="nw")
+
 logo = customtkinter.CTkImage(light_image=Image.open(AppConfig.logo_path), size=(60, 40)) # 180x120
 logo_label = customtkinter.CTkLabel(app, text="", image=logo)
 logo_label.grid(row=0, column=0, padx=padding_x, pady=padding_y, sticky="nw")
