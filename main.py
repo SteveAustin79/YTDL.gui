@@ -428,7 +428,7 @@ app.configure(bg_color=COLORS.black)
 # app.protocol("WM_DELETE_WINDOW", on_closing)
 
 header_frame = customtkinter.CTkFrame(app, fg_color=COLORS.frame_bg)
-header_frame.configure(row=0, column=0, columnspan=18, padx=padding_x, pady=padding_y, sticky="nw")
+header_frame.grid(row=0, column=0, columnspan=18, padx=padding_x, pady=padding_y, sticky="nw")
 
 logo = customtkinter.CTkImage(light_image=Image.open(AppConfig.logo_path), size=(60, 40)) # 180x120
 logo_label = customtkinter.CTkLabel(header_frame, text="", image=logo)
