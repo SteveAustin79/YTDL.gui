@@ -58,7 +58,7 @@ class COLORS:
     yellow      = "#fffb8c"
     violet      = "#c7a8ff"
     log_bg      = "#171717"
-    separator   = "#393939"
+    separator   = "#414141"
 
 
 class Tooltip:
