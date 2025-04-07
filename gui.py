@@ -1083,9 +1083,10 @@ def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: s
         video_thumbnail_label.grid(row=15, column=0, rowspan=4, padx=padding_x, pady=padding_y, sticky="e")
         elements_to_destroy_loop.append(video_thumbnail_label)
 
-        yt_video_id.configure(text=yt_video_id)
+        yt_video_id_value = tkinter.StringVar(value=y_tube.video_id)
+        yt_video_id.configure(text=yt_video_id_value)
         yt_video_id.grid(row=19, column=0, padx=padding_x, pady=padding_y, sticky="w")
-        elements_to_destroy.append(yt_video_id)
+        elements_to_destroy_loop.append(yt_video_id)
 
         yt_video_title_label.configure(text="Title:", text_color=COLORS.gray)
         yt_video_title_label.grid(row=15, column=1, padx=padding_x, pady=padding_y, sticky="e")
