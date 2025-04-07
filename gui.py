@@ -1022,6 +1022,7 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                     if video_duration >= int(max_duration) * 60:
                         do_not_download = 1
                         configuration_max_duration.configure(fg_color=COLORS.red)
+                    # separator2.update()
                 if int(min_year) > 0:
                     if int(video.publish_date.strftime("%Y")) <= int(min_year):
                         # do_not_download = 1
