@@ -1023,7 +1023,7 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                         do_not_download == 0 and not only_restricted_videos_bool):
                     count_ok_videos += 1
                     count_this_run += 1
-                    count_skipped = 0
+                    # count_skipped = 0
                     video_list.append(video.video_id)
 
                     start_download_work(audio_or_video_bool, False, video.video_id, True, year_subfolders)
