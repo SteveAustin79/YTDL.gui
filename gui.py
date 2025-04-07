@@ -1486,7 +1486,7 @@ configuration_includes = customtkinter.CTkTextbox(channel_frame)
 audio_button = customtkinter.CTkButton(channel_frame, text="Audio (mp3)")
 video_button = customtkinter.CTkButton(channel_frame, text="Video (mp4)")
 
-yt_video_id = customtkinter.CTkEntry(app, text="")
+yt_video_id = customtkinter.CTkEntry(app)
 yt_video_title_label = customtkinter.CTkLabel(app, text="")
 yt_video_views_label = customtkinter.CTkLabel(app, text="")
 yt_video_date_label = customtkinter.CTkLabel(app, text="")
