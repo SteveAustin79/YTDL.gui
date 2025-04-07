@@ -969,6 +969,12 @@ def loop_download(audio_or_video_bool, default_max_res, default_filter_words, on
     # t_loop_download.join()
 
 
+def reset_config_entry_box_colors():
+    configuration_min_duration.configure(fg_color="gray20")
+    configuration_max_duration.configure(fg_color="gray20")
+    configuration_filter_words.configure(fg_color="gray20")
+
+
 def loop_download_work(audio_or_video_bool, default_max_res, default_filter_words, only_restricted_videos_bool,
                         skip_restricted_bool, year_subfolders, min_duration_bool, min_duration, max_duration_bool, max_duration,
                         min_year, max_year, min_video_views):
@@ -989,8 +995,7 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
             count_ok_videos += 1
             count_skipped += 1
             update_download_log("Skipping   " + str(count_skipped) + "   already downloaded Video(s)", COLORS.violet)
-            configuration_max_duration.configure(fg_color="gray20")
-            configuration_filter_words.configure(fg_color="gray20")
+            reset_config_entry_box_colors()
         else:
             do_not_download = 0
             grid_remove_elements(elements_to_destroy_loop)
@@ -1310,8 +1315,7 @@ def convert_m4a_to_mp3(video_id: str, publish_date: str, year: str, restricted: 
     update_download_log("MP3 downloaded", COLORS.green)
     delete_temp_files()
 
-    configuration_max_duration.configure(fg_color="gray20")
-    configuration_filter_words.configure(fg_color="gray20")
+    reset_config_entry_box_colors()
 
 
 def merge_video_audio(video_id: str, publish_date: str, vid_res: str, year: str, restricted: bool) -> None:
@@ -1349,8 +1353,7 @@ def merge_video_audio(video_id: str, publish_date: str, vid_res: str, year: str,
             str(count_files(output_dir + "/" + clean_string_regex(total_channel_name).rstrip(), ".mp4")) +
             " / " + str(total_channel_videos) + " Videos downloaded")
 
-        configuration_max_duration.configure(fg_color="gray20")
-        configuration_filter_words.configure(fg_color="gray20")
+        reset_config_entry_box_colors()
 
         delete_temp_files()
 
