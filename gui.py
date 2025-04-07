@@ -998,16 +998,14 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                 video = YouTube(youtube_watch_url + only_video_id, on_progress_callback=on_progress)
 
             v_title_text_length = 42
-            v_title = video.title[:v_title_text_length] + "..." if len(
-                video.title) > v_title_text_length else video.title
-            update_download_log(
-                "Searching match:  " + str(v_counter) + "/" + str(
-                    len(video_watch_urls)) + "  |  " +
-                 str(video.publish_date.strftime(AppConfig.date_format_display)) + "  |  " +
-                 format_time(video.length) + "  |  " +
-                 ("R" if video.age_restricted else "_") + "  |  " +
-                 format_view_count(video.views) + "  |  " +
-                 v_title, COLORS.violet)
+            v_title = video.title[:v_title_text_length] + "..." if len(video.title) > v_title_text_length else video.title
+            v_title_update_full = (str(v_counter) + "/" + str(len(video_watch_urls)) + "  |  " +
+                                 str(video.publish_date.strftime(AppConfig.date_format_display)) + "  |  " +
+                                 format_time(video.length) + "  |  " +
+                                 ("R" if video.age_restricted else "_") + "  |  " +
+                                 format_view_count(video.views) + "  |  " +
+                                 v_title)
+            update_download_log("Searching match:  " + v_title_update_full, COLORS.violet)
 
             if default_filter_words == "" or any(
                     word.lower() in video.title.lower() for word in string_to_list(default_filter_words)):
@@ -1032,12 +1030,8 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
 
                 # v_title_text_length = 42
                 v_title = video.title[:v_title_text_length] + "..." if len(video.title) > v_title_text_length else video.title
-                update_download_log(("Searching match:  " if do_not_download == 1 else "Found match!  ") + str(v_counter) + "/" + str(len(video_watch_urls)) + "  |  " +
-                                    str(video.publish_date.strftime(AppConfig.date_format_display)) + "  |  " +
-                                    format_time(video.length) + "  |  " +
-                                    ("R" if video.age_restricted else "_") + "  |  " +
-                                    format_view_count(video.views) + "  |  " +
-                                    v_title, (COLORS.violet if do_not_download == 1 else COLORS.green))
+                update_download_log(("Searching match:  " if do_not_download == 1 else "Found match!  ") +
+                                    v_title_update_full, (COLORS.violet if do_not_download == 1 else COLORS.green))
 
                 if (not video.age_restricted and
                         video.vid_info.get('playabilityStatus', {}).get('status') != 'UNPLAYABLE' and
