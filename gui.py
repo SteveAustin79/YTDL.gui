@@ -818,6 +818,8 @@ def get_information_work():
     # Create empty lists
     video_list.clear()
     video_list_restricted.clear()
+
+    global video_watch_urls
     video_watch_urls.clear()
 
     if len(include_list) > 0:
@@ -971,6 +973,8 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
     count_this_run = 0
     count_skipped = 0
     v_counter = 0
+
+    global video_watch_urls
 
     for url in video_watch_urls:
         only_video_id = str(url).split("=")[1]
