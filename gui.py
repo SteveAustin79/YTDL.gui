@@ -990,6 +990,17 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
             count_skipped += 1
             update_download_log("Skipping   " + str(count_skipped) + "   already downloaded Video(s)", COLORS.violet)
         else:
+            v_title_text_length = 42
+            v_title = video.title[:v_title_text_length] + "..." if len(
+                video.title) > v_title_text_length else video.title
+            update_download_log(
+                ("Searching match:  " if do_not_download == 1 else "Found match!  ") + str(v_counter) + "/" + str(
+                    len(video_watch_urls)) + "  |  " +
+                str(video.publish_date.strftime(AppConfig.date_format_display)) + "  |  " +
+                format_time(video.length) + "  |  " +
+                ("R" if video.age_restricted else "_") + "  |  " +
+                format_view_count(video.views) + "  |  " +
+                v_title, (COLORS.violet if do_not_download == 1 else COLORS.green))
             do_not_download = 0
             grid_remove_elements(elements_to_destroy_loop)
             if web_client:
@@ -1018,14 +1029,14 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                     if video.views <= int(min_video_views):
                         do_not_download = 1
 
-                v_title_text_length = 42
-                v_title = video.title[:v_title_text_length] + "..." if len(video.title) > v_title_text_length else video.title
-                update_download_log(("Searching match:  " if do_not_download == 1 else "Found match!  ") + str(v_counter) + "/" + str(len(video_watch_urls)) + "  |  " +
-                                    str(video.publish_date.strftime(AppConfig.date_format_display)) + "  |  " +
-                                    format_time(video.length) + "  |  " +
-                                    ("R" if video.age_restricted else "_") + "  |  " +
-                                    format_view_count(video.views) + "  |  " +
-                                    v_title, (COLORS.violet if do_not_download == 1 else COLORS.green))
+                # v_title_text_length = 42
+                # v_title = video.title[:v_title_text_length] + "..." if len(video.title) > v_title_text_length else video.title
+                # update_download_log(("Searching match:  " if do_not_download == 1 else "Found match!  ") + str(v_counter) + "/" + str(len(video_watch_urls)) + "  |  " +
+                #                     str(video.publish_date.strftime(AppConfig.date_format_display)) + "  |  " +
+                #                     format_time(video.length) + "  |  " +
+                #                     ("R" if video.age_restricted else "_") + "  |  " +
+                #                     format_view_count(video.views) + "  |  " +
+                #                     v_title, (COLORS.violet if do_not_download == 1 else COLORS.green))
 
                 if (not video.age_restricted and
                         video.vid_info.get('playabilityStatus', {}).get('status') != 'UNPLAYABLE' and
