@@ -985,6 +985,7 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
         only_video_id = str(url).split("=")[1]
         v_counter += 1
         # configuration_max_duration.configure(text_color=COLORS.white)
+        configuration_filter_words.configure(text_color=COLORS.white)
         # only_video_id = pytubefix.extract.video_id(url)
         if find_file_by_string(ytchannel_path.get(), only_video_id, default_max_res, audio_or_video_bool) is not None:
             count_ok_videos += 1
@@ -1010,6 +1011,7 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
 
             if default_filter_words == "" or any(
                     word.lower() in video.title.lower() for word in string_to_list(default_filter_words)):
+                configuration_filter_words.configure(text_color=COLORS.green)
                 if min_duration_bool:
                     video_duration = int(video.length)
                     if video_duration <= int(min_duration) * 60:
