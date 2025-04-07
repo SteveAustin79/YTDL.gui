@@ -1084,7 +1084,7 @@ def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: s
         elements_to_destroy_loop.append(video_thumbnail_label)
 
         yt_video_id_value = tkinter.StringVar(value=y_tube.video_id)
-        yt_video_id.configure(text=yt_video_id_value)
+        yt_video_id.configure(textvariable=yt_video_id_value)
         yt_video_id.grid(row=19, column=0, padx=padding_x, pady=padding_y, sticky="w")
         elements_to_destroy_loop.append(yt_video_id)
 
