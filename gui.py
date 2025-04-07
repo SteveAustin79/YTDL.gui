@@ -1064,7 +1064,7 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
             update_video_counts(
                 str(count_files(output_dir + "/" + clean_string_regex(total_channel_name).rstrip(), ".mp4")) +
                 " / " + str(total_channel_videos) + " Videos downloaded")
-
+        channel_frame.update()
 
     if count_this_run == 0:
         update_download_log("Nothing to do...", COLORS.green)
