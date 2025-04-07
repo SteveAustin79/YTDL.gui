@@ -168,6 +168,7 @@ def clean_youtube_urls(to_clean_video_list: list) -> list[str]:
 
 
 def add_url_in_order(filename: str, a_url: str) -> None:
+    global elements_to_destroy
     elements_to_destroy.remove(video_info_channel_button)
     video_info_channel_button.destroy()
     try:
@@ -417,6 +418,7 @@ def get_information():
 def get_information_work():
     global total_channel_videos
     global total_channel_name
+    global elements_to_destroy
 
     update_app_title()
     looper = False
@@ -816,6 +818,8 @@ def get_information_work():
     count_total_videos = 0
 
     # Create empty lists
+    global video_list
+    global video_list_restricted
     video_list.clear()
     video_list_restricted.clear()
 
@@ -975,6 +979,7 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
     v_counter = 0
 
     global video_watch_urls
+    global elements_to_destroy_loop
 
     for url in video_watch_urls:
         only_video_id = str(url).split("=")[1]
@@ -1068,6 +1073,7 @@ def start_download(audio_or_video_bool: bool, restricted: bool, video_id: str, l
 
 
 def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: str, looper: bool, year_subfolders: bool):
+    global elements_to_destroy_loop
     update_app_title()
     if restricted:
         if web_client:
@@ -1153,6 +1159,7 @@ def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: s
                                                                                   video_resolution.get(),
                                                                                   restricted, year_subfolders, looper))
         download_button.grid(row=21, column=2, padx=padding_x, pady=padding_y * padding_y_factor, sticky="w")
+        global elements_to_destroy
         elements_to_destroy.append(download_button)
 
 
@@ -1166,6 +1173,8 @@ def download_video(audio_or_video_bool: bool, y_tube: YouTube, res: str, restric
 
 
 def download_video_work(audio_or_video_bool: bool, y_tube: YouTube, res: str, restricted: bool, year_subfolders: bool):
+    global elements_to_destroy_loop
+
     abort_button.configure(fg_color=COLORS.dark_red, command=abort_download)
     abort_button.grid(row=22, column=3, rowspan=2, padx=padding_x, pady=padding_y, sticky="nw")
     elements_to_destroy_loop.append(abort_button)
