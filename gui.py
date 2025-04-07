@@ -1011,17 +1011,17 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
 
             if default_filter_words == "" or any(
                     word.lower() in video.title.lower() for word in string_to_list(default_filter_words)):
-                configuration_filter_words.configure(fg_color=COLORS.green)
+                configuration_filter_words.configure(fg_color=COLORS.dark_green)
                 if min_duration_bool:
                     video_duration = int(video.length)
                     if video_duration <= int(min_duration) * 60:
                         do_not_download = 1
                 if max_duration_bool and max_duration > min_duration:
                     video_duration = int(video.length)
-                    configuration_max_duration.configure(fg_color=COLORS.green)
+                    configuration_max_duration.configure(fg_color=COLORS.dark_green)
                     if video_duration >= int(max_duration) * 60:
                         do_not_download = 1
-                        configuration_max_duration.configure(fg_color=COLORS.red)
+                        configuration_max_duration.configure(fg_color=COLORS.dark_red)
                     # separator2.update()
                 if int(min_year) > 0:
                     if int(video.publish_date.strftime("%Y")) <= int(min_year):
