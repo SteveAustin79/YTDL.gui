@@ -1310,6 +1310,9 @@ def convert_m4a_to_mp3(video_id: str, publish_date: str, year: str, restricted: 
     update_download_log("MP3 downloaded", COLORS.green)
     delete_temp_files()
 
+    configuration_max_duration.configure(fg_color="gray20")
+    configuration_filter_words.configure(fg_color="gray20")
+
 
 def merge_video_audio(video_id: str, publish_date: str, vid_res: str, year: str, restricted: bool) -> None:
     video_file, audio_file = find_media_files(".")
@@ -1345,6 +1348,9 @@ def merge_video_audio(video_id: str, publish_date: str, vid_res: str, year: str,
         update_video_counts(
             str(count_files(output_dir + "/" + clean_string_regex(total_channel_name).rstrip(), ".mp4")) +
             " / " + str(total_channel_videos) + " Videos downloaded")
+
+        configuration_max_duration.configure(fg_color="gray20")
+        configuration_filter_words.configure(fg_color="gray20")
 
         delete_temp_files()
 
@@ -1408,6 +1414,9 @@ def convert_webm_to_mp4(input_file: str, output_file: str, year: str, restricted
     update_video_counts(
         str(count_files(output_dir + "/" + clean_string_regex(total_channel_name).rstrip(), ".mp4")) +
         " / " + str(total_channel_videos) + " Videos downloaded")
+
+    configuration_max_duration.configure(fg_color="gray20")
+    configuration_filter_words.configure(fg_color="gray20")
 
 
 
