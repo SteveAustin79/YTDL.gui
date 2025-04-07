@@ -547,7 +547,7 @@ def get_information_work():
             incomplete_string.append("c_max_resolution")
 
         if "c_min_duration_in_minutes" in channel_config:
-            if channel_config["c_min_duration_in_minutes"] != "":
+            if int(channel_config["c_min_duration_in_minutes"]) != 0:
                 default_min_duration_in_minutes = channel_config["c_min_duration_in_minutes"]
                 min_duration_bool = True
         else:
@@ -555,7 +555,7 @@ def get_information_work():
             incomplete_string.append("c_min_duration_in_minutes")
 
         if "c_max_duration_in_minutes" in channel_config:
-            if channel_config["c_max_duration_in_minutes"] != "":
+            if int(channel_config["c_max_duration_in_minutes"]) != 0:
                 default_max_duration_in_minutes = channel_config["c_max_duration_in_minutes"]
                 max_duration_bool = True
         else:
@@ -563,14 +563,14 @@ def get_information_work():
             incomplete_string.append("c_max_duration_in_minutes")
 
         if "c_minimum_year" in channel_config:
-            if channel_config["c_minimum_year"] != "":
+            if int(channel_config["c_minimum_year"]) != 0:
                 default_minimum_year = channel_config["c_minimum_year"]
         else:
             incomplete_config = True
             incomplete_string.append("c_minimum_year")
 
         if "c_maximum_year" in channel_config:
-            if channel_config["c_maximum_year"] != "":
+            if int(channel_config["c_maximum_year"]) != 0:
                 default_maximum_year = channel_config["c_maximum_year"]
         else:
             incomplete_config = True
@@ -595,7 +595,7 @@ def get_information_work():
             incomplete_string.append("c_skip_restricted")
 
         if "c_minimum_views" in channel_config:
-            if channel_config["c_minimum_views"] != "":
+            if int(channel_config["c_minimum_views"]) != 0:
                 default_minimum_views = channel_config["c_minimum_views"]
         else:
             incomplete_config = True
