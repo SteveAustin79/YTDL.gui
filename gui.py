@@ -339,7 +339,7 @@ def check_channels_txt(filename: str, c_url: str) -> bool:
 
 def update_download_log(text: str, color: str) -> None:
     download_log_label.configure(text=text, text_color=color)
-    download_log_label.grid(row=23, column=2, padx=padding_x, pady=padding_y, sticky="w")
+    download_log_label.grid(row=23, column=2, columnspan=2, padx=padding_x, pady=padding_y, sticky="w")
     download_log_label.update()
 
 
@@ -1004,7 +1004,7 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                     if video.views <= int(min_video_views):
                         do_not_download = 1
 
-                v_title_text_length = 21
+                v_title_text_length = 39
                 v_title = video.title[:v_title_text_length] + "..." if len(video.title) > v_title_text_length else video.title
                 update_download_log(("Searching match:  " if do_not_download == 1 else "Found match!  ") + str(v_counter) + "/" + str(len(video_watch_urls)) + "  |  " +
                                     ("R" if video.age_restricted else "_") + "  |  " +
