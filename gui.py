@@ -984,7 +984,7 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
     for url in video_watch_urls:
         only_video_id = str(url).split("=")[1]
         v_counter += 1
-        # configuration_max_duration.configure(text_color=COLORS.white)
+        configuration_max_duration.configure(fg_color="gray20")
         configuration_filter_words.configure(fg_color="gray20")
         # only_video_id = pytubefix.extract.video_id(url)
         if find_file_by_string(ytchannel_path.get(), only_video_id, default_max_res, audio_or_video_bool) is not None:
