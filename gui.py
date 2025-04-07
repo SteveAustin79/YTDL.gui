@@ -16,7 +16,7 @@ from functions import (AppConfig, COLORS, CcConfig, JSONConfig, load_config, fin
 
 # dropdown with int for loop mode exit after int loops
 # copy video id field
-# delete party converted file in channel target dir if aborted during conversion
+# delete partly converted file in channel target dir if aborted during conversion
 # update channel config only restart configuration build from channel config file, not YT channel fetch again
 
 app_title = "YTDL.video"
@@ -417,7 +417,6 @@ def get_information():
 def get_information_work():
     global total_channel_videos
     global total_channel_name
-    channel_in_link_field = False
 
     update_app_title()
     looper = False
