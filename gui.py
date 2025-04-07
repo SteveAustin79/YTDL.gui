@@ -984,13 +984,13 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
     for url in video_watch_urls:
         only_video_id = str(url).split("=")[1]
         v_counter += 1
-        # configuration_max_duration.configure(fg_color="gray20")
-        # configuration_filter_words.configure(fg_color="gray20")
         # only_video_id = pytubefix.extract.video_id(url)
         if find_file_by_string(ytchannel_path.get(), only_video_id, default_max_res, audio_or_video_bool) is not None:
             count_ok_videos += 1
             count_skipped += 1
             update_download_log("Skipping   " + str(count_skipped) + "   already downloaded Video(s)", COLORS.violet)
+            configuration_max_duration.configure(fg_color="gray20")
+            configuration_filter_words.configure(fg_color="gray20")
         else:
             do_not_download = 0
             grid_remove_elements(elements_to_destroy_loop)
