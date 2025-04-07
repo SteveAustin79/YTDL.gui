@@ -984,6 +984,7 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
     for url in video_watch_urls:
         only_video_id = str(url).split("=")[1]
         v_counter += 1
+        configuration_max_duration.configure(text_color=COLORS.white)
         # only_video_id = pytubefix.extract.video_id(url)
         if find_file_by_string(ytchannel_path.get(), only_video_id, default_max_res, audio_or_video_bool) is not None:
             count_ok_videos += 1
@@ -1015,8 +1016,10 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                         do_not_download = 1
                 if max_duration_bool and max_duration > min_duration:
                     video_duration = int(video.length)
+                    configuration_max_duration.configure(text_color=COLORS.green)
                     if video_duration >= int(max_duration) * 60:
                         do_not_download = 1
+                        configuration_max_duration.configure(text_color=COLORS.red)
                 if int(min_year) > 0:
                     if int(video.publish_date.strftime("%Y")) <= int(min_year):
                         # do_not_download = 1
@@ -1031,7 +1034,7 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                 # v_title_text_length = 42
                 v_title = video.title[:v_title_text_length] + "..." if len(video.title) > v_title_text_length else video.title
                 update_download_log(("Searching match:  " if do_not_download == 1 else "Found match!  ") +
-                                    v_title_update_full, (COLORS.violet if do_not_download == 1 else COLORS.green))
+                                    v_title_update_full, COLORS.violet)
 
                 if (not video.age_restricted and
                         video.vid_info.get('playabilityStatus', {}).get('status') != 'UNPLAYABLE' and
