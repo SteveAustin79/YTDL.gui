@@ -846,7 +846,7 @@ def get_information_work():
     # channel_videos_combobox.grid(row=10, column=2, columnspan=2, padx=padding_x, pady=padding_y, sticky="se")
     # elements_to_destroy.append(channel_videos_combobox)
 
-    channel_frame.grid(row=3, column=0, columnspan=4, sticky="ew", padx=0, pady=padding_y * padding_y_factor)
+    channel_frame.grid(row=3, column=0, columnspan=4, sticky="ew", padx=0, pady=0)
     elements_to_destroy.append(channel_frame)
 
     restricted_video = False
@@ -895,7 +895,7 @@ def get_information_work():
         yt_video_id.grid(row=20, column=0, padx=padding_x, pady=padding_y, sticky="e")
         elements_to_destroy.append(yt_video_id)
 
-        video_frame.grid(row=4, column=0, columnspan=4, sticky="ew", padx=0, pady=padding_y * padding_y_factor)
+        video_frame.grid(row=4, column=0, columnspan=4, sticky="ew", padx=0, pady=0)
         elements_to_destroy_loop.append(video_frame)
 
 
