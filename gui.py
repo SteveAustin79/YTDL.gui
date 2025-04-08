@@ -995,7 +995,9 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
     count_this_run = 0
     count_skipped = 0
     v_counter = 0
-    skip_count = int(skip_videos.get())
+    skip_count = 0
+    if skip_videos.get() !="":
+        skip_count = int(skip_videos.get())
 
     global video_watch_urls
     global elements_to_destroy_loop
