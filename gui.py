@@ -846,7 +846,7 @@ def get_information_work():
     # channel_videos_combobox.grid(row=10, column=2, columnspan=2, padx=padding_x, pady=padding_y, sticky="se")
     # elements_to_destroy.append(channel_videos_combobox)
 
-    channel_frame.grid(row=3, column=0, columnspan=4, sticky="ew", padx=0, pady=0)
+    channel_frame.grid(row=3, column=0, columnspan=4, sticky="ew", padx=0, pady=padding_y * padding_y_factor)
     elements_to_destroy.append(channel_frame)
 
     restricted_video = False
@@ -894,9 +894,6 @@ def get_information_work():
         yt_video_id.configure(textvariable=yt_video_id_value)
         yt_video_id.grid(row=20, column=0, padx=padding_x, pady=padding_y, sticky="e")
         elements_to_destroy.append(yt_video_id)
-
-        video_frame.grid(row=4, column=0, columnspan=4, sticky="ew", padx=0, pady=0)
-        elements_to_destroy_loop.append(video_frame)
 
 
 
@@ -1206,9 +1203,6 @@ def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: s
         avail_resolutions.grid(row=20, column=2, padx=padding_x, pady=padding_y, sticky="w")
         elements_to_destroy_loop.append(avail_resolutions)
 
-    video_frame.grid(row=4, column=0, columnspan=4, sticky="ew", padx=0, pady=padding_y * padding_y_factor)
-    elements_to_destroy_loop.append(video_frame)
-
     ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON
     ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON                       ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON
     ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON
@@ -1496,7 +1490,7 @@ app.iconbitmap(AppConfig.icon_path)
 # app.geometry(app_resolution + "+0+0")
 app.geometry(f"{AppConfig.win_width}x{AppConfig.win_height}" + "+0+0")
 update_app_title()
-app.configure(bg_color="gray12")
+app.configure(bg_color=COLORS.black)
 app.protocol("WM_DELETE_WINDOW", on_closing)
 app.grid_columnconfigure(0, minsize=250)
 app.grid_columnconfigure(1, minsize=300)
@@ -1537,12 +1531,6 @@ channel_frame.grid_columnconfigure(1, minsize=300)
 channel_frame.grid_columnconfigure(2, minsize=480)
 channel_frame.grid_columnconfigure(3, minsize=250)
 
-video_frame = customtkinter.CTkFrame(app, fg_color="gray12")
-video_frame.grid_columnconfigure(0, minsize=250)
-video_frame.grid_columnconfigure(1, minsize=300)
-video_frame.grid_columnconfigure(2, minsize=480)
-video_frame.grid_columnconfigure(3, minsize=250)
-
 separator2 = customtkinter.CTkFrame(channel_frame, height=2, fg_color=COLORS.separator)
 # separator3 = customtkinter.CTkFrame(app, height=2, fg_color=COLORS.separator)
 
@@ -1581,29 +1569,29 @@ skip_videos_value = tkinter.StringVar(value="")
 skip_videos = customtkinter.CTkEntry(channel_frame, textvariable=skip_videos_value)
 skip_videos_label = customtkinter.CTkLabel(channel_frame, text="Skip")
 
-yt_video_id = customtkinter.CTkEntry(video_frame)
-yt_video_title_label = customtkinter.CTkLabel(video_frame, text="")
-yt_video_views_label = customtkinter.CTkLabel(video_frame, text="")
-yt_video_date_label = customtkinter.CTkLabel(video_frame, text="")
-yt_video_length_label = customtkinter.CTkLabel(video_frame, text="")
-yt_video_title = customtkinter.CTkLabel(video_frame, text="")
-yt_video_views = customtkinter.CTkLabel(video_frame, text="")
-yt_video_date = customtkinter.CTkLabel(video_frame, text="")
-yt_video_length = customtkinter.CTkLabel(video_frame, text="")
-video_thumbnail_label = customtkinter.CTkLabel(video_frame, text="")
+yt_video_id = customtkinter.CTkEntry(app)
+yt_video_title_label = customtkinter.CTkLabel(app, text="")
+yt_video_views_label = customtkinter.CTkLabel(app, text="")
+yt_video_date_label = customtkinter.CTkLabel(app, text="")
+yt_video_length_label = customtkinter.CTkLabel(app, text="")
+yt_video_title = customtkinter.CTkLabel(app, text="")
+yt_video_views = customtkinter.CTkLabel(app, text="")
+yt_video_date = customtkinter.CTkLabel(app, text="")
+yt_video_length = customtkinter.CTkLabel(app, text="")
+video_thumbnail_label = customtkinter.CTkLabel(app, text="")
 
-abort_button = customtkinter.CTkButton(video_frame, text="Abort")
+abort_button = customtkinter.CTkButton(app, text="Abort")
 
-video_resolution_label = customtkinter.CTkLabel(video_frame, text="")
-video_resolution = customtkinter.CTkComboBox(video_frame)
-avail_resolutions = customtkinter.CTkLabel(video_frame, text="")
+video_resolution_label = customtkinter.CTkLabel(app, text="")
+video_resolution = customtkinter.CTkComboBox(app)
+avail_resolutions = customtkinter.CTkLabel(app, text="")
 
-download_button = customtkinter.CTkButton(video_frame, text="")
+download_button = customtkinter.CTkButton(app, text="")
 
-progress_percent = customtkinter.CTkLabel(video_frame, text="")
-progress_bar = customtkinter.CTkProgressBar(video_frame, width=entry_width)
+progress_percent = customtkinter.CTkLabel(app, text="")
+progress_bar = customtkinter.CTkProgressBar(app, width=entry_width)
 
-download_log_label = customtkinter.CTkLabel(video_frame, text="")
+download_log_label = customtkinter.CTkLabel(app, text="")
 
 if len(sys.argv) > 1 and youtube_url in str(sys.argv[1]):
     channel_dropdown.set(sys.argv[1])
