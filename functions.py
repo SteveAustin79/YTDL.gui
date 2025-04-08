@@ -58,6 +58,7 @@ class COLORS:
     pink        = "#ff83a6"
     yellow      = "#fffb8c"
     violet      = "#c7a8ff"
+    dark_violet = "#633da8"
     log_bg      = "#191919"
     separator   = "#414141"
     frame_bg    = "#131313"
