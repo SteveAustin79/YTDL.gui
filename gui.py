@@ -1021,10 +1021,11 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
             configuration_max_year.configure(fg_color="gray20")
             configuration_min_views.configure(fg_color="gray20")
 
-            configuration_filter_words.configure(fg_color=COLORS.dark_red)
+            if len(string_to_list(default_filter_words)) > 1:
+                configuration_filter_words.configure(fg_color=COLORS.dark_red)
+
             if default_filter_words == "" or any(
                     word.lower() in video.title.lower() for word in string_to_list(default_filter_words)):
-                print(default_filter_words)
                 if len(string_to_list(default_filter_words)) > 1:
                     configuration_filter_words.configure(fg_color=COLORS.dark_green)
                 if min_duration_bool:
