@@ -924,7 +924,8 @@ def get_information_work():
     elements_to_destroy.append(video_button)
 
     skip_videos_value.set("0")
-    skip_videos.grid(row=13, column=2, padx=padding_x, pady=padding_y * padding_y_factor * 2, sticky="e")
+    skip_videos.configure(fg_color=COLORS.violet, width=20)
+    skip_videos.grid(row=13, column=3, padx=padding_x, pady=padding_y * padding_y_factor * 2, sticky="w")
     elements_to_destroy.append(skip_videos)
 
     ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON
