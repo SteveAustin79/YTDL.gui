@@ -1342,6 +1342,7 @@ def convert_m4a_to_mp3(video_id: str, publish_date: str, year: str, restricted: 
     delete_temp_files()
 
     reset_config_entry_box_colors()
+    print()
 
 
 def merge_video_audio(video_id: str, publish_date: str, vid_res: str, year: str, restricted: bool) -> None:
@@ -1386,6 +1387,8 @@ def merge_video_audio(video_id: str, publish_date: str, vid_res: str, year: str,
     except Exception as ee:
         print(f"❌ Error merging files: {ee}")
         sys.exit(1)
+
+    print()
 
 
 def convert_m4a_to_opus_and_merge(video_id: str, publish_date: str, vid_res: str, year: str,
@@ -1445,6 +1448,7 @@ def convert_webm_to_mp4(input_file: str, output_file: str, year: str, restricted
         " / " + str(total_channel_videos) + " Videos downloaded")
 
     reset_config_entry_box_colors()
+    print()
 
 
 
