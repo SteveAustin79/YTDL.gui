@@ -343,7 +343,7 @@ def update_download_log(text: str, color: str) -> None:
     log_frame.grid(row=4, column=0, columnspan=4, sticky="ew", padx=0, pady=padding_y * padding_y_factor)
     elements_to_destroy.append(channel_frame)
     download_log_label.configure(text=text, text_color=color)
-    download_log_label.grid(row=4, column=2, columnspan=2, padx=padding_x, pady=padding_y, sticky="w") # row=23 / 12
+    download_log_label.grid(row=4, column=1, columnspan=3, padx=padding_x, pady=padding_y, sticky="w") # row=23 / 12
     download_log_label.update()
 
 
