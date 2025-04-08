@@ -1431,8 +1431,7 @@ def convert_webm_to_mp4(input_file: str, output_file: str, year: str, restricted
         str(count_files(output_dir + "/" + clean_string_regex(total_channel_name).rstrip(), ".mp4")) +
         " / " + str(total_channel_videos) + " Videos downloaded")
 
-    configuration_max_duration.configure(fg_color="gray20")
-    configuration_filter_words.configure(fg_color="gray20")
+    reset_config_entry_box_colors()
 
 
 
