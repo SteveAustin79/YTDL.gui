@@ -1537,7 +1537,7 @@ channel_frame.grid_columnconfigure(1, minsize=300)
 channel_frame.grid_columnconfigure(2, minsize=480)
 channel_frame.grid_columnconfigure(3, minsize=250)
 
-video_frame = customtkinter.CTkFrame(app)
+video_frame = customtkinter.CTkFrame(app, fg_color=None)
 video_frame.grid_columnconfigure(0, minsize=250)
 video_frame.grid_columnconfigure(1, minsize=300)
 video_frame.grid_columnconfigure(2, minsize=480)
