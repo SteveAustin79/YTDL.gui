@@ -926,9 +926,9 @@ def get_information_work():
     ##### AUDIO OR VIDEO BUTTON #####                             AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON
     ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON
 
-    if count_files_from_channel_dir >= len(video_watch_urls):
-        video_button.grid_remove()
-        audio_button.grid_remove()
+    # if count_files_from_channel_dir >= len(video_watch_urls):
+    #     video_button.grid_remove()
+    #     audio_button.grid_remove()
 
     enable_buttons()
 
