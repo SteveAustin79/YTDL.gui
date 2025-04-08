@@ -1,6 +1,5 @@
 import os
 import re
-import pytubefix.extract
 import tkinter
 import customtkinter
 import shutil
@@ -75,11 +74,11 @@ def update_channel_config(default_max_res, limit_resolution_to, default_min_dura
         if default_year_subfolders != year_subfolders_temp:
             JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.channel_config_path, "c_year_subfolders", year_subfolders_temp)
         if default_exclude_videos != exclude_video_ids:
-            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.channel_config_path, "c_exclude_video_ids", exclude_video_ids[:-1])
+            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.channel_config_path, "c_exclude_video_ids", exclude_video_ids)
         if default_include_videos != include_video_ids:
-            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.channel_config_path, "c_include_video_ids", include_video_ids[:-1])
+            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.channel_config_path, "c_include_video_ids", include_video_ids)
         if default_filter_words != video_name_filter:
-            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.channel_config_path, "c_filter_words", video_name_filter[:-1])
+            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.channel_config_path, "c_filter_words", video_name_filter)
         get_information()
 
 
@@ -142,9 +141,9 @@ def create_channel_config(default_max_res, limit_resolution_to, default_min_dura
             "c_skip_restricted": json_skip_restricted,
             "c_minimum_views": int(json_min_video_views),
             "c_year_subfolders": json_year_subfolders_temp,
-            "c_exclude_video_ids": json_exclude_video_ids[:-1],
-            "c_include_video_ids": json_include_video_ids[:-1],
-            "c_filter_words": json_video_name_filter[:-1]
+            "c_exclude_video_ids": json_exclude_video_ids,
+            "c_include_video_ids": json_include_video_ids,
+            "c_filter_words": json_video_name_filter
         }
         JSONConfig.create_json_config(ytchannel_path.get() + AppConfig.channel_config_path, custom_values)
 
@@ -652,9 +651,9 @@ def get_information_work():
                                               default_minimum_views, configuration_min_views.get(),
                                               default_year_subfolders,
                                               "y" if configuration_year_subs.get() == 1 else "",
-                                              default_exclude_videos, configuration_excludes.get("0.0", "end"),
-                                              default_include_videos, configuration_includes.get("0.0", "end"),
-                                              default_filter_words, configuration_filter_words.get("0.0", "end")))
+                                              default_exclude_videos, configuration_excludes.get("0.0", "end").strip(),
+                                              default_include_videos, configuration_includes.get("0.0", "end").strip(),
+                                              default_filter_words, configuration_filter_words.get("0.0", "end").strip()))
 
     else:
         channel_config_label.configure(text="No channel config file found!", text_color=COLORS.gray)
@@ -667,9 +666,9 @@ def get_information_work():
                                         default_skip_restricted, "y" if configuration_skip_restricted.get() == 1 else "",
                                         default_minimum_views, configuration_min_views.get(),
                                         default_year_subfolders, "y" if configuration_year_subs.get() == 1 else "",
-                                        default_exclude_videos, configuration_excludes.get("0.0", "end"),
-                                        default_include_videos, configuration_includes.get("0.0", "end"),
-                                        default_filter_words, configuration_filter_words.get("0.0", "end")))
+                                        default_exclude_videos, configuration_excludes.get("0.0", "end").strip(),
+                                        default_include_videos, configuration_includes.get("0.0", "end").strip(),
+                                        default_filter_words, configuration_filter_words.get("0.0", "end").strip()))
         create_channel_config_button.configure(text="Create channel config")
 
     create_channel_config_button.grid(row=5, column=3, padx=padding_x, pady=padding_y, sticky="w")
@@ -899,7 +898,7 @@ def get_information_work():
 
     if looper:
         audio_button.configure(command=lambda: loop_download(True, configuration_resolution.get(),
-                                                                configuration_filter_words.get("0.0", "end")[:-1],
+                                                                configuration_filter_words.get("0.0", "end").strip(),
                                                                 only_restricted_videos_bool, skip_restricted_bool,
                                                                 True if configuration_year_subs.get() == 1 else False,
                                                                 min_duration_bool, configuration_min_duration.get(),
@@ -907,7 +906,7 @@ def get_information_work():
                                                                 configuration_min_year.get(), configuration_max_year.get(),
                                                                 configuration_min_views.get()))
         video_button.configure(command=lambda: loop_download(False, configuration_resolution.get(),
-                                                                configuration_filter_words.get("0.0", "end")[:-1],
+                                                                configuration_filter_words.get("0.0", "end").strip(),
                                                                 only_restricted_videos_bool, skip_restricted_bool,
                                                                 True if configuration_year_subs.get() == 1 else False,
                                                                 min_duration_bool, configuration_min_duration.get(),
