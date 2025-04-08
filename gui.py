@@ -362,7 +362,6 @@ def get_yt_channel(channel_url) -> Channel:
 def disable_buttons():
     video_button.configure(state="disabled")
     audio_button.configure(state="disabled")
-    skip_videos.configure(state="disabled")
     get_information_button.configure(state="disabled")
     video_info_channel_button.configure(state="disabled")
     create_channel_config_button.configure(state="disabled")
@@ -386,7 +385,6 @@ def disable_buttons():
 def enable_buttons():
     video_button.configure(state="normal")
     audio_button.configure(state="normal")
-    skip_videos.configure(state="normal")
     get_information_button.configure(state="normal")
     video_info_channel_button.configure(state="normal")
     create_channel_config_button.configure(state="normal")
@@ -922,6 +920,9 @@ def get_information_work():
                                                               False, True if configuration_year_subs.get() == 1 else False))
     video_button.grid(row=13, column=2, padx=padding_x, pady=padding_y * padding_y_factor * 2, sticky="w")
     elements_to_destroy.append(video_button)
+
+    skip_videos_label.grid(row=13, column=2, padx=padding_x, pady=padding_y * padding_y_factor * 2, sticky="e")
+    elements_to_destroy.append(skip_videos_label)
 
     skip_videos_value.set("0")
     skip_videos.configure(text_color=COLORS.black, fg_color=COLORS.violet, width=60)
@@ -1554,6 +1555,7 @@ video_button = customtkinter.CTkButton(channel_frame, text="Video (mp4)")
 
 skip_videos_value = tkinter.StringVar(value="")
 skip_videos = customtkinter.CTkEntry(channel_frame, textvariable=skip_videos_value)
+skip_videos_label = customtkinter.CTkLabel(channel_frame, text="Skip")
 
 yt_video_id = customtkinter.CTkEntry(app)
 yt_video_title_label = customtkinter.CTkLabel(app, text="")
