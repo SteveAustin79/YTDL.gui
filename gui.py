@@ -993,9 +993,6 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
     count_skipped = 0
     v_counter = 0
     skip_count = int(skip_videos.get())
-    total_downloaded_videos_to_skip = count_files(ytchannel_path.get(), ".mp4")
-    if skip_count > 0:
-        count_skipped = total_downloaded_videos_to_skip
 
     global video_watch_urls
     global elements_to_destroy_loop
