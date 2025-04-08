@@ -974,6 +974,7 @@ def loop_download(audio_or_video_bool, default_max_res, default_filter_words, on
                         min_year, max_year, min_video_views), daemon=True)
     t_loop_download.start()
     # t_loop_download.join()
+    app.focus_set()
 
 
 def reset_config_entry_box_colors():
@@ -1117,6 +1118,7 @@ def start_download(audio_or_video_bool: bool, restricted: bool, video_id: str, l
     t_start_download_b = threading.Thread(target=lambda: start_download_work(audio_or_video_bool, restricted, video_id, looper, year_subfolders), daemon=True)
     t_start_download_b.start()
     # t_start_download_b.join()
+    app.focus_set()
 
 
 def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: str, looper: bool, year_subfolders: bool):
