@@ -925,7 +925,7 @@ def get_information_work():
         skip_videos_label.grid(row=13, column=2, padx=padding_x, pady=padding_y * padding_y_factor * 2, sticky="e")
         elements_to_destroy.append(skip_videos_label)
 
-        skip_videos_value.set("0")
+        # skip_videos_value.set("0")
         skip_videos.configure(fg_color=COLORS.dark_violet, width=60)
         skip_videos.grid(row=13, column=3, padx=padding_x, pady=padding_y * padding_y_factor * 2, sticky="w")
         elements_to_destroy.append(skip_videos)
