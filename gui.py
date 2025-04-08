@@ -899,7 +899,7 @@ def get_information_work():
 
     if looper:
         audio_button.configure(command=lambda: loop_download(True, configuration_resolution.get(),
-                                                                configuration_filter_words.get("0.0", "end"),
+                                                                configuration_filter_words.get("0.0", "end")[:-1],
                                                                 only_restricted_videos_bool, skip_restricted_bool,
                                                                 True if configuration_year_subs.get() == 1 else False,
                                                                 min_duration_bool, configuration_min_duration.get(),
@@ -907,7 +907,7 @@ def get_information_work():
                                                                 configuration_min_year.get(), configuration_max_year.get(),
                                                                 configuration_min_views.get()))
         video_button.configure(command=lambda: loop_download(False, configuration_resolution.get(),
-                                                                configuration_filter_words.get("0.0", "end"),
+                                                                configuration_filter_words.get("0.0", "end")[:-1],
                                                                 only_restricted_videos_bool, skip_restricted_bool,
                                                                 True if configuration_year_subs.get() == 1 else False,
                                                                 min_duration_bool, configuration_min_duration.get(),
@@ -1021,14 +1021,14 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
             # configuration_max_year.configure(fg_color="gray20")
             # configuration_min_views.configure(fg_color="gray20")
 
-            if len(string_to_list(default_filter_words[:-1])) > 0:
+            if len(string_to_list(default_filter_words)) > 0:
                 configuration_filter_words.configure(fg_color=COLORS.dark_red)
 
-            print(len(string_to_list(default_filter_words[:-1])))
+            print(len(string_to_list(default_filter_words)))
 
-            if default_filter_words[:-1] == "" or any(
+            if default_filter_words == "" or any(
                     word.lower() in video.title.lower() for word in string_to_list(default_filter_words)):
-                if len(string_to_list(default_filter_words[:-1])) > 0:
+                if len(string_to_list(default_filter_words)) > 0:
                     configuration_filter_words.configure(fg_color=COLORS.dark_green)
                 if min_duration_bool:
                     video_duration = int(video.length)
