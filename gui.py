@@ -474,8 +474,7 @@ def get_information_work():
     total_channel_name = channel_info_name
     channel_info_thumbnail = channel_info.thumbnail_url
 
-    channel_frame.grid(row=3, column=0, columnspan=4, sticky="ew", padx=0, pady=padding_y * padding_y_factor)
-    elements_to_destroy.append(channel_frame)
+
 
     # separator1.grid(row=2, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y * padding_y_factor)
     # elements_to_destroy.append(separator1)
@@ -846,6 +845,9 @@ def get_information_work():
     # channel_videos_combobox = customtkinter.CTkComboBox(app, values=video_watch_urls)
     # channel_videos_combobox.grid(row=10, column=2, columnspan=2, padx=padding_x, pady=padding_y, sticky="se")
     # elements_to_destroy.append(channel_videos_combobox)
+
+    channel_frame.grid(row=3, column=0, columnspan=4, sticky="ew", padx=0, pady=padding_y * padding_y_factor)
+    elements_to_destroy.append(channel_frame)
 
     restricted_video = False
 
