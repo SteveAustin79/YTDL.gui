@@ -1021,6 +1021,8 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
             # configuration_max_year.configure(fg_color="gray20")
             # configuration_min_views.configure(fg_color="gray20")
 
+            print("DW: " + default_filter_words)
+
             if len(string_to_list(default_filter_words)) > 0:
                 configuration_filter_words.configure(fg_color=COLORS.dark_red)
 
