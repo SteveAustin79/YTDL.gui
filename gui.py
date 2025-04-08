@@ -79,7 +79,7 @@ def update_channel_config(default_max_res, limit_resolution_to, default_min_dura
             JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.channel_config_path, "c_include_video_ids", include_video_ids)
         if default_filter_words != video_name_filter:
             JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.channel_config_path, "c_filter_words", video_name_filter)
-        get_information()
+        # get_information()
 
 
 def create_channel_config(default_max_res, limit_resolution_to, default_min_duration_in_minutes, min_duration,
@@ -1042,64 +1042,64 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                         word.lower() in video.title.lower() for word in string_to_list(default_filter_words)):
                     if default_filter_words != "":
                         configuration_filter_words.configure(fg_color=COLORS.dark_green)
-                    if min_duration_bool:
-                        video_duration = int(video.length)
-                        configuration_min_duration.configure(fg_color=COLORS.dark_green)
-                        if video_duration <= int(min_duration) * 60:
-                            do_not_download = 1
-                            configuration_min_duration.configure(fg_color=COLORS.dark_red)
-                    if max_duration_bool and max_duration > min_duration:
-                        video_duration = int(video.length)
-                        configuration_max_duration.configure(fg_color=COLORS.dark_green)
-                        if video_duration >= int(max_duration) * 60:
-                            do_not_download = 1
-                            configuration_max_duration.configure(fg_color=COLORS.dark_red)
-                        # separator2.update()
-                    if int(min_year) > 0:
-                        configuration_min_year.configure(fg_color=COLORS.dark_green)
-                        if int(video.publish_date.strftime("%Y")) <= int(min_year):
-                            configuration_min_year.configure(fg_color=COLORS.dark_red)
-                            # do_not_download = 1
-                            break
-                    if int(max_year) > 0:
-                        configuration_max_year.configure(fg_color=COLORS.dark_green)
-                        if int(video.publish_date.strftime("%Y")) >= int(max_year):
-                            do_not_download = 1
-                            configuration_max_year.configure(fg_color=COLORS.dark_red)
-                    if int(min_video_views) > 0:
-                        configuration_min_views.configure(fg_color=COLORS.dark_green)
-                        if video.views <= int(min_video_views):
-                            do_not_download = 1
-                            configuration_min_views.configure(fg_color=COLORS.dark_red)
+                if min_duration_bool:
+                    video_duration = int(video.length)
+                    configuration_min_duration.configure(fg_color=COLORS.dark_green)
+                    if video_duration <= int(min_duration) * 60:
+                        do_not_download = 1
+                        configuration_min_duration.configure(fg_color=COLORS.dark_red)
+                if max_duration_bool and max_duration > min_duration:
+                    video_duration = int(video.length)
+                    configuration_max_duration.configure(fg_color=COLORS.dark_green)
+                    if video_duration >= int(max_duration) * 60:
+                        do_not_download = 1
+                        configuration_max_duration.configure(fg_color=COLORS.dark_red)
+                    # separator2.update()
+                if int(min_year) > 0:
+                    configuration_min_year.configure(fg_color=COLORS.dark_green)
+                    if int(video.publish_date.strftime("%Y")) <= int(min_year):
+                        configuration_min_year.configure(fg_color=COLORS.dark_red)
+                        # do_not_download = 1
+                        break
+                if int(max_year) > 0:
+                    configuration_max_year.configure(fg_color=COLORS.dark_green)
+                    if int(video.publish_date.strftime("%Y")) >= int(max_year):
+                        do_not_download = 1
+                        configuration_max_year.configure(fg_color=COLORS.dark_red)
+                if int(min_video_views) > 0:
+                    configuration_min_views.configure(fg_color=COLORS.dark_green)
+                    if video.views <= int(min_video_views):
+                        do_not_download = 1
+                        configuration_min_views.configure(fg_color=COLORS.dark_red)
 
-                    # v_title_text_length = 42
-                    v_title = video.title[:v_title_text_length] + "..." if len(video.title) > v_title_text_length else video.title
-                    update_download_log(("Searching match:  " if do_not_download == 1 else "Found match!  ") +
-                                        v_title_update_full, COLORS.violet)
+                # v_title_text_length = 42
+                v_title = video.title[:v_title_text_length] + "..." if len(video.title) > v_title_text_length else video.title
+                update_download_log(("Searching match:  " if do_not_download == 1 else "Found match!  ") +
+                                    v_title_update_full, COLORS.violet)
 
-                    if (not video.age_restricted and
-                            video.vid_info.get('playabilityStatus', {}).get('status') != 'UNPLAYABLE' and
-                            video.vid_info.get('playabilityStatus', {}).get('status') != 'LIVE_STREAM_OFFLINE' and
-                            do_not_download == 0 and not only_restricted_videos_bool):
-                        count_ok_videos += 1
-                        count_this_run += 1
-                        # count_skipped = 0
-                        video_list.append(video.video_id)
+                if (not video.age_restricted and
+                        video.vid_info.get('playabilityStatus', {}).get('status') != 'UNPLAYABLE' and
+                        video.vid_info.get('playabilityStatus', {}).get('status') != 'LIVE_STREAM_OFFLINE' and
+                        do_not_download == 0 and not only_restricted_videos_bool):
+                    count_ok_videos += 1
+                    count_this_run += 1
+                    # count_skipped = 0
+                    video_list.append(video.video_id)
 
-                        start_download_work(audio_or_video_bool, False, video.video_id, True, year_subfolders)
-                    else:
-                        if not skip_restricted_bool:
-                            if (video.age_restricted and video.vid_info.get('playabilityStatus', {}).get(
-                                    'status') != 'UNPLAYABLE' and
-                                    video.vid_info.get('playabilityStatus', {}).get(
-                                        'status') != 'LIVE_STREAM_OFFLINE' and
-                                    do_not_download == 0):
-                                count_restricted_videos += 1
-                                count_ok_videos += 1
-                                count_this_run += 1
-                                video_list_restricted.append(video.video_id)
+                    start_download_work(audio_or_video_bool, False, video.video_id, True, year_subfolders)
+                else:
+                    if not skip_restricted_bool:
+                        if (video.age_restricted and video.vid_info.get('playabilityStatus', {}).get(
+                                'status') != 'UNPLAYABLE' and
+                                video.vid_info.get('playabilityStatus', {}).get(
+                                    'status') != 'LIVE_STREAM_OFFLINE' and
+                                do_not_download == 0):
+                            count_restricted_videos += 1
+                            count_ok_videos += 1
+                            count_this_run += 1
+                            video_list_restricted.append(video.video_id)
 
-                                start_download_work(audio_or_video_bool, True, video.video_id, True, year_subfolders)
+                            start_download_work(audio_or_video_bool, True, video.video_id, True, year_subfolders)
 
 
                 update_video_counts(
