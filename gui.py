@@ -362,6 +362,7 @@ def get_yt_channel(channel_url) -> Channel:
 def disable_buttons():
     video_button.configure(state="disabled")
     audio_button.configure(state="disabled")
+    skip_videos.configure(state="disabled")
     get_information_button.configure(state="disabled")
     video_info_channel_button.configure(state="disabled")
     create_channel_config_button.configure(state="disabled")
@@ -385,6 +386,7 @@ def disable_buttons():
 def enable_buttons():
     video_button.configure(state="normal")
     audio_button.configure(state="normal")
+    skip_videos.configure(state="normal")
     get_information_button.configure(state="normal")
     video_info_channel_button.configure(state="normal")
     create_channel_config_button.configure(state="normal")
@@ -921,6 +923,10 @@ def get_information_work():
     video_button.grid(row=13, column=2, padx=padding_x, pady=padding_y * padding_y_factor * 2, sticky="w")
     elements_to_destroy.append(video_button)
 
+    skip_videos_value.set("0")
+    skip_videos.grid(row=13, column=2, padx=padding_x, pady=padding_y * padding_y_factor * 2, sticky="e")
+    elements_to_destroy.append(skip_videos)
+
     ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON
     ##### AUDIO OR VIDEO BUTTON #####                             AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON
     ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON
@@ -985,7 +991,7 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
     count_this_run = 0
     count_skipped = 0
     v_counter = 0
-    skip_count = 100
+    skip_count = int(skip_videos.get())
 
     global video_watch_urls
     global elements_to_destroy_loop
@@ -1544,6 +1550,9 @@ configuration_includes = customtkinter.CTkTextbox(channel_frame)
 
 audio_button = customtkinter.CTkButton(channel_frame, text="Audio (mp3)")
 video_button = customtkinter.CTkButton(channel_frame, text="Video (mp4)")
+
+skip_videos_value = tkinter.StringVar(value="")
+skip_videos = customtkinter.CTkEntry(channel_frame, textvariable=skip_videos_value)
 
 yt_video_id = customtkinter.CTkEntry(app)
 yt_video_title_label = customtkinter.CTkLabel(app, text="")
