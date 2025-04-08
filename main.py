@@ -369,6 +369,7 @@ def list_channels_work():
                                                               text_color=color_else, height=row_height)
             label_latest_video_title.grid(row=i + row_factor, column=17, padx=padding_x, pady=padding_y, sticky="w")
             elements_to_destroy.append(label_latest_video_title)
+            Tooltip(label_latest_video_title, latest_video_title_text)
 
             label_video_count.configure(text_color=color_else)
             if counter_color != COLORS.gray:
