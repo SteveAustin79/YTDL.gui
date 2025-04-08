@@ -895,6 +895,9 @@ def get_information_work():
         yt_video_id.grid(row=20, column=0, padx=padding_x, pady=padding_y, sticky="e")
         elements_to_destroy.append(yt_video_id)
 
+        video_frame.grid(row=4, column=0, columnspan=4, sticky="ew", padx=0, pady=padding_y * padding_y_factor)
+        elements_to_destroy_loop.append(video_frame)
+
 
 
     audio_button.grid(row=13, column=1, padx=padding_x, pady=padding_y * padding_y_factor * 2, sticky="e")
@@ -1202,6 +1205,9 @@ def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: s
         avail_resolutions.configure(text=str(print_resolutions(y_tube)), text_color=COLORS.gray)
         avail_resolutions.grid(row=20, column=2, padx=padding_x, pady=padding_y, sticky="w")
         elements_to_destroy_loop.append(avail_resolutions)
+
+    video_frame.grid(row=4, column=0, columnspan=4, sticky="ew", padx=0, pady=padding_y * padding_y_factor)
+    elements_to_destroy_loop.append(video_frame)
 
     ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON
     ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON                       ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON
@@ -1526,11 +1532,16 @@ get_information_button.grid(row=1, column=3, padx=padding_x, pady=padding_y, sti
 # separator1.grid(row=2, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y)
 
 channel_frame = customtkinter.CTkFrame(app, fg_color=COLORS.frame_bg)
-
 channel_frame.grid_columnconfigure(0, minsize=250)
 channel_frame.grid_columnconfigure(1, minsize=300)
 channel_frame.grid_columnconfigure(2, minsize=480)
 channel_frame.grid_columnconfigure(3, minsize=250)
+
+video_frame = customtkinter.CTkFrame(app)
+video_frame.grid_columnconfigure(0, minsize=250)
+video_frame.grid_columnconfigure(1, minsize=300)
+video_frame.grid_columnconfigure(2, minsize=480)
+video_frame.grid_columnconfigure(3, minsize=250)
 
 separator2 = customtkinter.CTkFrame(channel_frame, height=2, fg_color=COLORS.separator)
 # separator3 = customtkinter.CTkFrame(app, height=2, fg_color=COLORS.separator)
@@ -1570,27 +1581,27 @@ skip_videos_value = tkinter.StringVar(value="")
 skip_videos = customtkinter.CTkEntry(channel_frame, textvariable=skip_videos_value)
 skip_videos_label = customtkinter.CTkLabel(channel_frame, text="Skip")
 
-yt_video_id = customtkinter.CTkEntry(app)
-yt_video_title_label = customtkinter.CTkLabel(app, text="")
-yt_video_views_label = customtkinter.CTkLabel(app, text="")
-yt_video_date_label = customtkinter.CTkLabel(app, text="")
-yt_video_length_label = customtkinter.CTkLabel(app, text="")
-yt_video_title = customtkinter.CTkLabel(app, text="")
-yt_video_views = customtkinter.CTkLabel(app, text="")
-yt_video_date = customtkinter.CTkLabel(app, text="")
-yt_video_length = customtkinter.CTkLabel(app, text="")
-video_thumbnail_label = customtkinter.CTkLabel(app, text="")
+yt_video_id = customtkinter.CTkEntry(video_frame)
+yt_video_title_label = customtkinter.CTkLabel(video_frame, text="")
+yt_video_views_label = customtkinter.CTkLabel(video_frame, text="")
+yt_video_date_label = customtkinter.CTkLabel(video_frame, text="")
+yt_video_length_label = customtkinter.CTkLabel(video_frame, text="")
+yt_video_title = customtkinter.CTkLabel(video_frame, text="")
+yt_video_views = customtkinter.CTkLabel(video_frame, text="")
+yt_video_date = customtkinter.CTkLabel(video_frame, text="")
+yt_video_length = customtkinter.CTkLabel(video_frame, text="")
+video_thumbnail_label = customtkinter.CTkLabel(video_frame, text="")
 
-abort_button = customtkinter.CTkButton(app, text="Abort")
+abort_button = customtkinter.CTkButton(video_frame, text="Abort")
 
-video_resolution_label = customtkinter.CTkLabel(app, text="")
-video_resolution = customtkinter.CTkComboBox(app)
-avail_resolutions = customtkinter.CTkLabel(app, text="")
+video_resolution_label = customtkinter.CTkLabel(video_frame, text="")
+video_resolution = customtkinter.CTkComboBox(video_frame)
+avail_resolutions = customtkinter.CTkLabel(video_frame, text="")
 
-download_button = customtkinter.CTkButton(app, text="")
+download_button = customtkinter.CTkButton(video_frame, text="")
 
-progress_percent = customtkinter.CTkLabel(app, text="")
-progress_bar = customtkinter.CTkProgressBar(app, width=entry_width)
+progress_percent = customtkinter.CTkLabel(video_frame, text="")
+progress_bar = customtkinter.CTkProgressBar(video_frame, width=entry_width)
 
 download_log_label = customtkinter.CTkLabel(app, text="")
 
