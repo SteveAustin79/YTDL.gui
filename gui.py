@@ -1035,10 +1035,6 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                                      v_title)
                 update_download_log("Searching match:  " + v_title_update_full, COLORS.violet)
 
-                # configuration_min_year.configure(fg_color="gray20")
-                # configuration_max_year.configure(fg_color="gray20")
-                # configuration_min_views.configure(fg_color="gray20")
-
                 if default_filter_words == "" or any(
                         word.lower() in video.title.lower() for word in string_to_list(default_filter_words)):
                     if default_filter_words != "":
