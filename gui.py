@@ -1603,7 +1603,7 @@ download_button = customtkinter.CTkButton(video_frame, text="")
 progress_percent = customtkinter.CTkLabel(video_frame, text="")
 progress_bar = customtkinter.CTkProgressBar(video_frame, width=entry_width)
 
-download_log_label = customtkinter.CTkLabel(app, text="")
+download_log_label = customtkinter.CTkLabel(video_frame, text="")
 
 if len(sys.argv) > 1 and youtube_url in str(sys.argv[1]):
     channel_dropdown.set(sys.argv[1])
