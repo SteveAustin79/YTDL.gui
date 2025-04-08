@@ -340,8 +340,10 @@ def check_channels_txt(filename: str, c_url: str) -> bool:
 
 
 def update_download_log(text: str, color: str) -> None:
+    log_frame.grid(row=4, column=0, columnspan=4, sticky="ew", padx=0, pady=padding_y * padding_y_factor)
+    elements_to_destroy.append(channel_frame)
     download_log_label.configure(text=text, text_color=color)
-    download_log_label.grid(row=12, column=2, columnspan=2, padx=padding_x, pady=padding_y, sticky="w") # row=23
+    download_log_label.grid(row=4, column=2, columnspan=2, padx=padding_x, pady=padding_y, sticky="w") # row=23 / 12
     download_log_label.update()
 
 
@@ -1591,7 +1593,12 @@ download_button = customtkinter.CTkButton(app, text="")
 progress_percent = customtkinter.CTkLabel(app, text="")
 progress_bar = customtkinter.CTkProgressBar(app, width=entry_width)
 
-download_log_label = customtkinter.CTkLabel(app, text="")
+log_frame = customtkinter.CTkFrame(app)
+log_frame.grid_columnconfigure(0, minsize=250)
+log_frame.grid_columnconfigure(1, minsize=300)
+log_frame.grid_columnconfigure(2, minsize=480)
+log_frame.grid_columnconfigure(3, minsize=250)
+download_log_label = customtkinter.CTkLabel(log_frame, text="")
 
 if len(sys.argv) > 1 and youtube_url in str(sys.argv[1]):
     channel_dropdown.set(sys.argv[1])
