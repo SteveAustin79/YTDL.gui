@@ -341,7 +341,7 @@ def check_channels_txt(filename: str, c_url: str) -> bool:
 
 def update_download_log(text: str, color: str) -> None:
     download_log_label.configure(text=text, text_color=color)
-    download_log_label.grid(row=17, column=2, columnspan=2, padx=padding_x, pady=padding_y, sticky="w") # row=23
+    download_log_label.grid(row=12, column=2, columnspan=2, padx=padding_x, pady=padding_y, sticky="w") # row=23
     download_log_label.update()
 
 
