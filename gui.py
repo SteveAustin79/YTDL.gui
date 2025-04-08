@@ -1027,7 +1027,7 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
 
                 v_title_text_length = 90
                 v_title = video.title[:v_title_text_length] + "..." if len(video.title) > v_title_text_length else video.title
-                v_title_update_full = (str(v_counter) + "/" + str(len(video_watch_urls)) + "  |  " +
+                v_title_update_full = (str(v_counter) + " / " + str(len(video_watch_urls)) + "  |  " +
                                      str(video.publish_date.strftime(AppConfig.date_format_display)) + "  |  " +
                                      format_time(video.length) + "  |  " +
                                      ("R" if video.age_restricted else "_") + "  |  " +
@@ -1077,7 +1077,6 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                         configuration_min_views.configure(fg_color=COLORS.dark_red)
 
                 # v_title_text_length = 42
-                v_title = video.title[:v_title_text_length] + "..." if len(video.title) > v_title_text_length else video.title
                 update_download_log(("Searching match:  " if do_not_download == 1 else "FOUND match!  ") +
                                     v_title_update_full, COLORS.violet)
 
