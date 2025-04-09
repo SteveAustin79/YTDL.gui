@@ -1316,6 +1316,15 @@ def download_video_process(audio_or_video_bool: bool, yt: YouTube, res: str, mor
             merge_video_audio(yt.video_id, publishing_date, res, year, restricted)
 
 
+def after_download_action():
+    abort_button.grid_remove()
+    enable_buttons()
+    update_video_counts(
+        str(count_files(output_dir + "/" + clean_string_regex(total_channel_name).rstrip(), [".mp4", ".mp3"])) +
+        " / " + str(total_channel_videos) + " Videos downloaded")
+    reset_config_entry_box_colors()
+
+
 def convert_m4a_to_mp3(video_id: str, publish_date: str, year: str, restricted: bool) -> None:
     video_file, audio_file = find_media_files(".")
     if not audio_file:
@@ -1346,14 +1355,7 @@ def convert_m4a_to_mp3(video_id: str, publish_date: str, year: str, restricted: 
 
     update_download_log("MP3 downloaded", COLORS.green)
     delete_temp_files()
-
-    abort_button.grid_remove()
-    enable_buttons()
-    update_video_counts(
-        str(count_files(output_dir + "/" + clean_string_regex(total_channel_name).rstrip(), [".mp4", ".mp3"])) +
-        " / " + str(total_channel_videos) + " Videos downloaded")
-
-    reset_config_entry_box_colors()
+    after_download_action()
     print()
 
 
@@ -1386,21 +1388,13 @@ def merge_video_audio(video_id: str, publish_date: str, vid_res: str, year: str,
         else:
             update_download_log("Video downloaded", COLORS.green)
 
-        abort_button.grid_remove()
-        enable_buttons()
-        update_video_counts(
-            str(count_files(output_dir + "/" + clean_string_regex(total_channel_name).rstrip(), [".mp4", ".mp3"])) +
-            " / " + str(total_channel_videos) + " Videos downloaded")
-
-        reset_config_entry_box_colors()
-
         delete_temp_files()
+        after_download_action()
+        print()
 
     except Exception as ee:
         print(f"❌ Error merging files: {ee}")
         sys.exit(1)
-
-    print()
 
 
 def convert_m4a_to_opus_and_merge(video_id: str, publish_date: str, vid_res: str, year: str,
@@ -1453,13 +1447,7 @@ def convert_webm_to_mp4(input_file: str, output_file: str, year: str, restricted
     else:
         update_download_log("Video downloaded", COLORS.green)
 
-    abort_button.grid_remove()
-    enable_buttons()
-    update_video_counts(
-        str(count_files(output_dir + "/" + clean_string_regex(total_channel_name).rstrip(), [".mp4", ".mp3"])) +
-        " / " + str(total_channel_videos) + " Videos downloaded")
-
-    reset_config_entry_box_colors()
+    after_download_action()
     print()
 
 
