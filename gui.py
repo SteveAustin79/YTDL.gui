@@ -408,6 +408,7 @@ def enable_buttons():
 
 
 def get_information():
+    grid_remove_elements(elements_to_destroy_loop)
     if channel_dropdown.get() == "" and link.get() == "":
         update_download_log("Empty selection", COLORS.red)
     else:
