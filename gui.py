@@ -1356,7 +1356,7 @@ def convert_m4a_to_mp3(video_id: str, publish_date: str, year: str, restricted: 
             bufsize=1
         )
         for line in process.stdout:
-            update_download_log(line, COLORS.orange)
+            update_download_log(line, COLORS.white)
         process.stdout.close()
         process.wait()
 
