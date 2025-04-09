@@ -1356,7 +1356,7 @@ def convert_m4a_to_mp3(video_id: str, publish_date: str, year: str, restricted: 
             bufsize=1
         )
         for line in process.stdout:
-            update_download_log("\n" + line, COLORS.white)
+            update_download_log("\n" + line, COLORS.violet)
         process.stdout.close()
         process.wait()
 
@@ -1393,7 +1393,18 @@ def merge_video_audio(video_id: str, publish_date: str, vid_res: str, year: str,
             "ffmpeg", "-loglevel", "quiet", "-stats", "-i", video_file, "-i", audio_file,
             "-c:v", "copy", "-c:a", "aac", output_file
         ]
-        subprocess.run(command, check=True)
+        # subprocess.run(command, check=True)
+        process = subprocess.Popen(
+            command,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            universal_newlines=True,
+            bufsize=1
+        )
+        for line in process.stdout:
+            update_download_log("\n" + line, COLORS.violet)
+        process.stdout.close()
+        process.wait()
 
         if restricted:
             update_download_log("Restricted Video downloaded", COLORS.green)
@@ -1416,7 +1427,19 @@ def convert_m4a_to_opus_and_merge(video_id: str, publish_date: str, vid_res: str
     command = [
         "ffmpeg", "-loglevel", "quiet", "-stats", "-i", audio_file, "-c:a", "libopus", "audio.opus"
     ]
-    subprocess.run(command, check=True)
+    # subprocess.run(command, check=True)
+    process = subprocess.Popen(
+        command,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        universal_newlines=True,
+        bufsize=1
+    )
+    for line in process.stdout:
+        update_download_log("\n" + line, COLORS.violet)
+    process.stdout.close()
+    process.wait()
+
     merge_webm_opus(video_id, publish_date, vid_res, year, restricted)
 
 
@@ -1428,7 +1451,18 @@ def merge_webm_opus(video_id: str, publish_date: str, vid_res: str, year: str, r
         "ffmpeg", "-loglevel", "quiet", "-stats", "-i", video_file, "-i", "audio.opus",
         "-c:v", "copy", "-c:a", "copy", output_file
     ]
-    subprocess.run(command, check=True)
+    # subprocess.run(command, check=True)
+    process = subprocess.Popen(
+        command,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        universal_newlines=True,
+        bufsize=1
+    )
+    for line in process.stdout:
+        update_download_log("\n" + line, COLORS.violet)
+    process.stdout.close()
+    process.wait()
 
     delete_temp_files()
     os.remove("audio.opus")
@@ -1452,7 +1486,19 @@ def convert_webm_to_mp4(input_file: str, output_file: str, year: str, restricted
         "-movflags", "+faststart",  # Optimize MP4 for streaming
         output_file
     ]
-    subprocess.run(command, check=True)
+    # subprocess.run(command, check=True)
+    process = subprocess.Popen(
+        command,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        universal_newlines=True,
+        bufsize=1
+    )
+    for line in process.stdout:
+        update_download_log("\n" + line, COLORS.violet)
+    process.stdout.close()
+    process.wait()
+
     os.remove(input_file)
     if restricted:
         update_download_log("Restricted Video downloaded", COLORS.green)
