@@ -1301,6 +1301,8 @@ def download_video_process(audio_or_video_bool: bool, yt: YouTube, res: str, mor
                 break
         yt.streams[idx].download()
 
+    progress_percent.configure(text="0%")
+    progress_bar.set(0)
     update_download_log("Downloading AUDIO...", COLORS.violet)
     for idx, i in enumerate(yt.streams):
         if i.bitrate == "128kbps":
@@ -1358,7 +1360,7 @@ def convert_m4a_to_mp3(video_id: str, publish_date: str, year: str, restricted: 
             bufsize=1
         )
         for line in process.stdout:
-            update_download_log("Converting to MP3...\n" + line, COLORS.violet)
+            update_download_log("Converting to MP3... " + line, COLORS.violet)
         process.stdout.close()
         process.wait()
 
@@ -1404,7 +1406,7 @@ def merge_video_audio(video_id: str, publish_date: str, vid_res: str, year: str,
             bufsize=1
         )
         for line in process.stdout:
-            update_download_log("Merging to MP4...\n" + line, COLORS.violet)
+            update_download_log("Merging to MP4... " + line, COLORS.violet)
         process.stdout.close()
         process.wait()
 
@@ -1438,7 +1440,7 @@ def convert_m4a_to_opus_and_merge(video_id: str, publish_date: str, vid_res: str
         bufsize=1
     )
     for line in process.stdout:
-        update_download_log("Convert M4A audio to Opus format (WebM compatible)...\n" + line, COLORS.violet)
+        update_download_log("Convert M4A audio to Opus format (WebM compatible)... " + line, COLORS.violet)
     process.stdout.close()
     process.wait()
 
@@ -1462,7 +1464,7 @@ def merge_webm_opus(video_id: str, publish_date: str, vid_res: str, year: str, r
         bufsize=1
     )
     for line in process.stdout:
-        update_download_log("Merging WebM video with Opus audio...\n" + line, COLORS.violet)
+        update_download_log("Merging WebM video + Opus audio... " + line, COLORS.violet)
     process.stdout.close()
     process.wait()
 
@@ -1497,7 +1499,7 @@ def convert_webm_to_mp4(input_file: str, output_file: str, year: str, restricted
         bufsize=1
     )
     for line in process.stdout:
-        update_download_log("Converting WebM to MP4... (this may take a while)\n" + line, COLORS.violet)
+        update_download_log("Converting WebM to MP4... " + line, COLORS.violet)
     process.stdout.close()
     process.wait()
 
