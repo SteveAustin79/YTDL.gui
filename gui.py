@@ -1228,19 +1228,6 @@ def download_video(audio_or_video_bool: bool, y_tube: YouTube, res: str, restric
 def download_video_work(audio_or_video_bool: bool, y_tube: YouTube, res: str, restricted: bool, year_subfolders: bool):
     global elements_to_destroy_loop
 
-    abort_button.configure(fg_color=COLORS.dark_red, command=abort_download)
-    abort_button.grid(row=22, column=3, rowspan=2, padx=padding_x, pady=padding_y, sticky="nw")
-    elements_to_destroy_loop.append(abort_button)
-
-    progress_percent.configure(text="0%")
-    progress_percent.grid(row=22, column=1, padx=padding_x, pady=padding_y, sticky="e")
-    elements_to_destroy_loop.append(progress_percent)
-
-    progress_bar.set(0)
-    progress_bar.configure(progress_color=COLORS.green)
-    progress_bar.grid(row=22, column=2, padx=padding_x, pady=padding_y, sticky="w")
-    elements_to_destroy_loop.append(progress_bar)
-
     update_download_log("", COLORS.gray)
 
     y_tube_publish_date = y_tube.publish_date
@@ -1292,6 +1279,19 @@ def download_video_work(audio_or_video_bool: bool, y_tube: YouTube, res: str, re
 
 def download_video_process(audio_or_video_bool: bool, yt: YouTube, res: str, more_than1080p: bool, publishing_date: str, year: str,
                            restricted: bool) -> None:
+    abort_button.configure(fg_color=COLORS.dark_red, command=abort_download)
+    abort_button.grid(row=22, column=3, rowspan=2, padx=padding_x, pady=padding_y, sticky="nw")
+    elements_to_destroy_loop.append(abort_button)
+
+    progress_percent.configure(text="0%")
+    progress_percent.grid(row=22, column=1, padx=padding_x, pady=padding_y, sticky="e")
+    elements_to_destroy_loop.append(progress_percent)
+
+    progress_bar.set(0)
+    progress_bar.configure(progress_color=COLORS.green)
+    progress_bar.grid(row=22, column=2, padx=padding_x, pady=padding_y, sticky="w")
+    elements_to_destroy_loop.append(progress_bar)
+
     if not audio_or_video_bool:
         update_download_log("Downloading VIDEO...", COLORS.violet)
         for idx, i in enumerate(yt.streams):
