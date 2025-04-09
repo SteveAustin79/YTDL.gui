@@ -1345,6 +1345,10 @@ def convert_m4a_to_mp3(video_id: str, publish_date: str, year: str, restricted: 
     update_download_log("MP3 downloaded", COLORS.green)
     delete_temp_files()
 
+    update_video_counts(
+        str(count_files(output_dir + "/" + clean_string_regex(total_channel_name).rstrip(), [".mp4", ".mp3"])) +
+        " / " + str(total_channel_videos) + " Videos downloaded")
+
     reset_config_entry_box_colors()
     print()
 
