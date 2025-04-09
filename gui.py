@@ -342,6 +342,7 @@ def check_channels_txt(filename: str, c_url: str) -> bool:
 def update_download_log(text: str, color: str) -> None:
     download_log_label.configure(text=text, text_color=color)
     download_log_label.grid(row=23, column=2, columnspan=2, padx=padding_x, pady=padding_y, sticky="nw") # row=23 / 12
+    download_console_label.grid(row=24, column=2, columnspan=2, padx=padding_x, pady=padding_y, sticky="nw")
     download_log_label.update()
 
 
@@ -1342,7 +1343,7 @@ def convert_m4a_to_mp3(video_id: str, publish_date: str, year: str, restricted: 
     create_directories(restricted, year)
     output_file = (ytchannel_path.get() + str(year) + restricted_path + publish_date +
                    " - " + clean_string_regex(os.path.splitext(audio_file)[0]) + " - " + video_id + ".mp3")
-    # update_download_log("Converting to MP3...", COLORS.violet)
+    update_download_log("Converting to MP3...", COLORS.violet)
     try:
         command = [
             "ffmpeg", "-loglevel", "quiet", "-stats",
@@ -1360,7 +1361,8 @@ def convert_m4a_to_mp3(video_id: str, publish_date: str, year: str, restricted: 
             bufsize=1
         )
         for line in process.stdout:
-            update_download_log("Converting to MP3... " + line, COLORS.violet)
+            # update_download_log("Converting to MP3... " + line, COLORS.violet)
+            download_console_label.configure(text=line, text_color=COLORS.gray)
         process.stdout.close()
         process.wait()
 
@@ -1391,7 +1393,7 @@ def merge_video_audio(video_id: str, publish_date: str, vid_res: str, year: str,
                    + " - " + clean_string_regex(os.path.splitext(video_file)[0]) + " - " + video_id + ".mp4")
 
     try:
-        # update_download_log("Merging to MP4...", COLORS.violet)
+        update_download_log("Merging to MP4...", COLORS.violet)
         abort_button.grid_remove()
         command = [
             "ffmpeg", "-loglevel", "quiet", "-stats", "-i", video_file, "-i", audio_file,
@@ -1406,7 +1408,8 @@ def merge_video_audio(video_id: str, publish_date: str, vid_res: str, year: str,
             bufsize=1
         )
         for line in process.stdout:
-            update_download_log("Merging to MP4... " + line, COLORS.violet)
+            # update_download_log("Merging to MP4... " + line, COLORS.violet)
+            download_console_label.configure(text=line, text_color=COLORS.gray)
         process.stdout.close()
         process.wait()
 
@@ -1427,7 +1430,7 @@ def merge_video_audio(video_id: str, publish_date: str, vid_res: str, year: str,
 def convert_m4a_to_opus_and_merge(video_id: str, publish_date: str, vid_res: str, year: str,
                                   restricted: bool) -> None:
     video_file, audio_file = find_media_files(".")
-    # update_download_log("Convert M4A audio to Opus format (WebM compatible)...", COLORS.violet)
+    update_download_log("Convert M4A audio to Opus format (WebM compatible)...", COLORS.violet)
     command = [
         "ffmpeg", "-loglevel", "quiet", "-stats", "-i", audio_file, "-c:a", "libopus", "audio.opus"
     ]
@@ -1440,7 +1443,8 @@ def convert_m4a_to_opus_and_merge(video_id: str, publish_date: str, vid_res: str
         bufsize=1
     )
     for line in process.stdout:
-        update_download_log("Convert M4A audio to Opus format (WebM compatible)... " + line, COLORS.violet)
+        # update_download_log("Convert M4A audio to Opus format (WebM compatible)... " + line, COLORS.violet)
+        download_console_label.configure(text=line, text_color=COLORS.gray)
     process.stdout.close()
     process.wait()
 
@@ -1450,7 +1454,7 @@ def convert_m4a_to_opus_and_merge(video_id: str, publish_date: str, vid_res: str
 def merge_webm_opus(video_id: str, publish_date: str, vid_res: str, year: str, restricted: bool) -> None:
     video_file, audio_file = find_media_files(".")
     output_file = "tmp/" + video_file
-    # update_download_log("Merging WebM video with Opus audio...", COLORS.violet)
+    update_download_log("Merging WebM video with Opus audio...", COLORS.violet)
     command = [
         "ffmpeg", "-loglevel", "quiet", "-stats", "-i", video_file, "-i", "audio.opus",
         "-c:v", "copy", "-c:a", "copy", output_file
@@ -1464,7 +1468,8 @@ def merge_webm_opus(video_id: str, publish_date: str, vid_res: str, year: str, r
         bufsize=1
     )
     for line in process.stdout:
-        update_download_log("Merging WebM video + Opus audio... " + line, COLORS.violet)
+        # update_download_log("Merging WebM video + Opus audio... " + line, COLORS.violet)
+        download_console_label.configure(text=line, text_color=COLORS.gray)
     process.stdout.close()
     process.wait()
 
@@ -1481,7 +1486,7 @@ def merge_webm_opus(video_id: str, publish_date: str, vid_res: str, year: str, r
 
 def convert_webm_to_mp4(input_file: str, output_file: str, year: str, restricted: bool) -> None:
     create_directories(restricted, year)
-    # update_download_log("Converting WebM to MP4... (this may take a while)", COLORS.violet)
+    update_download_log("Converting WebM to MP4... (this may take a while)", COLORS.violet)
     abort_button.grid_remove()
     command = [
         "ffmpeg", "-loglevel", "quiet", "-stats", "-i", input_file,
@@ -1499,7 +1504,8 @@ def convert_webm_to_mp4(input_file: str, output_file: str, year: str, restricted
         bufsize=1
     )
     for line in process.stdout:
-        update_download_log("Converting WebM to MP4... " + line, COLORS.violet)
+        # update_download_log("Converting WebM to MP4... " + line, COLORS.violet)
+        download_console_label.configure(text=line, text_color=COLORS.gray)
     process.stdout.close()
     process.wait()
 
@@ -1645,6 +1651,7 @@ progress_percent = customtkinter.CTkLabel(app, text="")
 progress_bar = customtkinter.CTkProgressBar(app, width=entry_width)
 
 download_log_label = customtkinter.CTkLabel(app, text="")
+download_console_label = customtkinter.CTkLabel(app, text="")
 
 if len(sys.argv) > 1 and youtube_url in str(sys.argv[1]):
     channel_dropdown.set(sys.argv[1])
