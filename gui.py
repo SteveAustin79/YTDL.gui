@@ -1347,7 +1347,16 @@ def convert_m4a_to_mp3(video_id: str, publish_date: str, year: str, restricted: 
             "-q:a", "2",  # Quality setting (lower is better)
             output_file
         ]
-        subprocess.run(command, check=True)
+        # subprocess.run(command, check=True)
+        process = subprocess.Popen(
+            command,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            universal_newlines=True,
+            bufsize=1
+        )
+        for line in process.stdout:
+            update_download_log(line, COLORS.orange)
 
     except Exception as ee:
         print(f"❌ Error merging files: {ee}")
