@@ -1202,7 +1202,7 @@ def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: s
     ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON                       ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON
     ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON
 
-    if looper:
+    if looper or audio_or_video_bool:
         download_video(audio_or_video_bool, y_tube, res, restricted, year_subfolders, looper)
     else:
         # enable_buttons()
