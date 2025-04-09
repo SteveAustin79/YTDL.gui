@@ -1132,6 +1132,7 @@ def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: s
     global elements_to_destroy_loop
     update_app_title()
 
+    download_console_label.configure(text="")
     download_console_label.grid(row=24, column=2, columnspan=2, padx=padding_x, pady=padding_y, sticky="nw")
     elements_to_destroy_loop.append(download_console_label)
 
