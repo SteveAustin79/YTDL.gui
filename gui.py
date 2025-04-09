@@ -342,7 +342,6 @@ def check_channels_txt(filename: str, c_url: str) -> bool:
 def update_download_log(text: str, color: str) -> None:
     download_log_label.configure(text=text, text_color=color)
     download_log_label.grid(row=23, column=2, columnspan=2, padx=padding_x, pady=padding_y, sticky="nw") # row=23 / 12
-    download_console_label.grid(row=24, column=2, columnspan=2, padx=padding_x, pady=padding_y, sticky="nw")
     download_log_label.update()
 
 
@@ -1311,6 +1310,9 @@ def download_video_process(audio_or_video_bool: bool, yt: YouTube, res: str, mor
     yt.streams[idx].download()
 
     rename_files_in_temp_directory()
+
+    download_console_label.grid(row=24, column=2, columnspan=2, padx=padding_x, pady=padding_y, sticky="nw")
+    elements_to_destroy_loop.append(download_console_label)
 
     if audio_or_video_bool:
         convert_m4a_to_mp3(yt.video_id, publishing_date, year, restricted)
