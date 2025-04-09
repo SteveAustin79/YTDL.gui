@@ -341,7 +341,7 @@ def check_channels_txt(filename: str, c_url: str) -> bool:
 
 def update_download_log(text: str, color: str) -> None:
     download_log_label.configure(text=text, text_color=color)
-    download_log_label.grid(row=23, column=1, columnspan=3, padx=padding_x, pady=padding_y, sticky="w") # row=23 / 12
+    download_log_label.grid(row=23, column=2, columnspan=2, padx=padding_x, pady=padding_y, sticky="w") # row=23 / 12
     download_log_label.update()
 
 
@@ -1025,7 +1025,7 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                 else:
                     video = YouTube(youtube_watch_url + only_video_id, on_progress_callback=on_progress)
 
-                v_title_text_length = 90
+                v_title_text_length = 45
                 v_title = video.title[:v_title_text_length] + "..." if len(video.title) > v_title_text_length else video.title
                 v_title_update_full = (str(v_counter) + " / " + str(len(video_watch_urls)) + "  |  " +
                                      str(video.publish_date.strftime(AppConfig.date_format_display)) + "  |  " +
