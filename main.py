@@ -28,7 +28,7 @@ def checkbox_filter_on_clicked():
 
 
 def update_app_title():
-    app.title(app_title + AppConfig.version + " - Free disk space: " + get_free_space(output_dir))
+    app.title(app_title + AppConfig.VERSION + " - Free disk space: " + get_free_space(output_dir))
 
 
 def read_channel_txt_lines(filename: str) -> list[str]:
@@ -95,9 +95,9 @@ def list_channels_work():
         elements_to_destroy.append(button_channel_name)
 
         if os.path.exists(output_dir + "/" + clean_string_regex(
-                channel_object.channel_name).rstrip() + AppConfig.channel_config_path):
+                channel_object.channel_name).rstrip() + AppConfig.CHANNEL_CONFIG_PATH):
             channel_config = load_config(output_dir + "/" + clean_string_regex(
-                channel_object.channel_name).rstrip() + AppConfig.channel_config_path)
+                channel_object.channel_name).rstrip() + AppConfig.CHANNEL_CONFIG_PATH)
 
             # Resolution
             label_config_resolution = customtkinter.CTkLabel(app, text="max", height=row_height, text_color=COLORS.gray)
@@ -246,10 +246,10 @@ def list_channels_work():
 
         if os.path.exists(
                 output_dir + "/" + clean_string_regex(
-                    channel_object.channel_name).rstrip() + AppConfig.channel_config_path):
+                    channel_object.channel_name).rstrip() + AppConfig.CHANNEL_CONFIG_PATH):
             ch_config = load_config(
                 output_dir + "/" + clean_string_regex(
-                    channel_object.channel_name).rstrip() + AppConfig.channel_config_path)
+                    channel_object.channel_name).rstrip() + AppConfig.CHANNEL_CONFIG_PATH)
 
             ch_config_filter_words = ch_config["c_filter_words"]
             if str(ch_config["c_min_duration_in_minutes"]).strip():
@@ -290,7 +290,7 @@ def list_channels_work():
                 youtube_vo_publish_date = youtube_video_object.publish_date
 
                 update_log("Find match:  " + str(counter) + "/" + str(len(size)) + "     |     " +
-                           str(youtube_vo_publish_date.strftime(AppConfig.date_format_display)) + "     |     " +
+                           str(youtube_vo_publish_date.strftime(AppConfig.DATE_FORMAT_DISPLAY)) + "     |     " +
                                                     format_time(youtube_vo_length) + "     |     " +
                                         ("R" if youtube_vo_age_restricted else "_") + "     |     " + youtube_vo_title)
                 # update_download_log("Find match:  " + str(v_counter) + "/" + str(len(video_watch_urls)) + "  |  " +
@@ -313,8 +313,8 @@ def list_channels_work():
                     # yt_video_thumbnail = load_image_from_url(youtube_video_object.thumbnail_url, size=(32, 18))
 
                     latest_video_title_text = youtube_vo_title
-                    latest_date_math = youtube_vo_publish_date.strftime(AppConfig.date_format_math)
-                    latest_date = youtube_vo_publish_date.strftime(AppConfig.date_format_display)
+                    latest_date_math = youtube_vo_publish_date.strftime(AppConfig.DATE_FORMAT_MATH)
+                    latest_date = youtube_vo_publish_date.strftime(AppConfig.DATE_FORMAT_DISPLAY)
                     latest_video_id_text = youtube_vo_video_id
 
                     if youtube_vo_age_restricted:
@@ -426,16 +426,16 @@ customtkinter.set_default_color_theme("blue")
 
 # App frame
 app = customtkinter.CTk()
-app.iconbitmap(AppConfig.icon_path)
+app.iconbitmap(AppConfig.ICON_PATH)
 # Get screen width & height
 screen_width = app.winfo_screenwidth()
 screen_height = app.winfo_screenheight()
 
 # Calculate x, y for bottom-right position
-x_offset = screen_width - AppConfig.win_width - 10  # Align to right
-y_offset = screen_height - AppConfig.win_height - 72  # Align to bottom
+x_offset = screen_width - AppConfig.WIN_WIDTH - 10  # Align to right
+y_offset = screen_height - AppConfig.WIN_HEIGHT - 72  # Align to bottom
 
-app.geometry(f"{AppConfig.win_width}x{AppConfig.win_height}+{x_offset}+{y_offset}")
+app.geometry(f"{AppConfig.WIN_WIDTH}x{AppConfig.WIN_HEIGHT}+{x_offset}+{y_offset}")
 update_app_title()
 app.configure(bg_color=COLORS.black)
 # app.protocol("WM_DELETE_WINDOW", on_closing)
@@ -443,7 +443,7 @@ app.configure(bg_color=COLORS.black)
 header_frame = customtkinter.CTkFrame(app, fg_color=COLORS.frame_bg)
 header_frame.grid(row=0, column=0, columnspan=18, padx=0, pady=padding_y, sticky="nw")
 
-logo = customtkinter.CTkImage(light_image=Image.open(AppConfig.logo_path), size=(60, 40)) # 180x120
+logo = customtkinter.CTkImage(light_image=Image.open(AppConfig.LOGO_PATH), size=(60, 40)) # 180x120
 logo_label = customtkinter.CTkLabel(header_frame, text="", image=logo)
 logo_label.grid(row=0, column=0, padx=padding_x, pady=padding_y, sticky="nw")
 

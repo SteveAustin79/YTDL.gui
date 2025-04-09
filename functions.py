@@ -9,16 +9,15 @@ from io import BytesIO
 
 
 class AppConfig:
-    version = " v1.0.5 (20250410)"
-    logo_path = "assets/logo.png"
-    icon_path = "assets/icon.ico"
-    channel_config_path = "/" + "_config_channel.json"
-    date_format_display = "%d.%m.%Y"
-    date_time_format = "%d.%m.%Y %H:%M:%S"
-    date_format_math = "%Y-%m-%d"
+    VERSION = " v1.0.5 (20250410)"
+    LOGO_PATH = "assets/logo.png"
+    ICON_PATH = "assets/icon.ico"
+    CHANNEL_CONFIG_PATH = "/" + "_config_channel.json"
+    DATE_FORMAT_DISPLAY = "%d.%m.%Y"
+    DATE_TIME_FORMAT = "%d.%m.%Y %H:%M:%S"
+    DATE_FORMAT_MATH = "%Y-%m-%d"
     # Set window size
-    win_width = 1280
-    win_height = 800
+    WIN_WIDTH, WIN_HEIGHT = 1280, 800
 
     REQUIRED_APP_CONFIG = {
         "output_directory": "",
@@ -276,5 +275,4 @@ def grid_remove_elements(d_elements_to_destroy):
     for element in d_elements_to_destroy:
         element.grid_remove()  # Remove widget from the UI
     d_elements_to_destroy.clear()
-
 

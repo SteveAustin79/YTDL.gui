@@ -14,7 +14,6 @@ from functions import (AppConfig, COLORS, CcConfig, JSONConfig, load_config, fin
 
 
 # dropdown with int for loop mode exit after int loops
-# copy video id field
 # delete partly converted file in channel target dir if aborted during conversion
 # update channel config only restart configuration build from channel config file, not YT channel fetch again
 # fix: buttons are and stay enabled after first run in loop mode
@@ -54,32 +53,32 @@ def update_channel_config(default_max_res, limit_resolution_to, default_min_dura
         app.focus_set()
 
         if default_max_res != limit_resolution_to:
-            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.channel_config_path, "c_max_resolution", limit_resolution_to)
+            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.CHANNEL_CONFIG_PATH, "c_max_resolution", limit_resolution_to)
         if default_min_duration_in_minutes != min_duration:
-            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.channel_config_path, "c_min_duration_in_minutes",
+            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.CHANNEL_CONFIG_PATH, "c_min_duration_in_minutes",
                                int(min_duration))
         if default_max_duration_in_minutes != max_duration:
-            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.channel_config_path, "c_max_duration_in_minutes",
+            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.CHANNEL_CONFIG_PATH, "c_max_duration_in_minutes",
                                int(max_duration))
         if default_minimum_year != min_year:
-            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.channel_config_path, "c_minimum_year", int(min_year))
+            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.CHANNEL_CONFIG_PATH, "c_minimum_year", int(min_year))
         if default_maximum_year != max_year:
-            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.channel_config_path, "c_maximum_year", int(max_year))
+            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.CHANNEL_CONFIG_PATH, "c_maximum_year", int(max_year))
         if default_only_restricted != only_restricted_videos:
-            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.channel_config_path, "c_only_restricted",
+            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.CHANNEL_CONFIG_PATH, "c_only_restricted",
                                only_restricted_videos)
         if default_skip_restricted != skip_restricted:
-            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.channel_config_path, "c_skip_restricted", skip_restricted)
+            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.CHANNEL_CONFIG_PATH, "c_skip_restricted", skip_restricted)
         if default_minimum_views != min_video_views:
-            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.channel_config_path, "c_minimum_views", int(min_video_views))
+            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.CHANNEL_CONFIG_PATH, "c_minimum_views", int(min_video_views))
         if default_year_subfolders != year_subfolders_temp:
-            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.channel_config_path, "c_year_subfolders", year_subfolders_temp)
+            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.CHANNEL_CONFIG_PATH, "c_year_subfolders", year_subfolders_temp)
         if default_exclude_videos != exclude_video_ids:
-            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.channel_config_path, "c_exclude_video_ids", exclude_video_ids)
+            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.CHANNEL_CONFIG_PATH, "c_exclude_video_ids", exclude_video_ids)
         if default_include_videos != include_video_ids:
-            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.channel_config_path, "c_include_video_ids", include_video_ids)
+            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.CHANNEL_CONFIG_PATH, "c_include_video_ids", include_video_ids)
         if default_filter_words != video_name_filter:
-            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.channel_config_path, "c_filter_words", video_name_filter)
+            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.CHANNEL_CONFIG_PATH, "c_filter_words", video_name_filter)
         # get_information()
 
 
@@ -347,7 +346,7 @@ def update_download_log(text: str, color: str) -> None:
 
 
 def update_app_title():
-    app.title(app_title + AppConfig.version + " - Free disk space: " + get_free_space(output_dir))
+    app.title(app_title + AppConfig.VERSION + " - Free disk space: " + get_free_space(output_dir))
 
 
 def update_video_counts(text: str):
@@ -536,11 +535,11 @@ def get_information_work():
     min_duration_bool = False
     max_duration_bool = False
 
-    if os.path.exists(ytchannel_path.get() + AppConfig.channel_config_path):
+    if os.path.exists(ytchannel_path.get() + AppConfig.CHANNEL_CONFIG_PATH):
         incomplete_config = False
         incomplete_string = []
         # Load channel config
-        channel_config = load_config(ytchannel_path.get() + AppConfig.channel_config_path)
+        channel_config = load_config(ytchannel_path.get() + AppConfig.CHANNEL_CONFIG_PATH)
         # Access and set settings
         if "c_max_resolution" in channel_config:
             if channel_config["c_max_resolution"] != "":
@@ -637,7 +636,7 @@ def get_information_work():
         if incomplete_config:
             channel_config_label.configure(text=("Incomplete channel config file! --> Adding missing key(s) to file " +
                                                  str(incomplete_string)), text_color=COLORS.red)
-            CcConfig.cc_check_and_update_json_config(ytchannel_path.get() + AppConfig.channel_config_path, AppConfig.REQUIRED_VIDEO_CHANNEL_CONFIG)
+            CcConfig.cc_check_and_update_json_config(ytchannel_path.get() + AppConfig.CHANNEL_CONFIG_PATH, AppConfig.REQUIRED_VIDEO_CHANNEL_CONFIG)
         else:
             channel_config_label.configure(text="Channel config file found!", text_color=COLORS.green)
 
@@ -877,7 +876,7 @@ def get_information_work():
         yt_video_date_label.configure(text="Date:", text_color=COLORS.gray)
         yt_video_date_label.grid(row=17, column=1, padx=padding_x, pady=padding_y, sticky="e")
         elements_to_destroy.append(yt_video_date_label)
-        yt_video_date.configure(text=ytv.publish_date.strftime(AppConfig.date_format_display))
+        yt_video_date.configure(text=ytv.publish_date.strftime(AppConfig.DATE_FORMAT_DISPLAY))
         yt_video_date.grid(row=17, column=2, padx=padding_x, pady=padding_y, sticky="w")
         elements_to_destroy.append(yt_video_date)
 
@@ -1030,7 +1029,7 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                 v_title_text_length = 45
                 v_title = video.title[:v_title_text_length] + "..." if len(video.title) > v_title_text_length else video.title
                 v_title_update_full = (str(v_counter) + " / " + str(len(video_watch_urls)) + "  |  " +
-                                     str(video.publish_date.strftime(AppConfig.date_format_display)) + "  |  " +
+                                     str(video.publish_date.strftime(AppConfig.DATE_FORMAT_DISPLAY)) + "  |  " +
                                      format_time(video.length) + "  |  " +
                                      ("R" if video.age_restricted else "_") + "  |  " +
                                      format_view_count(video.views) + "  |  " +
@@ -1182,7 +1181,7 @@ def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: s
         yt_video_date_label.configure(text="Date:", text_color=COLORS.gray)
         yt_video_date_label.grid(row=17, column=1, padx=padding_x, pady=padding_y, sticky="e")
         elements_to_destroy_loop.append(yt_video_date_label)
-        yt_video_date.configure(text=y_tube.publish_date.strftime(AppConfig.date_format_display))
+        yt_video_date.configure(text=y_tube.publish_date.strftime(AppConfig.DATE_FORMAT_DISPLAY))
         yt_video_date.grid(row=17, column=2, padx=padding_x, pady=padding_y, sticky="w")
         elements_to_destroy_loop.append(yt_video_date)
 
@@ -1246,7 +1245,7 @@ def download_video_work(audio_or_video_bool: bool, y_tube: YouTube, res: str, re
         restricted_path_snippet = "restricted/"
 
     try:
-        publishing_date = y_tube_publish_date.strftime(AppConfig.date_format_math)
+        publishing_date = y_tube_publish_date.strftime(AppConfig.DATE_FORMAT_MATH)
     except Exception as eee:
         publishing_date = eee
 
@@ -1551,9 +1550,9 @@ customtkinter.set_default_color_theme("blue")
 
 # App frame
 app = customtkinter.CTk()
-app.iconbitmap(AppConfig.icon_path)
+app.iconbitmap(AppConfig.ICON_PATH)
 # app.geometry(app_resolution + "+0+0")
-app.geometry(f"{AppConfig.win_width}x{AppConfig.win_height}" + "+0+0")
+app.geometry(f"{AppConfig.WIN_WIDTH}x{AppConfig.WIN_HEIGHT}" + "+0+0")
 update_app_title()
 app.configure(bg_color=COLORS.black)
 app.protocol("WM_DELETE_WINDOW", on_closing)
@@ -1563,7 +1562,7 @@ app.grid_columnconfigure(2, minsize=480)
 app.grid_columnconfigure(3, minsize=250)
 
 # Add UI elements
-logo = customtkinter.CTkImage(light_image=Image.open(AppConfig.logo_path), size=(87, 58)) # 180x120
+logo = customtkinter.CTkImage(light_image=Image.open(AppConfig.LOGO_PATH), size=(87, 58)) # 180x120
 logo_label = customtkinter.CTkLabel(app, text="", image=logo)
 logo_label.grid(row=0, column=0, rowspan=2, padx=padding_x, pady=padding_y, sticky="nw")
 
