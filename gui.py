@@ -1075,8 +1075,10 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                         configuration_min_views.configure(fg_color=COLORS.dark_red)
 
                 # v_title_text_length = 42
-                update_download_log(("Searching match:  " if do_not_download == 1 else "FOUND match!  ") +
-                                    v_title_update_full, COLORS.violet)
+                if do_not_download == 1:
+                    update_download_log("Searching match:  " + v_title_update_full, COLORS.violet)
+                else:
+                    update_download_log("FOUND match!  " + v_title_update_full, COLORS.green)
 
                 if (not video.age_restricted and
                         video.vid_info.get('playabilityStatus', {}).get('status') != 'UNPLAYABLE' and
