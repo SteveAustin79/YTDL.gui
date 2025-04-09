@@ -678,7 +678,7 @@ def get_information_work():
     elements_to_destroy.append(create_channel_config_button)
 
     # channel config settings
-    configuration_resolution_label = customtkinter.CTkLabel(channel_frame, text="Max. Resolution:")
+    configuration_resolution_label = customtkinter.CTkLabel(channel_frame, text="Max. Resolution:", text_color=COLORS.gray)
     configuration_resolution_label.grid(row=7, column=0, padx=padding_x, pady=padding_y, sticky="e")
     elements_to_destroy.append(configuration_resolution_label)
     res_values = ["max", "2160p", "1440p", "1080p", "720p", "480p"]
@@ -687,7 +687,7 @@ def get_information_work():
     configuration_resolution.grid(row=7, column=1, padx=padding_x, pady=padding_y, sticky="w")
     elements_to_destroy.append(configuration_resolution)
 
-    configuration_min_views_label = customtkinter.CTkLabel(channel_frame, text="Min. Views:")
+    configuration_min_views_label = customtkinter.CTkLabel(channel_frame, text="Min. Views:", text_color=COLORS.gray)
     configuration_min_views_label.grid(row=7, column=1, padx=padding_x, pady=padding_y, sticky="e")
     elements_to_destroy.append(configuration_min_views_label)
     min_views_value = tkinter.StringVar(value=default_minimum_views)
@@ -696,7 +696,7 @@ def get_information_work():
     configuration_min_views.grid(row=7, column=2, padx=padding_x, pady=padding_y, sticky="w")
     elements_to_destroy.append(configuration_min_views)
 
-    configuration_year_subs_label = customtkinter.CTkLabel(channel_frame, text="Year sub dir structure:")
+    configuration_year_subs_label = customtkinter.CTkLabel(channel_frame, text="Year sub dir structure:", text_color=COLORS.gray)
     configuration_year_subs_label.grid(row=7, column=2, padx=padding_x, pady=padding_y, sticky="e")
     elements_to_destroy.append(configuration_year_subs_label)
     configuration_year_subs.configure(text="")
@@ -707,7 +707,7 @@ def get_information_work():
     configuration_year_subs.grid(row=7, column=3, padx=padding_x, pady=padding_y, sticky="w")
     elements_to_destroy.append(configuration_year_subs)
 
-    configuration_min_duration_label = customtkinter.CTkLabel(channel_frame, text="Min. duration (m):")
+    configuration_min_duration_label = customtkinter.CTkLabel(channel_frame, text="Min. duration (m):", text_color=COLORS.gray)
     configuration_min_duration_label.grid(row=8, column=0, padx=padding_x, pady=padding_y, sticky="e")
     elements_to_destroy.append(configuration_min_duration_label)
     min_duration_value = tkinter.StringVar(value=default_min_duration_in_minutes)
@@ -716,7 +716,7 @@ def get_information_work():
     configuration_min_duration.grid(row=8, column=1, padx=padding_x, pady=padding_y, sticky="w")
     elements_to_destroy.append(configuration_min_duration)
 
-    configuration_max_duration_label = customtkinter.CTkLabel(channel_frame, text="Max. duration (m):")
+    configuration_max_duration_label = customtkinter.CTkLabel(channel_frame, text="Max. duration (m):", text_color=COLORS.gray)
     configuration_max_duration_label.grid(row=8, column=1, padx=padding_x, pady=padding_y, sticky="e")
     elements_to_destroy.append(configuration_max_duration_label)
     max_duration_value = tkinter.StringVar(value=default_max_duration_in_minutes)
@@ -724,7 +724,7 @@ def get_information_work():
     configuration_max_duration.grid(row=8, column=2, padx=padding_x, pady=padding_y, sticky="w")
     elements_to_destroy.append(configuration_max_duration)
 
-    configuration_skip_restricted_label = customtkinter.CTkLabel(channel_frame, text="Skip restricted:")
+    configuration_skip_restricted_label = customtkinter.CTkLabel(channel_frame, text="Skip restricted:", text_color=COLORS.gray)
     configuration_skip_restricted_label.grid(row=8, column=2, padx=padding_x, pady=padding_y, sticky="e")
     elements_to_destroy.append(configuration_skip_restricted_label)
     configuration_skip_restricted.configure(text="")
@@ -735,7 +735,7 @@ def get_information_work():
     configuration_skip_restricted.grid(row=8, column=3, padx=padding_x, pady=padding_y, sticky="w")
     elements_to_destroy.append(configuration_skip_restricted)
 
-    configuration_only_restricted_label = customtkinter.CTkLabel(channel_frame, text="Only restricted:")
+    configuration_only_restricted_label = customtkinter.CTkLabel(channel_frame, text="Only restricted:", text_color=COLORS.gray)
     configuration_only_restricted_label.grid(row=9, column=2, padx=padding_x, pady=padding_y, sticky="e")
     elements_to_destroy.append(configuration_only_restricted_label)
     configuration_only_restricted.configure(text="")
@@ -747,7 +747,7 @@ def get_information_work():
     elements_to_destroy.append(configuration_only_restricted)
 
     # min year
-    configuration_min_year_label = customtkinter.CTkLabel(channel_frame, text="Min. year:")
+    configuration_min_year_label = customtkinter.CTkLabel(channel_frame, text="Min. year:", text_color=COLORS.gray)
     configuration_min_year_label.grid(row=9, column=0, padx=padding_x, pady=padding_y, sticky="e")
     elements_to_destroy.append(configuration_min_year_label)
     min_year_value = tkinter.StringVar(value=default_minimum_year)
@@ -756,7 +756,7 @@ def get_information_work():
     elements_to_destroy.append(configuration_min_year)
 
     # max year
-    configuration_max_year_label = customtkinter.CTkLabel(channel_frame, text="Max. year:")
+    configuration_max_year_label = customtkinter.CTkLabel(channel_frame, text="Max. year:", text_color=COLORS.gray)
     configuration_max_year_label.grid(row=9, column=1, padx=padding_x, pady=padding_y, sticky="e")
     elements_to_destroy.append(configuration_max_year_label)
     max_year_value = tkinter.StringVar(value=default_maximum_year)
@@ -765,7 +765,7 @@ def get_information_work():
     elements_to_destroy.append(configuration_max_year)
 
     # filter words
-    configuration_filter_words_label = customtkinter.CTkLabel(channel_frame, text="Filter words:")
+    configuration_filter_words_label = customtkinter.CTkLabel(channel_frame, text="Filter words:", text_color=COLORS.gray)
     configuration_filter_words_label.grid(row=10, column=0, padx=padding_x, pady=padding_y, sticky="en")
     elements_to_destroy.append(configuration_filter_words_label)
     configuration_filter_words.configure(width=170, height=50, fg_color=("white", "gray20"),  # Match Entry background color
@@ -777,7 +777,7 @@ def get_information_work():
     elements_to_destroy.append(configuration_filter_words)
 
     # excludes
-    configuration_excludes_label = customtkinter.CTkLabel(channel_frame, text="Excludes:")
+    configuration_excludes_label = customtkinter.CTkLabel(channel_frame, text="Excludes:", text_color=COLORS.gray)
     configuration_excludes_label.grid(row=10, column=1, padx=padding_x, pady=padding_y, sticky="en")
     elements_to_destroy.append(configuration_excludes_label)
     configuration_excludes.configure(width=300, height=50, fg_color=("white", "gray20"),  # Match Entry background color
@@ -789,7 +789,7 @@ def get_information_work():
     elements_to_destroy.append(configuration_excludes)
 
     # includes
-    configuration_includes_label = customtkinter.CTkLabel(channel_frame, text="Includes:")
+    configuration_includes_label = customtkinter.CTkLabel(channel_frame, text="Includes:", text_color=COLORS.gray)
     configuration_includes_label.grid(row=10, column=2, padx=padding_x, pady=padding_y, sticky="en")
     elements_to_destroy.append(configuration_includes_label)
     configuration_includes.configure(width=170, height=50, fg_color=("white", "gray20"),  # Match Entry background color

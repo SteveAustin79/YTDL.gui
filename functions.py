@@ -47,7 +47,7 @@ class COLORS:
     white       = "#ffffff"
     black       = "#000000"
     dark        = "#111111"
-    gray        = "#888888"
+    gray        = "#999999"
     blue        = "#7777ff"
     cyan        = "#66f2ff"
     red         = "#ff6666"
