@@ -1357,6 +1357,9 @@ def convert_m4a_to_mp3(video_id: str, publish_date: str, year: str, restricted: 
         )
         for line in process.stdout:
             update_download_log(line, COLORS.orange)
+        process.stdout.close()
+        process.wait()
+
 
     except Exception as ee:
         print(f"❌ Error merging files: {ee}")
