@@ -1252,7 +1252,7 @@ def download_video_work(audio_or_video_bool: bool, y_tube: YouTube, res: str, re
     except Exception as eee:
         publishing_date = eee
 
-    update_download_log("Starting download to " + ytchannel_path.get(), COLORS.gray)
+    update_download_log("Starting download to " + ytchannel_path.get(), COLORS.violet)
 
     if year_subfolders:
         year = "/" + str(y_tube_publish_date.strftime("%Y"))
@@ -1280,7 +1280,7 @@ def download_video_work(audio_or_video_bool: bool, y_tube: YouTube, res: str, re
                 path = (ytchannel_path.get() + str(year) + "/" + restricted_path_snippet + str(
                     publishing_date) + " - " + res + " - "
                         + clean_string_regex(os.path.splitext(video_file_tmp)[0]) + " - " + y_tube.video_id + ".mp4")
-                update_download_log("Merged file still available!", COLORS.gray)
+                update_download_log("Merged file still available!", COLORS.violet)
                 convert_webm_to_mp4("tmp/" + video_file_tmp, path, year, restricted)
             else:
                 download_video_process(audio_or_video_bool, y_tube, res, more_than1080p, publishing_date, year, restricted)
@@ -1291,13 +1291,13 @@ def download_video_work(audio_or_video_bool: bool, y_tube: YouTube, res: str, re
 def download_video_process(audio_or_video_bool: bool, yt: YouTube, res: str, more_than1080p: bool, publishing_date: str, year: str,
                            restricted: bool) -> None:
     if not audio_or_video_bool:
-        update_download_log("Downloading VIDEO...", COLORS.gray)
+        update_download_log("Downloading VIDEO...", COLORS.violet)
         for idx, i in enumerate(yt.streams):
             if i.resolution == res:
                 break
         yt.streams[idx].download()
 
-    update_download_log("Downloading AUDIO...", COLORS.gray)
+    update_download_log("Downloading AUDIO...", COLORS.violet)
     for idx, i in enumerate(yt.streams):
         if i.bitrate == "128kbps":
             break
@@ -1327,7 +1327,7 @@ def convert_m4a_to_mp3(video_id: str, publish_date: str, year: str, restricted: 
     create_directories(restricted, year)
     output_file = (ytchannel_path.get() + str(year) + restricted_path + publish_date +
                    " - " + clean_string_regex(os.path.splitext(audio_file)[0]) + " - " + video_id + ".mp3")
-    update_download_log("Converting to MP3...", COLORS.gray)
+    update_download_log("Converting to MP3...", COLORS.violet)
     try:
         command = [
             "ffmpeg", "-loglevel", "quiet", "-stats",
@@ -1365,7 +1365,7 @@ def merge_video_audio(video_id: str, publish_date: str, vid_res: str, year: str,
                    + " - " + clean_string_regex(os.path.splitext(video_file)[0]) + " - " + video_id + ".mp4")
 
     try:
-        update_download_log("Merging to MP4...", COLORS.gray)
+        update_download_log("Merging to MP4...", COLORS.violet)
         abort_button.grid_remove()
         command = [
             "ffmpeg", "-loglevel", "quiet", "-stats", "-i", video_file, "-i", audio_file,
@@ -1398,7 +1398,7 @@ def merge_video_audio(video_id: str, publish_date: str, vid_res: str, year: str,
 def convert_m4a_to_opus_and_merge(video_id: str, publish_date: str, vid_res: str, year: str,
                                   restricted: bool) -> None:
     video_file, audio_file = find_media_files(".")
-    update_download_log("Convert M4A audio to Opus format (WebM compatible)...", COLORS.gray)
+    update_download_log("Convert M4A audio to Opus format (WebM compatible)...", COLORS.violet)
     command = [
         "ffmpeg", "-loglevel", "quiet", "-stats", "-i", audio_file, "-c:a", "libopus", "audio.opus"
     ]
@@ -1409,7 +1409,7 @@ def convert_m4a_to_opus_and_merge(video_id: str, publish_date: str, vid_res: str
 def merge_webm_opus(video_id: str, publish_date: str, vid_res: str, year: str, restricted: bool) -> None:
     video_file, audio_file = find_media_files(".")
     output_file = "tmp/" + video_file
-    update_download_log("Merging WebM video with Opus audio...", COLORS.gray)
+    update_download_log("Merging WebM video with Opus audio...", COLORS.violet)
     command = [
         "ffmpeg", "-loglevel", "quiet", "-stats", "-i", video_file, "-i", "audio.opus",
         "-c:v", "copy", "-c:a", "copy", output_file
@@ -1429,7 +1429,7 @@ def merge_webm_opus(video_id: str, publish_date: str, vid_res: str, year: str, r
 
 def convert_webm_to_mp4(input_file: str, output_file: str, year: str, restricted: bool) -> None:
     create_directories(restricted, year)
-    update_download_log("Converting WebM to MP4... (this may take a while)", COLORS.gray)
+    update_download_log("Converting WebM to MP4... (this may take a while)", COLORS.violet)
     abort_button.grid_remove()
     command = [
         "ffmpeg", "-loglevel", "quiet", "-stats", "-i", input_file,
