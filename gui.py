@@ -1114,9 +1114,11 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
 
     if count_this_run == 0:
         update_download_log("Nothing to do...", COLORS.green)
+        reset_config_entry_box_colors()
     else:
         enable_buttons()
         update_download_log("DONE!", COLORS.green)
+        reset_config_entry_box_colors()
 
 
 
