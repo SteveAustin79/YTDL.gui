@@ -840,9 +840,9 @@ def get_information_work():
                         video_watch_urls.append(url.watch_url)
                 # else:
                 video_watch_urls.append(url.watch_url)
-    video_math = customtkinter.CTkLabel(channel_frame, text=str(len(video_watch_urls)) + " (total videos minus excludes)", text_color=COLORS.gray)
-    video_math.grid(row=5, column=1, padx=padding_x, pady=padding_y, sticky="sw")
-    elements_to_destroy.append(video_math)
+    # video_math = customtkinter.CTkLabel(channel_frame, text=str(len(video_watch_urls)) + " (total videos minus excludes)", text_color=COLORS.gray)
+    # video_math.grid(row=5, column=1, padx=padding_x, pady=padding_y, sticky="sw")
+    # elements_to_destroy.append(video_math)
 
     # channel_videos_combobox = customtkinter.CTkComboBox(app, values=video_watch_urls)
     # channel_videos_combobox.grid(row=10, column=2, columnspan=2, padx=padding_x, pady=padding_y, sticky="se")
