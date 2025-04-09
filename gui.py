@@ -1013,7 +1013,7 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
         only_video_id = str(url).split("=")[1]
         v_counter += 1
         # only_video_id = pytubefix.extract.video_id(url)
-
+        grid_remove_elements(elements_to_destroy_loop)
         if v_counter >= skip_count:
             if find_file_by_string(ytchannel_path.get(), only_video_id, default_max_res, audio_or_video_bool) is not None:
                 count_ok_videos += 1
@@ -1022,7 +1022,6 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                 reset_config_entry_box_colors()
             else:
                 do_not_download = 0
-                grid_remove_elements(elements_to_destroy_loop)
                 if web_client:
                     video = YouTube(youtube_watch_url + only_video_id, 'WEB', on_progress_callback=on_progress)
                 else:
