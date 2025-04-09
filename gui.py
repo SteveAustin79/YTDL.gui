@@ -1628,7 +1628,7 @@ video_button = customtkinter.CTkButton(channel_frame, text="Video (mp4)")
 
 skip_videos_value = tkinter.StringVar(value="")
 skip_videos = customtkinter.CTkEntry(channel_frame, textvariable=skip_videos_value)
-skip_videos_label = customtkinter.CTkLabel(channel_frame, text="Skip")
+skip_videos_label = customtkinter.CTkLabel(channel_frame, text="Skip", text_color=COLORS.gray)
 
 yt_video_id = customtkinter.CTkEntry(app)
 yt_video_title_label = customtkinter.CTkLabel(app, text="")
