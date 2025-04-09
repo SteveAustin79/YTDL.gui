@@ -223,10 +223,13 @@ def find_file_by_string(directory: str, search_string: str, resolution: str, mp3
     return None  # Return None if no file is found
 
 
-def count_files(directory, ext):
+def count_files(directory, extensions):
+    if isinstance(extensions, str):
+        extensions = (extensions,)  # convert single string to tuple
+
     count = 0
     for root, dirs, files in os.walk(directory):
-        count += sum(1 for file in files if file.endswith(ext))
+        count += sum(1 for file in files if file.lower().endswith(tuple(ext.lower() for ext in extensions)))
     return count
 
 

@@ -214,7 +214,7 @@ def list_channels_work():
             channel_video_count = str(len(channel_object.video_urls))
             count_files_from_channel_dir = count_files(output_dir + "/" +
                                                        clean_string_regex(channel_object.channel_name).rstrip(),
-                                                       ".mp4")
+                                                       [".mp4", ".mp3"])
             if count_files_from_channel_dir >= int(channel_video_count):
                 counter_color = COLORS.dark_green
             label_video_count.configure(text=str(count_files_from_channel_dir) + " / " + channel_video_count)
@@ -222,7 +222,7 @@ def list_channels_work():
             # Video count
             label_video_count.configure(text=str(count_files(output_dir + "/" +
                                                              clean_string_regex(channel_object.channel_name).rstrip(),
-                                                             ".mp4")) + " / ...")
+                                                             [".mp4", ".mp3"])) + " / ...")
 
         label_video_count.grid(row=i + row_factor, column=13, padx=padding_x, pady=padding_y, sticky="e")
         elements_to_destroy.append(label_video_count)

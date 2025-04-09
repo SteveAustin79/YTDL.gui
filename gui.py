@@ -468,7 +468,7 @@ def get_information_work():
     channel_info_video_urls = channel_info.video_urls
     count_files_from_channel_dir = count_files(output_dir + "/" +
                                                clean_string_regex(channel_info_name).rstrip(),
-                                               ".mp4")
+                                               [".mp4", ".mp3"])
     update_video_counts(str(count_files_from_channel_dir) + " / " + str(len(channel_info.video_urls)) + " Videos downloaded")
     total_channel_videos = len(channel_info.video_urls)
     total_channel_name = channel_info_name
@@ -1102,7 +1102,7 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
 
 
                 update_video_counts(
-                    str(count_files(output_dir + "/" + clean_string_regex(total_channel_name).rstrip(), ".mp4")) +
+                    str(count_files(output_dir + "/" + clean_string_regex(total_channel_name).rstrip(), [".mp4", ".mp3"])) +
                     " / " + str(total_channel_videos) + " Videos downloaded")
 
         channel_frame.update()
@@ -1381,7 +1381,7 @@ def merge_video_audio(video_id: str, publish_date: str, vid_res: str, year: str,
         abort_button.grid_remove()
         enable_buttons()
         update_video_counts(
-            str(count_files(output_dir + "/" + clean_string_regex(total_channel_name).rstrip(), ".mp4")) +
+            str(count_files(output_dir + "/" + clean_string_regex(total_channel_name).rstrip(), [".mp4", ".mp3"])) +
             " / " + str(total_channel_videos) + " Videos downloaded")
 
         reset_config_entry_box_colors()
@@ -1448,7 +1448,7 @@ def convert_webm_to_mp4(input_file: str, output_file: str, year: str, restricted
     abort_button.grid_remove()
     enable_buttons()
     update_video_counts(
-        str(count_files(output_dir + "/" + clean_string_regex(total_channel_name).rstrip(), ".mp4")) +
+        str(count_files(output_dir + "/" + clean_string_regex(total_channel_name).rstrip(), [".mp4", ".mp3"])) +
         " / " + str(total_channel_videos) + " Videos downloaded")
 
     reset_config_entry_box_colors()
