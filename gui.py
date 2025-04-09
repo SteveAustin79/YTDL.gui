@@ -17,6 +17,7 @@ from functions import (AppConfig, COLORS, CcConfig, JSONConfig, load_config, fin
 # copy video id field
 # delete partly converted file in channel target dir if aborted during conversion
 # update channel config only restart configuration build from channel config file, not YT channel fetch again
+# fix: buttons are and stay enabled after first run in loop mode
 
 app_title = "YTDL.video"
 entry_width = 460
@@ -1130,6 +1131,10 @@ def start_download(audio_or_video_bool: bool, restricted: bool, video_id: str, l
 def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: str, looper: bool, year_subfolders: bool):
     global elements_to_destroy_loop
     update_app_title()
+
+    download_console_label.grid(row=24, column=2, columnspan=2, padx=padding_x, pady=padding_y, sticky="nw")
+    elements_to_destroy_loop.append(download_console_label)
+
     if restricted:
         if web_client:
             y_tube = YouTube(youtube_watch_url + video_id, 'WEB', use_oauth=True, allow_oauth_cache=True,
@@ -1310,9 +1315,6 @@ def download_video_process(audio_or_video_bool: bool, yt: YouTube, res: str, mor
     yt.streams[idx].download()
 
     rename_files_in_temp_directory()
-
-    download_console_label.grid(row=24, column=2, columnspan=2, padx=padding_x, pady=padding_y, sticky="nw")
-    elements_to_destroy_loop.append(download_console_label)
 
     if audio_or_video_bool:
         convert_m4a_to_mp3(yt.video_id, publishing_date, year, restricted)
