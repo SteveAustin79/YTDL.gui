@@ -60,7 +60,7 @@ class COLORS:
     dark_violet = "#633da8"
     log_bg      = "#191919"
     separator   = "#414141"
-    frame_bg    = "#131313"
+    frame_bg    = "#141414"
 
 
 class Tooltip:
