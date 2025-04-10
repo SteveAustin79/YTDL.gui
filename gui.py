@@ -15,7 +15,6 @@ from functions import (AppConfig, COLORS, CcConfig, JSONConfig, load_config, fin
 
 # dropdown with int for loop mode exit after int loops
 # delete partly converted file in channel target dir if aborted during conversion
-# update channel config only restart configuration build from channel config file, not YT channel fetch again
 # fix: buttons are and stay enabled after first run in loop mode
 
 app_title = "YTDL.video"
