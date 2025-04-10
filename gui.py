@@ -145,7 +145,7 @@ def create_channel_config(default_max_res, limit_resolution_to, default_min_dura
             "c_include_video_ids": json_include_video_ids,
             "c_filter_words": json_video_name_filter
         }
-        JSONConfig.create_json_config(ytchannel_path.get() + AppConfig.channel_config_path, custom_values)
+        JSONConfig.create_json_config(ytchannel_path.get() + AppConfig.CHANNEL_CONFIG_PATH, custom_values)
 
         channel_config_label.configure(text="Channel config file found!", text_color=COLORS.green)
         # create_channel_config_button.grid_remove()
