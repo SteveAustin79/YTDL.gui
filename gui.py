@@ -78,8 +78,8 @@ def update_channel_config(default_max_res, limit_resolution_to, default_min_dura
             JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.CHANNEL_CONFIG_PATH, "c_include_video_ids", include_video_ids)
         if default_filter_words != video_name_filter:
             JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.CHANNEL_CONFIG_PATH, "c_filter_words", video_name_filter)
-        # get_information()
-        fetch_channel_config_in_gui()
+
+        channel_config_manager()
 
 
 def create_channel_config(default_max_res, limit_resolution_to, default_min_duration_in_minutes, min_duration,
@@ -407,7 +407,7 @@ def enable_buttons():
     # configuration_filter_words.configure(state="normal")
 
 
-def fetch_channel_config_in_gui():
+def channel_config_manager():
     default_max_res = "max"
     default_min_duration_in_minutes = 0
     default_max_duration_in_minutes = 0
@@ -849,13 +849,7 @@ def get_information_work():
     channel_thumbnail_label.grid(row=3, column=0, rowspan=3, padx=padding_x, pady=padding_y * padding_y_factor * 2, sticky="ne")
     elements_to_destroy.append(channel_thumbnail_label)
 
-
-
-
-    include_list, exclude_list, only_restricted_videos_bool, skip_restricted_bool, min_duration_bool, max_duration_bool = fetch_channel_config_in_gui()
-
-
-
+    include_list, exclude_list, only_restricted_videos_bool, skip_restricted_bool, min_duration_bool, max_duration_bool = channel_config_manager()
 
     count_total_videos = 0
 

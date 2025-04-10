@@ -7,7 +7,6 @@ from PIL import Image
 from functions import (AppConfig, COLORS, CcConfig, Tooltip, load_config, find_file_by_string, count_files, format_time,
                        get_free_space, clean_string_regex, string_to_list, destroy_elements)
 
-# latest video mode n/f
 
 app_title = "YTDL.channels"
 row_height = 23
