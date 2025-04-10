@@ -971,6 +971,15 @@ def limit_resolution(resolution: str, limit: str) -> str:
     return max_resolution
 
 
+def reset_config_entry_box_colors():
+    configuration_min_duration.configure(fg_color="gray20")
+    configuration_max_duration.configure(fg_color="gray20")
+    configuration_filter_words.configure(fg_color="gray20")
+    configuration_min_year.configure(fg_color="gray20")
+    configuration_max_year.configure(fg_color="gray20")
+    configuration_min_views.configure(fg_color="gray20")
+
+
 def loop_download(audio_or_video_bool, default_max_res, default_filter_words, only_restricted_videos_bool,
                         skip_restricted_bool, year_subfolders, min_duration_bool, min_duration, max_duration_bool, max_duration,
                         min_year, max_year, min_video_views):
@@ -981,15 +990,6 @@ def loop_download(audio_or_video_bool, default_max_res, default_filter_words, on
     t_loop_download.start()
     # t_loop_download.join()
     app.focus_set()
-
-
-def reset_config_entry_box_colors():
-    configuration_min_duration.configure(fg_color="gray20")
-    configuration_max_duration.configure(fg_color="gray20")
-    configuration_filter_words.configure(fg_color="gray20")
-    configuration_min_year.configure(fg_color="gray20")
-    configuration_max_year.configure(fg_color="gray20")
-    configuration_min_views.configure(fg_color="gray20")
 
 
 def loop_download_work(audio_or_video_bool, default_max_res, default_filter_words, only_restricted_videos_bool,
@@ -1025,13 +1025,13 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                 else:
                     video = YouTube(youtube_watch_url + only_video_id, on_progress_callback=on_progress)
 
-                v_title_text_length = 45
+                v_title_text_length = 40
                 v_title = video.title[:v_title_text_length] + "..." if len(video.title) > v_title_text_length else video.title
-                v_title_update_full = (str(v_counter) + " / " + str(len(video_watch_urls)) + "  |  " +
-                                     str(video.publish_date.strftime(AppConfig.DATE_FORMAT_DISPLAY)) + "  |  " +
-                                     format_time(video.length) + "  |  " +
-                                     ("R" if video.age_restricted else "_") + "  |  " +
-                                     format_view_count(video.views) + "  |  " +
+                v_title_update_full = (str(v_counter) + " / " + str(len(video_watch_urls)) + "   |   " +
+                                     str(video.publish_date.strftime(AppConfig.DATE_FORMAT_DISPLAY)) + "   |   " +
+                                     format_time(video.length) + "   |   " +
+                                     ("R" if video.age_restricted else "_") + "   |   " +
+                                     format_view_count(video.views) + "   |   " +
                                      v_title)
                 update_download_log("Searching match:  " + v_title_update_full, COLORS.violet)
 
