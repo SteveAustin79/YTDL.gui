@@ -15,20 +15,18 @@ from functions import (AppConfig, COLORS, CcConfig, JSONConfig, load_config, fin
 
 # dropdown with int for loop mode exit after int loops
 # delete partly converted file in channel target dir if aborted during conversion
-# fix: buttons are and stay enabled after first run in loop mode
 
-app_title = "YTDL.video"
-entry_width = 460
-padding_x = 6
-padding_y = 3
-padding_y_factor = 2
-tn_width = 14 * 16
-tn_height = 14 * 9
-video_title_width = 84
-log_default = "    "
+APP_TITLE = "YTDL.video"
+ENTRY_WIDTH = 460
+PADDING_X = 6
+PADDING_Y = 3
+PADDING_Y_FACTOR = 2
+TN_WIDTH = 14 * 16
+TN_HEIGHT = 14 * 9
+VIDEO_TITLE_WIDTH = 84
+
 total_channel_videos = 0
 total_channel_name = ""
-
 video_list = []
 video_list_restricted = []
 video_watch_urls = []
@@ -78,7 +76,7 @@ def update_channel_config(default_max_res, limit_resolution_to, default_min_dura
             JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.CHANNEL_CONFIG_PATH, "c_include_video_ids", include_video_ids)
         if default_filter_words != video_name_filter:
             JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.CHANNEL_CONFIG_PATH, "c_filter_words", video_name_filter)
-
+        channel_config_label.configure(text="Channel config updated!", text_color=COLORS.green)
         channel_config_manager()
 
 
@@ -148,7 +146,6 @@ def create_channel_config(default_max_res, limit_resolution_to, default_min_dura
         JSONConfig.create_json_config(ytchannel_path.get() + AppConfig.CHANNEL_CONFIG_PATH, custom_values)
 
         channel_config_label.configure(text="Channel config file found!", text_color=COLORS.green)
-        # create_channel_config_button.grid_remove()
         create_channel_config_button.configure(text="Update channel config")
 
 
@@ -190,7 +187,7 @@ def add_url_in_order(filename: str, a_url: str) -> None:
 
         # print("✅ URL added to channels.txt.")
         after_adding_to_channels_txt_label.configure(text="URL added to channels.txt")
-        after_adding_to_channels_txt_label.grid(row=3, column=3, padx=padding_x, pady=padding_y, sticky="nw")
+        after_adding_to_channels_txt_label.grid(row=3, column=3, padx=PADDING_X, pady=PADDING_Y, sticky="nw")
         elements_to_destroy.append(after_adding_to_channels_txt_label)
 
         channel_dropdown.configure(values=read_channel_txt_lines("channels.txt"))
@@ -341,12 +338,12 @@ def check_channels_txt(filename: str, c_url: str) -> bool:
 
 def update_download_log(text: str, color: str) -> None:
     download_log_label.configure(text=text, text_color=color)
-    download_log_label.grid(row=23, column=2, columnspan=2, padx=padding_x, pady=padding_y, sticky="nw") # row=23 / 12
+    download_log_label.grid(row=23, column=2, columnspan=2, padx=PADDING_X, pady=PADDING_Y, sticky="nw") # row=23 / 12
     download_log_label.update()
 
 
 def update_app_title():
-    app.title(app_title + AppConfig.VERSION + " - Free disk space: " + get_free_space(output_dir))
+    app.title(APP_TITLE + AppConfig.VERSION + " - Free disk space: " + get_free_space(output_dir))
 
 
 def update_video_counts(text: str):
@@ -370,18 +367,6 @@ def disable_buttons():
     channel_dropdown.configure(state="disabled")
     link.configure(state="disabled")
     ytchannel_path.configure(state="disabled")
-    # configuration_resolution.configure(state="disabled")
-    # configuration_min_duration.configure(state="disabled")
-    # configuration_max_duration.configure(state="disabled")
-    # configuration_min_year.configure(state="disabled")
-    # configuration_max_year.configure(state="disabled")
-    # configuration_only_restricted.configure(state="disabled")
-    # configuration_skip_restricted.configure(state="disabled")
-    # configuration_min_views.configure(state="disabled")
-    # configuration_year_subs.configure(state="disabled")
-    # configuration_excludes.configure(state="disabled")
-    # configuration_includes.configure(state="disabled")
-    # configuration_filter_words.configure(state="disabled")
 
 
 def enable_buttons():
@@ -393,18 +378,6 @@ def enable_buttons():
     channel_dropdown.configure(state="normal")
     link.configure(state="normal")
     ytchannel_path.configure(state="normal")
-    # configuration_resolution.configure(state="normal")
-    # configuration_min_duration.configure(state="normal")
-    # configuration_max_duration.configure(state="normal")
-    # configuration_min_year.configure(state="normal")
-    # configuration_max_year.configure(state="normal")
-    # configuration_only_restricted.configure(state="normal")
-    # configuration_skip_restricted.configure(state="normal")
-    # configuration_min_views.configure(state="normal")
-    # configuration_year_subs.configure(state="normal")
-    # configuration_excludes.configure(state="normal")
-    # configuration_includes.configure(state="normal")
-    # configuration_filter_words.configure(state="normal")
 
 
 def channel_config_manager():
@@ -536,156 +509,154 @@ def channel_config_manager():
         # create_channel_config_button.grid_remove()
         create_channel_config_button.configure(text="Update channel config")
         create_channel_config_button.configure(command=lambda: update_channel_config(default_max_res,
-                                                                                     "" if configuration_resolution.get() == "max" else configuration_resolution.get(),
-                                                                                     default_min_duration_in_minutes,
-                                                                                     configuration_min_duration.get(),
-                                                                                     default_max_duration_in_minutes,
-                                                                                     configuration_max_duration.get(),
-                                                                                     default_minimum_year,
-                                                                                     configuration_min_year.get(),
-                                                                                     default_maximum_year,
-                                                                                     configuration_max_year.get(),
-                                                                                     default_only_restricted,
-                                                                                     "y" if configuration_only_restricted.get() == 1 else "",
-                                                                                     default_skip_restricted,
-                                                                                     "y" if configuration_skip_restricted.get() == 1 else "",
-                                                                                     default_minimum_views,
-                                                                                     configuration_min_views.get(),
-                                                                                     default_year_subfolders,
-                                                                                     "y" if configuration_year_subs.get() == 1 else "",
-                                                                                     default_exclude_videos,
-                                                                                     configuration_excludes.get("0.0",
-                                                                                                                "end").strip(),
-                                                                                     default_include_videos,
-                                                                                     configuration_includes.get("0.0",
-                                                                                                                "end").strip(),
-                                                                                     default_filter_words,
-                                                                                     configuration_filter_words.get(
-                                                                                         "0.0", "end").strip()))
+                                     "" if configuration_resolution.get() == "max" else configuration_resolution.get(),
+                                     default_min_duration_in_minutes,
+                                     configuration_min_duration.get(),
+                                     default_max_duration_in_minutes,
+                                     configuration_max_duration.get(),
+                                     default_minimum_year,
+                                     configuration_min_year.get(),
+                                     default_maximum_year,
+                                     configuration_max_year.get(),
+                                     default_only_restricted,
+                                     "y" if configuration_only_restricted.get() == 1 else "",
+                                     default_skip_restricted,
+                                     "y" if configuration_skip_restricted.get() == 1 else "",
+                                     default_minimum_views,
+                                     configuration_min_views.get(),
+                                     default_year_subfolders,
+                                     "y" if configuration_year_subs.get() == 1 else "",
+                                     default_exclude_videos,
+                                     configuration_excludes.get("0.0",
+                                                                "end").strip(),
+                                     default_include_videos,
+                                     configuration_includes.get("0.0",
+                                                                "end").strip(),
+                                     default_filter_words,
+                                     configuration_filter_words.get(
+                                         "0.0", "end").strip()))
 
     else:
         channel_config_label.configure(text="No channel config file found!", text_color=COLORS.gray)
         create_channel_config_button.configure(
             command=lambda: create_channel_config(default_max_res, configuration_resolution.get(),
-                                                  default_min_duration_in_minutes, configuration_min_duration.get(),
-                                                  default_max_duration_in_minutes, configuration_max_duration.get(),
-                                                  default_minimum_year, configuration_min_year.get(),
-                                                  default_maximum_year, configuration_max_year.get(),
-                                                  default_only_restricted,
-                                                  "y" if configuration_only_restricted.get() == 1 else "",
-                                                  default_skip_restricted,
-                                                  "y" if configuration_skip_restricted.get() == 1 else "",
-                                                  default_minimum_views, configuration_min_views.get(),
-                                                  default_year_subfolders,
-                                                  "y" if configuration_year_subs.get() == 1 else "",
-                                                  default_exclude_videos,
-                                                  configuration_excludes.get("0.0", "end").strip(),
-                                                  default_include_videos,
-                                                  configuration_includes.get("0.0", "end").strip(),
-                                                  default_filter_words,
-                                                  configuration_filter_words.get("0.0", "end").strip()))
+                                      default_min_duration_in_minutes, configuration_min_duration.get(),
+                                      default_max_duration_in_minutes, configuration_max_duration.get(),
+                                      default_minimum_year, configuration_min_year.get(),
+                                      default_maximum_year, configuration_max_year.get(),
+                                      default_only_restricted,
+                                      "y" if configuration_only_restricted.get() == 1 else "",
+                                      default_skip_restricted,
+                                      "y" if configuration_skip_restricted.get() == 1 else "",
+                                      default_minimum_views, configuration_min_views.get(),
+                                      default_year_subfolders,
+                                      "y" if configuration_year_subs.get() == 1 else "",
+                                      default_exclude_videos,
+                                      configuration_excludes.get("0.0", "end").strip(),
+                                      default_include_videos,
+                                      configuration_includes.get("0.0", "end").strip(),
+                                      default_filter_words,
+                                      configuration_filter_words.get("0.0", "end").strip()))
         create_channel_config_button.configure(text="Create channel config")
 
-    create_channel_config_button.grid(row=5, column=3, padx=padding_x, pady=padding_y, sticky="w")
+    create_channel_config_button.grid(row=5, column=3, padx=PADDING_X, pady=PADDING_Y, sticky="w")
     elements_to_destroy.append(create_channel_config_button)
 
     # channel config settings
     configuration_resolution_label = customtkinter.CTkLabel(channel_frame, text="Max. Resolution:",
                                                             text_color=COLORS.gray)
-    configuration_resolution_label.grid(row=7, column=0, padx=padding_x, pady=padding_y, sticky="e")
+    configuration_resolution_label.grid(row=7, column=0, padx=PADDING_X, pady=PADDING_Y, sticky="e")
     elements_to_destroy.append(configuration_resolution_label)
     res_values = ["max", "2160p", "1440p", "1080p", "720p", "480p"]
     configuration_resolution.configure(values=res_values, width=100)
     configuration_resolution.set(default_max_res)
-    configuration_resolution.grid(row=7, column=1, padx=padding_x, pady=padding_y, sticky="w")
+    configuration_resolution.grid(row=7, column=1, padx=PADDING_X, pady=PADDING_Y, sticky="w")
     elements_to_destroy.append(configuration_resolution)
 
     configuration_min_views_label = customtkinter.CTkLabel(channel_frame, text="Min. Views:", text_color=COLORS.gray)
-    configuration_min_views_label.grid(row=7, column=1, padx=padding_x, pady=padding_y, sticky="e")
+    configuration_min_views_label.grid(row=7, column=1, padx=PADDING_X, pady=PADDING_Y, sticky="e")
     elements_to_destroy.append(configuration_min_views_label)
     min_views_value = tkinter.StringVar(value=default_minimum_views)
-    # min_views_value.trace_add("write", on_change)
     configuration_min_views.configure(width=100, textvariable=min_views_value)
-    configuration_min_views.grid(row=7, column=2, padx=padding_x, pady=padding_y, sticky="w")
+    configuration_min_views.grid(row=7, column=2, padx=PADDING_X, pady=PADDING_Y, sticky="w")
     elements_to_destroy.append(configuration_min_views)
 
     configuration_year_subs_label = customtkinter.CTkLabel(channel_frame, text="Year sub dir structure:",
                                                            text_color=COLORS.gray)
-    configuration_year_subs_label.grid(row=7, column=2, padx=padding_x, pady=padding_y, sticky="e")
+    configuration_year_subs_label.grid(row=7, column=2, padx=PADDING_X, pady=PADDING_Y, sticky="e")
     elements_to_destroy.append(configuration_year_subs_label)
     configuration_year_subs.configure(text="")
     if year_subfolders:
         configuration_year_subs.select()
     else:
         configuration_year_subs.deselect()
-    configuration_year_subs.grid(row=7, column=3, padx=padding_x, pady=padding_y, sticky="w")
+    configuration_year_subs.grid(row=7, column=3, padx=PADDING_X, pady=PADDING_Y, sticky="w")
     elements_to_destroy.append(configuration_year_subs)
 
     configuration_min_duration_label = customtkinter.CTkLabel(channel_frame, text="Min. duration (m):",
                                                               text_color=COLORS.gray)
-    configuration_min_duration_label.grid(row=8, column=0, padx=padding_x, pady=padding_y, sticky="e")
+    configuration_min_duration_label.grid(row=8, column=0, padx=PADDING_X, pady=PADDING_Y, sticky="e")
     elements_to_destroy.append(configuration_min_duration_label)
     min_duration_value = tkinter.StringVar(value=default_min_duration_in_minutes)
-    # min_duration_value.trace_add("write", on_change)
     configuration_min_duration.configure(width=100, textvariable=min_duration_value)
-    configuration_min_duration.grid(row=8, column=1, padx=padding_x, pady=padding_y, sticky="w")
+    configuration_min_duration.grid(row=8, column=1, padx=PADDING_X, pady=PADDING_Y, sticky="w")
     elements_to_destroy.append(configuration_min_duration)
 
     configuration_max_duration_label = customtkinter.CTkLabel(channel_frame, text="Max. duration (m):",
                                                               text_color=COLORS.gray)
-    configuration_max_duration_label.grid(row=8, column=1, padx=padding_x, pady=padding_y, sticky="e")
+    configuration_max_duration_label.grid(row=8, column=1, padx=PADDING_X, pady=PADDING_Y, sticky="e")
     elements_to_destroy.append(configuration_max_duration_label)
     max_duration_value = tkinter.StringVar(value=default_max_duration_in_minutes)
     configuration_max_duration.configure(width=100, textvariable=max_duration_value)
-    configuration_max_duration.grid(row=8, column=2, padx=padding_x, pady=padding_y, sticky="w")
+    configuration_max_duration.grid(row=8, column=2, padx=PADDING_X, pady=PADDING_Y, sticky="w")
     elements_to_destroy.append(configuration_max_duration)
 
     configuration_skip_restricted_label = customtkinter.CTkLabel(channel_frame, text="Skip restricted:",
                                                                  text_color=COLORS.gray)
-    configuration_skip_restricted_label.grid(row=8, column=2, padx=padding_x, pady=padding_y, sticky="e")
+    configuration_skip_restricted_label.grid(row=8, column=2, padx=PADDING_X, pady=PADDING_Y, sticky="e")
     elements_to_destroy.append(configuration_skip_restricted_label)
     configuration_skip_restricted.configure(text="")
     if skip_restricted:
         configuration_skip_restricted.select()
     else:
         configuration_skip_restricted.deselect()
-    configuration_skip_restricted.grid(row=8, column=3, padx=padding_x, pady=padding_y, sticky="w")
+    configuration_skip_restricted.grid(row=8, column=3, padx=PADDING_X, pady=PADDING_Y, sticky="w")
     elements_to_destroy.append(configuration_skip_restricted)
 
     configuration_only_restricted_label = customtkinter.CTkLabel(channel_frame, text="Only restricted:",
                                                                  text_color=COLORS.gray)
-    configuration_only_restricted_label.grid(row=9, column=2, padx=padding_x, pady=padding_y, sticky="e")
+    configuration_only_restricted_label.grid(row=9, column=2, padx=PADDING_X, pady=PADDING_Y, sticky="e")
     elements_to_destroy.append(configuration_only_restricted_label)
     configuration_only_restricted.configure(text="")
     if only_restricted:
         configuration_only_restricted.select()
     else:
         configuration_only_restricted.deselect()
-    configuration_only_restricted.grid(row=9, column=3, padx=padding_x, pady=padding_y, sticky="w")
+    configuration_only_restricted.grid(row=9, column=3, padx=PADDING_X, pady=PADDING_Y, sticky="w")
     elements_to_destroy.append(configuration_only_restricted)
 
     # min year
     configuration_min_year_label = customtkinter.CTkLabel(channel_frame, text="Min. year:", text_color=COLORS.gray)
-    configuration_min_year_label.grid(row=9, column=0, padx=padding_x, pady=padding_y, sticky="e")
+    configuration_min_year_label.grid(row=9, column=0, padx=PADDING_X, pady=PADDING_Y, sticky="e")
     elements_to_destroy.append(configuration_min_year_label)
     min_year_value = tkinter.StringVar(value=default_minimum_year)
     configuration_min_year.configure(width=100, textvariable=min_year_value)
-    configuration_min_year.grid(row=9, column=1, padx=padding_x, pady=padding_y, sticky="w")
+    configuration_min_year.grid(row=9, column=1, padx=PADDING_X, pady=PADDING_Y, sticky="w")
     elements_to_destroy.append(configuration_min_year)
 
     # max year
     configuration_max_year_label = customtkinter.CTkLabel(channel_frame, text="Max. year:", text_color=COLORS.gray)
-    configuration_max_year_label.grid(row=9, column=1, padx=padding_x, pady=padding_y, sticky="e")
+    configuration_max_year_label.grid(row=9, column=1, padx=PADDING_X, pady=PADDING_Y, sticky="e")
     elements_to_destroy.append(configuration_max_year_label)
     max_year_value = tkinter.StringVar(value=default_maximum_year)
     configuration_max_year.configure(width=100, textvariable=max_year_value)
-    configuration_max_year.grid(row=9, column=2, padx=padding_x, pady=padding_y, sticky="w")
+    configuration_max_year.grid(row=9, column=2, padx=PADDING_X, pady=PADDING_Y, sticky="w")
     elements_to_destroy.append(configuration_max_year)
 
     # filter words
     configuration_filter_words_label = customtkinter.CTkLabel(channel_frame, text="Filter words:",
                                                               text_color=COLORS.gray)
-    configuration_filter_words_label.grid(row=10, column=0, padx=padding_x, pady=padding_y, sticky="en")
+    configuration_filter_words_label.grid(row=10, column=0, padx=PADDING_X, pady=PADDING_Y, sticky="en")
     elements_to_destroy.append(configuration_filter_words_label)
     configuration_filter_words.configure(width=170, height=50, fg_color=("white", "gray20"),
                                          # Match Entry background color
@@ -693,31 +664,31 @@ def channel_config_manager():
                                          border_width=2, corner_radius=6)
     configuration_filter_words.delete("0.0", "end")
     configuration_filter_words.insert("0.0", default_filter_words)
-    configuration_filter_words.grid(row=10, column=1, padx=padding_x, pady=padding_y, sticky="wn")
+    configuration_filter_words.grid(row=10, column=1, padx=PADDING_X, pady=PADDING_Y, sticky="wn")
     elements_to_destroy.append(configuration_filter_words)
 
     # excludes
     configuration_excludes_label = customtkinter.CTkLabel(channel_frame, text="Excludes:", text_color=COLORS.gray)
-    configuration_excludes_label.grid(row=10, column=1, padx=padding_x, pady=padding_y, sticky="en")
+    configuration_excludes_label.grid(row=10, column=1, padx=PADDING_X, pady=PADDING_Y, sticky="en")
     elements_to_destroy.append(configuration_excludes_label)
     configuration_excludes.configure(width=300, height=50, fg_color=("white", "gray20"),  # Match Entry background color
                                      border_color=("gray60", "gray40"),  # Match Entry border color
                                      border_width=2, corner_radius=6)
     configuration_excludes.delete("0.0", "end")
     configuration_excludes.insert("0.0", default_exclude_videos)
-    configuration_excludes.grid(row=10, column=2, padx=padding_x, pady=padding_y, sticky="wn")
+    configuration_excludes.grid(row=10, column=2, padx=PADDING_X, pady=PADDING_Y, sticky="wn")
     elements_to_destroy.append(configuration_excludes)
 
     # includes
     configuration_includes_label = customtkinter.CTkLabel(channel_frame, text="Includes:", text_color=COLORS.gray)
-    configuration_includes_label.grid(row=10, column=2, padx=padding_x, pady=padding_y, sticky="en")
+    configuration_includes_label.grid(row=10, column=2, padx=PADDING_X, pady=PADDING_Y, sticky="en")
     elements_to_destroy.append(configuration_includes_label)
     configuration_includes.configure(width=170, height=50, fg_color=("white", "gray20"),  # Match Entry background color
                                      border_color=("gray60", "gray40"),  # Match Entry border color
                                      border_width=2, corner_radius=6)
     configuration_includes.delete("0.0", "end")
     configuration_includes.insert("0.0", default_include_videos)
-    configuration_includes.grid(row=10, column=3, padx=padding_x, pady=padding_y, sticky="wn")
+    configuration_includes.grid(row=10, column=3, padx=PADDING_X, pady=PADDING_Y, sticky="wn")
     elements_to_destroy.append(configuration_includes)
 
     # fill here channel config settings
@@ -765,11 +736,9 @@ def get_information_work():
         channel_url = link.get()
 
     after_adding_to_channels_txt_label.grid_remove()
-    # destroy_elements()
 
     yt_channel = channel_url
     video_id_from_single_video = ""
-    # ytv = ""
     if youtube_watch_url in yt_channel:
         if web_client:
             ytv = YouTube(yt_channel, 'WEB', on_progress_callback=on_progress)
@@ -809,44 +778,42 @@ def get_information_work():
     total_channel_name = channel_info_name
     channel_info_thumbnail = channel_info.thumbnail_url
 
-
-
-    # separator1.grid(row=2, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y * padding_y_factor)
+    # separator1.grid(row=2, column=0, columnspan=4, sticky="ew", padx=PADDING_X, pady=PADDING_Y * PADDING_Y_FACTOR)
     # elements_to_destroy.append(separator1)
 
-    separator2.grid(row=6, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y)
+    separator2.grid(row=6, column=0, columnspan=4, sticky="ew", padx=PADDING_X, pady=PADDING_Y)
     elements_to_destroy.append(separator2)
 
-    # separator3.grid(row=14, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y)
+    # separator3.grid(row=14, column=0, columnspan=4, sticky="ew", padx=PADDING_X, pady=PADDING_Y)
     # elements_to_destroy.append(separator3)
 
-    video_info_channel.grid(row=3, column=1, padx=padding_x, pady=padding_y * padding_y_factor, sticky="nw")
+    video_info_channel.grid(row=3, column=1, padx=PADDING_X, pady=PADDING_Y * PADDING_Y_FACTOR, sticky="nw")
     elements_to_destroy.append(video_info_channel)
     video_info_channel.configure(text=channel_info_name[:29] + "..." if len(channel_info_name) > 29 else channel_info_name)
-    video_info_channel_url.grid(row=3, column=2, padx=padding_x, pady=padding_y * padding_y_factor, sticky="nw")
+    video_info_channel_url.grid(row=3, column=2, padx=PADDING_X, pady=PADDING_Y * PADDING_Y_FACTOR, sticky="nw")
     elements_to_destroy.append(video_info_channel_url)
     video_info_channel_url.configure(text=channel_info_url)
     if not check_channels_txt("channels.txt", channel_info_url):
         video_info_channel_button.configure(command=lambda: add_url_in_order("channels.txt", channel_info_url))
-        video_info_channel_button.grid(row=3, column=3, padx=padding_x, pady=padding_y * padding_y_factor, sticky="nw")
+        video_info_channel_button.grid(row=3, column=3, padx=PADDING_X, pady=PADDING_Y * PADDING_Y_FACTOR, sticky="nw")
         elements_to_destroy.append(video_info_channel_button)
 
-    ytchannel_video_count.grid(row=4, column=1, padx=padding_x, pady=padding_y, sticky="nw")
+    ytchannel_video_count.grid(row=4, column=1, padx=PADDING_X, pady=PADDING_Y, sticky="nw")
     elements_to_destroy.append(ytchannel_video_count)
 
-    ytchannel_path_label.grid(row=4, column=1, padx=padding_x, pady=padding_y, sticky="ne")
+    ytchannel_path_label.grid(row=4, column=1, padx=PADDING_X, pady=PADDING_Y, sticky="ne")
     elements_to_destroy.append(ytchannel_path_label)
-    ytchannel_path.grid(row=4, column=2, padx=padding_x, pady=padding_y, sticky="nw")
+    ytchannel_path.grid(row=4, column=2, padx=PADDING_X, pady=PADDING_Y, sticky="nw")
     elements_to_destroy.append(ytchannel_path)
     ytchannel_path_var = tkinter.StringVar(value=output_dir + "/" + clean_string_regex(channel_info_name).rstrip())
     ytchannel_path.configure(textvariable=ytchannel_path_var)
 
-    channel_config_label.grid(row=5, column=2, padx=padding_x, pady=padding_y, sticky="sw")
+    channel_config_label.grid(row=5, column=2, padx=PADDING_X, pady=PADDING_Y, sticky="sw")
     elements_to_destroy.append(channel_config_label)
 
-    yt_channel_thumbnail = load_image_from_url(channel_info_thumbnail, size=(tn_height, tn_height))
+    yt_channel_thumbnail = load_image_from_url(channel_info_thumbnail, size=(TN_HEIGHT, TN_HEIGHT))
     channel_thumbnail_label.configure(image=yt_channel_thumbnail)
-    channel_thumbnail_label.grid(row=3, column=0, rowspan=3, padx=padding_x, pady=padding_y * padding_y_factor * 2, sticky="ne")
+    channel_thumbnail_label.grid(row=3, column=0, rowspan=3, padx=PADDING_X, pady=PADDING_Y * PADDING_Y_FACTOR * 2, sticky="ne")
     elements_to_destroy.append(channel_thumbnail_label)
 
     include_list, exclude_list, only_restricted_videos_bool, skip_restricted_bool, min_duration_bool, max_duration_bool = channel_config_manager()
@@ -875,65 +842,63 @@ def get_information_work():
                 # else:
                 video_watch_urls.append(url.watch_url)
     # video_math = customtkinter.CTkLabel(channel_frame, text=str(len(video_watch_urls)) + " (total videos minus excludes)", text_color=COLORS.gray)
-    # video_math.grid(row=5, column=1, padx=padding_x, pady=padding_y, sticky="sw")
+    # video_math.grid(row=5, column=1, padx=PADDING_X, pady=PADDING_Y, sticky="sw")
     # elements_to_destroy.append(video_math)
 
     # channel_videos_combobox = customtkinter.CTkComboBox(app, values=video_watch_urls)
-    # channel_videos_combobox.grid(row=10, column=2, columnspan=2, padx=padding_x, pady=padding_y, sticky="se")
+    # channel_videos_combobox.grid(row=10, column=2, columnspan=2, padx=PADDING_X, pady=PADDING_Y, sticky="se")
     # elements_to_destroy.append(channel_videos_combobox)
 
-    channel_frame.grid(row=3, column=0, columnspan=4, sticky="ew", padx=0, pady=padding_y * padding_y_factor)
+    channel_frame.grid(row=3, column=0, columnspan=4, sticky="ew", padx=0, pady=PADDING_Y * PADDING_Y_FACTOR)
     elements_to_destroy.append(channel_frame)
 
     restricted_video = False
 
     if video_id_from_single_video != "":
         yt_video_title_label.configure(text="Title:", text_color=COLORS.gray)
-        yt_video_title_label.grid(row=15, column=1, padx=padding_x, pady=padding_y, sticky="e")
+        yt_video_title_label.grid(row=15, column=1, padx=PADDING_X, pady=PADDING_Y, sticky="e")
         elements_to_destroy.append(yt_video_title_label)
-        yt_video_title.configure(text=str(ytv.title)[:video_title_width] +
-                        "..." if len(str(ytv.title)) > video_title_width else str(ytv.title), font=("Arial", 15, "bold"))
+        yt_video_title.configure(text=str(ytv.title)[:VIDEO_TITLE_WIDTH] +
+                        "..." if len(str(ytv.title)) > VIDEO_TITLE_WIDTH else str(ytv.title), font=("Arial", 15, "bold"))
         if ytv.age_restricted:
             yt_video_title.configure(text_color=COLORS.red)
             restricted_video = True
             # log_label.configure(text="Restricted Video!", text_color=COLORS.red)
-        yt_video_title.grid(row=15, column=2, columnspan=2, padx=padding_x, pady=padding_y, sticky="w")
+        yt_video_title.grid(row=15, column=2, columnspan=2, padx=PADDING_X, pady=PADDING_Y, sticky="w")
         elements_to_destroy.append(yt_video_title)
 
         yt_video_views_label.configure(text="Views:", text_color=COLORS.gray)
-        yt_video_views_label.grid(row=16, column=1, padx=padding_x, pady=padding_y, sticky="e")
+        yt_video_views_label.grid(row=16, column=1, padx=PADDING_X, pady=PADDING_Y, sticky="e")
         elements_to_destroy.append(yt_video_views_label)
         yt_video_views.configure(text=format_view_count(ytv.views))
-        yt_video_views.grid(row=16, column=2, padx=padding_x, pady=padding_y, sticky="w")
+        yt_video_views.grid(row=16, column=2, padx=PADDING_X, pady=PADDING_Y, sticky="w")
         elements_to_destroy.append(yt_video_views)
 
         yt_video_date_label.configure(text="Date:", text_color=COLORS.gray)
-        yt_video_date_label.grid(row=17, column=1, padx=padding_x, pady=padding_y, sticky="e")
+        yt_video_date_label.grid(row=17, column=1, padx=PADDING_X, pady=PADDING_Y, sticky="e")
         elements_to_destroy.append(yt_video_date_label)
         yt_video_date.configure(text=ytv.publish_date.strftime(AppConfig.DATE_FORMAT_DISPLAY))
-        yt_video_date.grid(row=17, column=2, padx=padding_x, pady=padding_y, sticky="w")
+        yt_video_date.grid(row=17, column=2, padx=PADDING_X, pady=PADDING_Y, sticky="w")
         elements_to_destroy.append(yt_video_date)
 
         yt_video_length_label.configure(text="Length:", text_color=COLORS.gray)
-        yt_video_length_label.grid(row=18, column=1, padx=padding_x, pady=padding_y, sticky="e")
+        yt_video_length_label.grid(row=18, column=1, padx=PADDING_X, pady=PADDING_Y, sticky="e")
         elements_to_destroy.append(yt_video_length_label)
         yt_video_length.configure(text=format_time(ytv.length))
-        yt_video_length.grid(row=18, column=2, padx=padding_x, pady=padding_y, sticky="w")
+        yt_video_length.grid(row=18, column=2, padx=PADDING_X, pady=PADDING_Y, sticky="w")
         elements_to_destroy.append(yt_video_length)
 
-        yt_video_thumbnail = load_image_from_url(ytv.thumbnail_url, size=(tn_width, tn_height))
+        yt_video_thumbnail = load_image_from_url(ytv.thumbnail_url, size=(TN_WIDTH, TN_HEIGHT))
         video_thumbnail_label.configure(image=yt_video_thumbnail, text="")
-        video_thumbnail_label.grid(row=15, column=0, rowspan=4, padx=padding_x, pady=padding_y, sticky="e")
+        video_thumbnail_label.grid(row=15, column=0, rowspan=4, padx=PADDING_X, pady=PADDING_Y, sticky="e")
         elements_to_destroy.append(video_thumbnail_label)
 
         yt_video_id_value = tkinter.StringVar(value=ytv.video_id)
         yt_video_id.configure(textvariable=yt_video_id_value)
-        yt_video_id.grid(row=20, column=0, padx=padding_x, pady=padding_y, sticky="e")
+        yt_video_id.grid(row=20, column=0, padx=PADDING_X, pady=PADDING_Y, sticky="e")
         elements_to_destroy.append(yt_video_id)
 
-
-
-    audio_button.grid(row=13, column=1, padx=padding_x, pady=padding_y * padding_y_factor * 2, sticky="e")
+    audio_button.grid(row=13, column=1, padx=PADDING_X, pady=PADDING_Y * PADDING_Y_FACTOR * 2, sticky="e")
     elements_to_destroy.append(audio_button)
 
     if looper:
@@ -958,16 +923,16 @@ def get_information_work():
                                                               False, True if configuration_year_subs.get() == 1 else False))
         video_button.configure(command=lambda: start_download(False, restricted_video, ytv.video_id,
                                                               False, True if configuration_year_subs.get() == 1 else False))
-    video_button.grid(row=13, column=2, padx=padding_x, pady=padding_y * padding_y_factor * 2, sticky="w")
+    video_button.grid(row=13, column=2, padx=PADDING_X, pady=PADDING_Y * PADDING_Y_FACTOR * 2, sticky="w")
     elements_to_destroy.append(video_button)
 
     if looper:
-        skip_videos_label.grid(row=13, column=2, padx=padding_x, pady=padding_y * padding_y_factor * 2, sticky="e")
+        skip_videos_label.grid(row=13, column=2, padx=PADDING_X, pady=PADDING_Y * PADDING_Y_FACTOR * 2, sticky="e")
         elements_to_destroy.append(skip_videos_label)
 
         # skip_videos_value.set("0")
         skip_videos.configure(fg_color=COLORS.dark_violet, width=60)
-        skip_videos.grid(row=13, column=3, padx=padding_x, pady=padding_y * padding_y_factor * 2, sticky="w")
+        skip_videos.grid(row=13, column=3, padx=PADDING_X, pady=PADDING_Y * PADDING_Y_FACTOR * 2, sticky="w")
         elements_to_destroy.append(skip_videos)
 
     ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON
@@ -977,7 +942,6 @@ def get_information_work():
     # if count_files_from_channel_dir >= len(video_watch_urls):
     #     video_button.grid_remove()
     #     audio_button.grid_remove()
-
     enable_buttons()
 
 
@@ -1089,7 +1053,6 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                     if video_duration >= int(max_duration) * 60:
                         do_not_download = 1
                         configuration_max_duration.configure(fg_color=COLORS.dark_red)
-                    # separator2.update()
                 if int(min_year) > 0:
                     configuration_min_year.configure(fg_color=COLORS.dark_green)
                     if int(video.publish_date.strftime("%Y")) <= int(min_year):
@@ -1107,7 +1070,6 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                         do_not_download = 1
                         configuration_min_views.configure(fg_color=COLORS.dark_red)
 
-                # v_title_text_length = 42
                 if do_not_download == 1:
                     update_download_log("Searching match:  " + v_title_update_full, COLORS.violet)
                 else:
@@ -1119,7 +1081,6 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                         do_not_download == 0 and not only_restricted_videos_bool):
                     count_ok_videos += 1
                     count_this_run += 1
-                    # count_skipped = 0
                     video_list.append(video.video_id)
 
                     start_download_work(audio_or_video_bool, False, video.video_id, True, year_subfolders)
@@ -1136,7 +1097,6 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                             video_list_restricted.append(video.video_id)
 
                             start_download_work(audio_or_video_bool, True, video.video_id, True, year_subfolders)
-
 
                 update_video_counts(
                     str(count_files(output_dir + "/" + clean_string_regex(total_channel_name).rstrip(), [".mp4", ".mp3"])) +
@@ -1167,7 +1127,7 @@ def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: s
     update_app_title()
 
     download_console_label.configure(text="")
-    download_console_label.grid(row=24, column=2, columnspan=2, padx=padding_x, pady=padding_y, sticky="nw")
+    download_console_label.grid(row=24, column=2, columnspan=2, padx=PADDING_X, pady=PADDING_Y, sticky="nw")
     elements_to_destroy_loop.append(download_console_label)
 
     if restricted:
@@ -1184,46 +1144,46 @@ def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: s
             y_tube = YouTube(youtube_watch_url + video_id, on_progress_callback=on_progress)
 
     if looper:
-        yt_video_thumbnail = load_image_from_url(y_tube.thumbnail_url, size=(tn_width, tn_height))
+        yt_video_thumbnail = load_image_from_url(y_tube.thumbnail_url, size=(TN_WIDTH, TN_HEIGHT))
         video_thumbnail_label.configure(image=yt_video_thumbnail, text="")
-        video_thumbnail_label.grid(row=15, column=0, rowspan=4, padx=padding_x, pady=padding_y, sticky="e")
+        video_thumbnail_label.grid(row=15, column=0, rowspan=4, padx=PADDING_X, pady=PADDING_Y, sticky="e")
         elements_to_destroy_loop.append(video_thumbnail_label)
 
         yt_video_id_value = tkinter.StringVar(value=y_tube.video_id)
         yt_video_id.configure(textvariable=yt_video_id_value)
-        yt_video_id.grid(row=20, column=0, padx=padding_x, pady=padding_y, sticky="e")
+        yt_video_id.grid(row=20, column=0, padx=PADDING_X, pady=PADDING_Y, sticky="e")
         elements_to_destroy_loop.append(yt_video_id)
 
         yt_video_title_label.configure(text="Title:", text_color=COLORS.gray)
-        yt_video_title_label.grid(row=15, column=1, padx=padding_x, pady=padding_y, sticky="e")
+        yt_video_title_label.grid(row=15, column=1, padx=PADDING_X, pady=PADDING_Y, sticky="e")
         elements_to_destroy_loop.append(yt_video_title_label)
-        yt_video_title.configure(text=str(y_tube.title)[:video_title_width] +
-                        "..." if len(str(y_tube.title)) > video_title_width else str(y_tube.title), text_color=COLORS.white, font=("Arial", 15, "bold"))
+        yt_video_title.configure(text=str(y_tube.title)[:VIDEO_TITLE_WIDTH] +
+                        "..." if len(str(y_tube.title)) > VIDEO_TITLE_WIDTH else str(y_tube.title), text_color=COLORS.white, font=("Arial", 15, "bold"))
         if restricted:
             yt_video_title.configure(text_color=COLORS.red)
             # log_label.configure(text="Restricted Video!", text_color=COLORS.red)
-        yt_video_title.grid(row=15, column=2, columnspan=2, padx=padding_x, pady=padding_y, sticky="w")
+        yt_video_title.grid(row=15, column=2, columnspan=2, padx=PADDING_X, pady=PADDING_Y, sticky="w")
         elements_to_destroy_loop.append(yt_video_title)
 
         yt_video_views_label.configure(text="Views:", text_color=COLORS.gray)
-        yt_video_views_label.grid(row=16, column=1, padx=padding_x, pady=padding_y, sticky="e")
+        yt_video_views_label.grid(row=16, column=1, padx=PADDING_X, pady=PADDING_Y, sticky="e")
         elements_to_destroy_loop.append(yt_video_views_label)
         yt_video_views.configure(text=format_view_count(y_tube.views))
-        yt_video_views.grid(row=16, column=2, padx=padding_x, pady=padding_y, sticky="w")
+        yt_video_views.grid(row=16, column=2, padx=PADDING_X, pady=PADDING_Y, sticky="w")
         elements_to_destroy_loop.append(yt_video_views)
 
         yt_video_date_label.configure(text="Date:", text_color=COLORS.gray)
-        yt_video_date_label.grid(row=17, column=1, padx=padding_x, pady=padding_y, sticky="e")
+        yt_video_date_label.grid(row=17, column=1, padx=PADDING_X, pady=PADDING_Y, sticky="e")
         elements_to_destroy_loop.append(yt_video_date_label)
         yt_video_date.configure(text=y_tube.publish_date.strftime(AppConfig.DATE_FORMAT_DISPLAY))
-        yt_video_date.grid(row=17, column=2, padx=padding_x, pady=padding_y, sticky="w")
+        yt_video_date.grid(row=17, column=2, padx=PADDING_X, pady=PADDING_Y, sticky="w")
         elements_to_destroy_loop.append(yt_video_date)
 
         yt_video_length_label.configure(text="Length:", text_color=COLORS.gray)
-        yt_video_length_label.grid(row=18, column=1, padx=padding_x, pady=padding_y, sticky="e")
+        yt_video_length_label.grid(row=18, column=1, padx=PADDING_X, pady=PADDING_Y, sticky="e")
         elements_to_destroy_loop.append(yt_video_length_label)
         yt_video_length.configure(text=format_time(y_tube.length))
-        yt_video_length.grid(row=18, column=2, padx=padding_x, pady=padding_y, sticky="w")
+        yt_video_length.grid(row=18, column=2, padx=PADDING_X, pady=PADDING_Y, sticky="w")
         elements_to_destroy_loop.append(yt_video_length)
 
     res = ""
@@ -1232,14 +1192,14 @@ def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: s
         if str(configuration_resolution.get()) != "max":
             res = limit_resolution(res, str(configuration_resolution.get()))
         video_resolution_label.configure(text="Resolution:", text_color=COLORS.gray)
-        video_resolution_label.grid(row=19, column=1, padx=padding_x, pady=padding_y, sticky="e")
+        video_resolution_label.grid(row=19, column=1, padx=PADDING_X, pady=PADDING_Y, sticky="e")
         elements_to_destroy_loop.append(video_resolution_label)
         video_resolution.configure(values=print_resolutions(y_tube))
         video_resolution.set(str(res))
-        video_resolution.grid(row=19, column=2, padx=padding_x, pady=padding_y, sticky="w")
+        video_resolution.grid(row=19, column=2, padx=PADDING_X, pady=PADDING_Y, sticky="w")
         elements_to_destroy_loop.append(video_resolution)
         avail_resolutions.configure(text=str(print_resolutions(y_tube)), text_color=COLORS.gray)
-        avail_resolutions.grid(row=20, column=2, padx=padding_x, pady=padding_y, sticky="w")
+        avail_resolutions.grid(row=20, column=2, padx=PADDING_X, pady=PADDING_Y, sticky="w")
         elements_to_destroy_loop.append(avail_resolutions)
 
     ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON
@@ -1253,7 +1213,7 @@ def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: s
         download_button.configure(text="Download", command=lambda: download_video(audio_or_video_bool, y_tube,
                                                                                   video_resolution.get(),
                                                                                   restricted, year_subfolders, looper))
-        download_button.grid(row=21, column=2, padx=padding_x, pady=padding_y * padding_y_factor, sticky="w")
+        download_button.grid(row=21, column=2, padx=PADDING_X, pady=PADDING_Y * PADDING_Y_FACTOR, sticky="w")
         global elements_to_destroy
         elements_to_destroy.append(download_button)
 
@@ -1322,16 +1282,16 @@ def download_video_work(audio_or_video_bool: bool, y_tube: YouTube, res: str, re
 def download_video_process(audio_or_video_bool: bool, yt: YouTube, res: str, more_than1080p: bool, publishing_date: str, year: str,
                            restricted: bool) -> None:
     abort_button.configure(fg_color=COLORS.dark_red, command=abort_download)
-    abort_button.grid(row=22, column=3, rowspan=2, padx=padding_x, pady=padding_y, sticky="nw")
+    abort_button.grid(row=22, column=3, rowspan=2, padx=PADDING_X, pady=PADDING_Y, sticky="nw")
     elements_to_destroy_loop.append(abort_button)
 
     progress_percent.configure(text="0%")
-    progress_percent.grid(row=22, column=1, padx=padding_x, pady=padding_y, sticky="e")
+    progress_percent.grid(row=22, column=1, padx=PADDING_X, pady=PADDING_Y, sticky="e")
     elements_to_destroy_loop.append(progress_percent)
 
     progress_bar.set(0)
     progress_bar.configure(progress_color=COLORS.green)
-    progress_bar.grid(row=22, column=2, padx=padding_x, pady=padding_y, sticky="w")
+    progress_bar.grid(row=22, column=2, padx=PADDING_X, pady=PADDING_Y, sticky="w")
     elements_to_destroy_loop.append(progress_bar)
 
     if not audio_or_video_bool:
@@ -1598,30 +1558,27 @@ app.grid_columnconfigure(3, minsize=250)
 # Add UI elements
 logo = customtkinter.CTkImage(light_image=Image.open(AppConfig.LOGO_PATH), size=(87, 58)) # 180x120
 logo_label = customtkinter.CTkLabel(app, text="", image=logo)
-logo_label.grid(row=0, column=0, rowspan=2, padx=padding_x, pady=padding_y, sticky="nw")
-
-# log_label = customtkinter.CTkLabel(app, text=log_default, width=235 , fg_color=COLORS.log_bg, text_color=COLORS.violet)
-# log_label.grid(row=0, column=1, padx=padding_x, pady=padding_y, sticky="w")
+logo_label.grid(row=0, column=0, rowspan=2, padx=PADDING_X, pady=PADDING_Y, sticky="nw")
 
 channel_dropdown = customtkinter.CTkComboBox(app, values=read_channel_txt_lines("channels.txt"), width=350)
-channel_dropdown.grid(row=0, column=2, padx=padding_x, pady=padding_y, sticky="w")
+channel_dropdown.grid(row=0, column=2, padx=PADDING_X, pady=PADDING_Y, sticky="w")
 
 title = customtkinter.CTkLabel(app, text="YouTube Channel, Video-, or Playlist URL:", text_color=COLORS.gray)
-title.grid(row=1, column=1, padx=padding_x, pady=padding_y, sticky="se")
+title.grid(row=1, column=1, padx=PADDING_X, pady=PADDING_Y, sticky="se")
 
 if len(sys.argv) > 1 and not youtube_url in str(sys.argv[1]):
     url_var = tkinter.StringVar(value=sys.argv[1])
 else:
     url_var = tkinter.StringVar(value="")
 
-link = customtkinter.CTkEntry(app, width=entry_width, textvariable=url_var)
-link.grid(row=1, column=2, padx=padding_x, pady=padding_y, sticky="sw")
+link = customtkinter.CTkEntry(app, width=ENTRY_WIDTH, textvariable=url_var)
+link.grid(row=1, column=2, padx=PADDING_X, pady=PADDING_Y, sticky="sw")
 
 get_information_button = customtkinter.CTkButton(app, text="Get Information", command=get_information)
-get_information_button.grid(row=1, column=3, padx=padding_x, pady=padding_y, sticky="sw")
+get_information_button.grid(row=1, column=3, padx=PADDING_X, pady=PADDING_Y, sticky="sw")
 
 # separator1 = customtkinter.CTkFrame(app, height=2, fg_color=COLORS.separator)
-# separator1.grid(row=2, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y)
+# separator1.grid(row=2, column=0, columnspan=4, sticky="ew", padx=PADDING_X, pady=PADDING_Y)
 
 channel_frame = customtkinter.CTkFrame(app, fg_color=COLORS.frame_bg)
 channel_frame.grid_columnconfigure(0, minsize=250)
@@ -1638,7 +1595,7 @@ video_info_channel_button = customtkinter.CTkButton(channel_frame, text="Add to 
 after_adding_to_channels_txt_label = customtkinter.CTkLabel(channel_frame, text="", text_color=COLORS.gray)
 
 ytchannel_path_label = customtkinter.CTkLabel(channel_frame, text="Save Path:", text_color=COLORS.gray)
-ytchannel_path = customtkinter.CTkEntry(channel_frame, width=entry_width)
+ytchannel_path = customtkinter.CTkEntry(channel_frame, width=ENTRY_WIDTH)
 
 ytchannel_video_count = customtkinter.CTkLabel(channel_frame, text="")
 
@@ -1687,7 +1644,7 @@ avail_resolutions = customtkinter.CTkLabel(app, text="")
 download_button = customtkinter.CTkButton(app, text="")
 
 progress_percent = customtkinter.CTkLabel(app, text="")
-progress_bar = customtkinter.CTkProgressBar(app, width=entry_width)
+progress_bar = customtkinter.CTkProgressBar(app, width=ENTRY_WIDTH)
 
 download_log_label = customtkinter.CTkLabel(app, text="")
 download_console_label = customtkinter.CTkLabel(app, text="")
