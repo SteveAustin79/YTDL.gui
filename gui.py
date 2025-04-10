@@ -1084,7 +1084,7 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                     count_this_run += 1
                     video_list.append(video.video_id)
 
-                    start_download_work(audio_or_video_bool, False, video.video_id, True, year_subfolders)
+                    start_download_work(audio_or_video_bool, False, video.video_id, True, year_subfolders, v_counter)
                 else:
                     if not skip_restricted_bool:
                         if (video.age_restricted and video.vid_info.get('playabilityStatus', {}).get(
@@ -1097,7 +1097,7 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                             count_this_run += 1
                             video_list_restricted.append(video.video_id)
 
-                            start_download_work(audio_or_video_bool, True, video.video_id, True, year_subfolders)
+                            start_download_work(audio_or_video_bool, True, video.video_id, True, year_subfolders, v_counter)
 
                 update_video_counts(
                     str(count_files(output_dir + "/" + clean_string_regex(total_channel_name).rstrip(), [".mp4", ".mp3"])) +
@@ -1117,13 +1117,14 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
 
 def start_download(audio_or_video_bool: bool, restricted: bool, video_id: str, looper: bool, year_subfolders: bool):
     disable_buttons()
-    t_start_download_b = threading.Thread(target=lambda: start_download_work(audio_or_video_bool, restricted, video_id, looper, year_subfolders), daemon=True)
+    t_start_download_b = threading.Thread(target=lambda: start_download_work(audio_or_video_bool, restricted, video_id, looper, year_subfolders, 0), daemon=True)
     t_start_download_b.start()
     # t_start_download_b.join()
     app.focus_set()
 
 
-def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: str, looper: bool, year_subfolders: bool):
+def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: str, looper: bool, year_subfolders: bool,
+                        v_counter):
     global elements_to_destroy_loop
     update_app_title()
 
@@ -1149,6 +1150,10 @@ def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: s
         video_thumbnail_label.configure(image=yt_video_thumbnail, text="")
         video_thumbnail_label.grid(row=15, column=0, rowspan=4, padx=PADDING_X, pady=PADDING_Y, sticky="e")
         elements_to_destroy_loop.append(video_thumbnail_label)
+
+        yt_video_counter_label.configure(text=v_counter)
+        yt_video_counter_label.grid(row=19, column=0, padx=PADDING_X, pady=PADDING_Y, sticky="e")
+        elements_to_destroy_loop.append(yt_video_counter_label)
 
         yt_video_id_value = tkinter.StringVar(value=y_tube.video_id)
         yt_video_id.configure(textvariable=yt_video_id_value)
@@ -1625,6 +1630,7 @@ skip_videos_value = tkinter.StringVar(value="")
 skip_videos = customtkinter.CTkEntry(channel_frame, textvariable=skip_videos_value)
 skip_videos_label = customtkinter.CTkLabel(channel_frame, text="Skip", text_color=COLORS.gray)
 
+yt_video_counter_label = customtkinter.CTkLabel(app, text="")
 yt_video_id = customtkinter.CTkEntry(app)
 yt_video_title_label = customtkinter.CTkLabel(app, text="")
 yt_video_views_label = customtkinter.CTkLabel(app, text="")
