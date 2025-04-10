@@ -77,6 +77,7 @@ def update_channel_config(default_max_res, limit_resolution_to, default_min_dura
         if default_filter_words != video_name_filter:
             JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.CHANNEL_CONFIG_PATH, "c_filter_words", video_name_filter)
         channel_config_label.configure(text="Channel config updated!", text_color=COLORS.green)
+        channel_config_label.update()
         channel_config_manager()
 
 
