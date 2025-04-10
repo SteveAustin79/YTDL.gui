@@ -80,6 +80,7 @@ def update_channel_config(default_max_res, limit_resolution_to, default_min_dura
         if default_filter_words != video_name_filter:
             JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.CHANNEL_CONFIG_PATH, "c_filter_words", video_name_filter)
         # get_information()
+        fetch_channel_config_in_gui()
 
 
 def create_channel_config(default_max_res, limit_resolution_to, default_min_duration_in_minutes, min_duration,
