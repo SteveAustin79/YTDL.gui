@@ -76,9 +76,9 @@ def update_channel_config(default_max_res, limit_resolution_to, default_min_dura
             JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.CHANNEL_CONFIG_PATH, "c_include_video_ids", include_video_ids)
         if default_filter_words != video_name_filter:
             JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.CHANNEL_CONFIG_PATH, "c_filter_words", video_name_filter)
+        channel_config_manager()
         channel_config_label.configure(text="Channel config updated!", text_color=COLORS.green)
         channel_config_label.update()
-        channel_config_manager()
 
 
 def create_channel_config(default_max_res, limit_resolution_to, default_min_duration_in_minutes, min_duration,
@@ -148,237 +148,6 @@ def create_channel_config(default_max_res, limit_resolution_to, default_min_dura
 
         channel_config_label.configure(text="Channel config file found!", text_color=COLORS.green)
         create_channel_config_button.configure(text="Update channel config")
-
-
-def on_closing():
-    delete_temp_files()
-    app.destroy()  # Ensures the window closes properly
-
-
-def abort_download() -> None:
-    sys.exit(0)
-
-
-def clean_youtube_urls(to_clean_video_list: list) -> list[str]:
-    prefix = youtube_watch_url
-    return [to_clean_video.replace(prefix, "") for to_clean_video in to_clean_video_list]
-
-
-def add_url_in_order(filename: str, a_url: str) -> None:
-    global elements_to_destroy
-    elements_to_destroy.remove(video_info_channel_button)
-    video_info_channel_button.destroy()
-    try:
-        # Read existing URLs and remove empty lines
-        with open(filename, "r", encoding="utf-8") as file:
-            urls = sorted(set(line.strip() for line in file if line.strip()))  # Remove duplicates and sort
-
-        # Check if the URL already exists
-        if a_url in urls:
-            # print("✅ URL already exists in the file.")
-            return
-
-        # Insert the new URL and sort again
-        urls.append(a_url)
-        urls.sort()
-
-        # Write back the sorted list
-        with open(filename, "w", encoding="utf-8") as file:
-            file.write("\n".join(urls) + "\n")
-
-        # print("✅ URL added to channels.txt.")
-        after_adding_to_channels_txt_label.configure(text="URL added to channels.txt")
-        after_adding_to_channels_txt_label.grid(row=3, column=3, padx=PADDING_X, pady=PADDING_Y, sticky="nw")
-        elements_to_destroy.append(after_adding_to_channels_txt_label)
-
-        channel_dropdown.configure(values=read_channel_txt_lines("channels.txt"))
-
-    except FileNotFoundError:
-        print("⚠️ File not found. Creating a new one and adding the URL.")
-        with open(filename, "w", encoding="utf-8") as file:
-            file.write(a_url + "\n")
-
-
-def organize_files_by_year(base_directory: str) -> None:
-    if not os.path.exists(base_directory):
-        print(f"Error: The directory '{base_directory}' does not exist.")
-        return
-
-    for file_name in os.listdir(base_directory):
-        file_path = os.path.join(base_directory, file_name)
-
-        # Ensure it's a file (not a folder)
-        if os.path.isfile(file_path):
-            # Extract year from filename (expects format: YYYY-...)
-            parts = file_name.split("-")
-            if parts[0].isdigit() and len(parts[0]) == 4:
-                year = parts[0]
-                year_folder = os.path.join(base_directory, year)
-
-                # Create the year folder if it doesn't exist
-                os.makedirs(year_folder, exist_ok=True)
-
-                # Move the file to the corresponding year folder
-                shutil.move(file_path, os.path.join(year_folder, file_name))
-    # print(print_colored_text("Created year sub folder structure!", BCOLORS.ORANGE))
-
-
-def contains_folder_starting_with_2(path: str) -> bool:
-    if os.path.exists(path):
-        return any(name.startswith("20") and os.path.isdir(os.path.join(path, name)) for name in os.listdir(path))
-    else:
-        return False
-
-
-def make_year_subfolder_structure(path: str) -> None:
-    if os.path.exists(path):
-        if (not contains_folder_starting_with_2(path) and
-                any(file.endswith((".mp4", ".mp3")) for file in os.listdir(path)
-                    if os.path.isfile(os.path.join(path, file)))):
-            organize_files_by_year(path)
-
-
-def on_progress(stream, chunk, bytes_remaining):
-    total_size = stream.filesize
-    bytes_downloaded = total_size - bytes_remaining
-    percent_completed = bytes_downloaded / total_size * 100
-    percent = str(int(percent_completed))
-    progress_percent.configure(text=percent + "%")
-    progress_bar.set(float(percent_completed) / 100)
-    progress_percent.update()
-
-
-def delete_temp_files() -> None:
-    video_file, audio_file = find_media_files(".")
-    if video_file and os.path.exists(video_file):
-        os.remove(video_file)
-    if audio_file and os.path.exists(audio_file):
-        os.remove(audio_file)
-
-
-def format_view_count(number: int) -> str:
-    if number >= 1_000_000_000:  # Billions
-        return f"{number / 1_000_000_000:.1f}B"
-    elif number >= 1_000_000:  # Millions
-        return f"{number / 1_000_000:.1f}M"
-    elif number >= 100_000:  # Thousands
-        return f"{number / 1_000:.0f}K"
-    elif number >= 1_000:  # Thousands
-        return f"{number / 1_000:.1f}K"
-    else:
-        return str(number)
-
-
-def find_media_files(fmf_path: str) -> tuple[str | None, str | None]:
-    video_file = None
-    audio_file = None
-    for file in os.listdir(fmf_path):
-        if file.endswith((".mp4", ".webm")) and video_file is None:
-            video_file = file
-        elif file.endswith(".m4a") and audio_file is None:
-            audio_file = file
-
-        if video_file and audio_file:
-            break  # Stop searching once both files are found
-
-    return video_file, audio_file
-
-
-def rename_files_in_temp_directory() -> None:
-    """Removes ':' from filenames in a given directory."""
-    directory = os.getcwd()
-    if not os.path.exists(directory):
-        print("Error: Directory does not exist!")
-        return
-
-    for filename in os.listdir(directory):
-        if ":" in filename:  # Check if filename contains ':'
-            sanitized_name = filename.replace(":", "")
-            old_path = os.path.join(directory, filename)
-            new_path = os.path.join(directory, sanitized_name)
-            os.rename(old_path, new_path)
-
-
-def create_directories(restricted: bool, year: str) -> None:
-    if restricted:
-        if not os.path.exists(ytchannel_path.get() + f"{str(year)}/restricted"):
-            os.makedirs(ytchannel_path.get() + f"{str(year)}/restricted")
-    else:
-        if not os.path.exists(ytchannel_path.get() + f"{str(year)}"):
-            os.makedirs(ytchannel_path.get() + f"{str(year)}")
-
-
-def read_channel_txt_lines(filename: str) -> list[str]:
-    try:
-        with open(filename, "r", encoding="utf-8") as file:
-            rc_lines = [line.strip() for line in file if not line.lstrip().startswith("#")]
-        rc_lines.insert(0, "")
-        return rc_lines
-    except FileNotFoundError:
-        print("❌ Error: File not found.")
-        return []
-
-
-def check_channels_txt(filename: str, c_url: str) -> bool:
-    try:
-        # Read existing URLs and remove empty lines
-        with open(filename, "r", encoding="utf-8") as file:
-            urls = sorted(set(line.strip() for line in file if line.strip()))  # Remove duplicates and sort
-
-        if c_url in urls:
-            # print("✅ URL already exists in the file.")
-            return True
-        else:
-            return False
-    except FileNotFoundError:
-        # print("⚠️ File not found. Creating a new one and adding the URL.")
-        # with open(filename, "w", encoding="utf-8") as file:
-        #     file.write(url + "\n")
-        return False
-
-
-def update_download_log(text: str, color: str) -> None:
-    download_log_label.configure(text=text, text_color=color)
-    download_log_label.grid(row=23, column=2, columnspan=2, padx=PADDING_X, pady=PADDING_Y, sticky="nw") # row=23 / 12
-    download_log_label.update()
-
-
-def update_app_title():
-    app.title(APP_TITLE + AppConfig.VERSION + " - Free disk space: " + get_free_space(output_dir))
-
-
-def update_video_counts(text: str):
-    ytchannel_video_count.configure(text=text)
-
-
-def get_yt_channel(channel_url) -> Channel:
-    if web_client:
-        channel = Channel(channel_url, 'WEB')
-    else:
-        channel = Channel(channel_url)
-    return channel
-
-
-def disable_buttons():
-    video_button.configure(state="disabled")
-    audio_button.configure(state="disabled")
-    get_information_button.configure(state="disabled")
-    video_info_channel_button.configure(state="disabled")
-    create_channel_config_button.configure(state="disabled")
-    channel_dropdown.configure(state="disabled")
-    link.configure(state="disabled")
-    ytchannel_path.configure(state="disabled")
-
-
-def enable_buttons():
-    video_button.configure(state="normal")
-    audio_button.configure(state="normal")
-    get_information_button.configure(state="normal")
-    video_info_channel_button.configure(state="normal")
-    create_channel_config_button.configure(state="normal")
-    channel_dropdown.configure(state="normal")
-    link.configure(state="normal")
-    ytchannel_path.configure(state="normal")
 
 
 def channel_config_manager():
@@ -710,6 +479,237 @@ def channel_config_manager():
         skip_restricted_bool = True
 
     return include_list, exclude_list, only_restricted_videos_bool, skip_restricted_bool, min_duration_bool, max_duration_bool
+
+
+def on_closing():
+    delete_temp_files()
+    app.destroy()  # Ensures the window closes properly
+
+
+def abort_download() -> None:
+    sys.exit(0)
+
+
+def clean_youtube_urls(to_clean_video_list: list) -> list[str]:
+    prefix = youtube_watch_url
+    return [to_clean_video.replace(prefix, "") for to_clean_video in to_clean_video_list]
+
+
+def add_url_in_order(filename: str, a_url: str) -> None:
+    global elements_to_destroy
+    elements_to_destroy.remove(video_info_channel_button)
+    video_info_channel_button.destroy()
+    try:
+        # Read existing URLs and remove empty lines
+        with open(filename, "r", encoding="utf-8") as file:
+            urls = sorted(set(line.strip() for line in file if line.strip()))  # Remove duplicates and sort
+
+        # Check if the URL already exists
+        if a_url in urls:
+            # print("✅ URL already exists in the file.")
+            return
+
+        # Insert the new URL and sort again
+        urls.append(a_url)
+        urls.sort()
+
+        # Write back the sorted list
+        with open(filename, "w", encoding="utf-8") as file:
+            file.write("\n".join(urls) + "\n")
+
+        # print("✅ URL added to channels.txt.")
+        after_adding_to_channels_txt_label.configure(text="URL added to channels.txt")
+        after_adding_to_channels_txt_label.grid(row=3, column=3, padx=PADDING_X, pady=PADDING_Y, sticky="nw")
+        elements_to_destroy.append(after_adding_to_channels_txt_label)
+
+        channel_dropdown.configure(values=read_channel_txt_lines("channels.txt"))
+
+    except FileNotFoundError:
+        print("⚠️ File not found. Creating a new one and adding the URL.")
+        with open(filename, "w", encoding="utf-8") as file:
+            file.write(a_url + "\n")
+
+
+def organize_files_by_year(base_directory: str) -> None:
+    if not os.path.exists(base_directory):
+        print(f"Error: The directory '{base_directory}' does not exist.")
+        return
+
+    for file_name in os.listdir(base_directory):
+        file_path = os.path.join(base_directory, file_name)
+
+        # Ensure it's a file (not a folder)
+        if os.path.isfile(file_path):
+            # Extract year from filename (expects format: YYYY-...)
+            parts = file_name.split("-")
+            if parts[0].isdigit() and len(parts[0]) == 4:
+                year = parts[0]
+                year_folder = os.path.join(base_directory, year)
+
+                # Create the year folder if it doesn't exist
+                os.makedirs(year_folder, exist_ok=True)
+
+                # Move the file to the corresponding year folder
+                shutil.move(file_path, os.path.join(year_folder, file_name))
+    # print(print_colored_text("Created year sub folder structure!", BCOLORS.ORANGE))
+
+
+def contains_folder_starting_with_2(path: str) -> bool:
+    if os.path.exists(path):
+        return any(name.startswith("20") and os.path.isdir(os.path.join(path, name)) for name in os.listdir(path))
+    else:
+        return False
+
+
+def make_year_subfolder_structure(path: str) -> None:
+    if os.path.exists(path):
+        if (not contains_folder_starting_with_2(path) and
+                any(file.endswith((".mp4", ".mp3")) for file in os.listdir(path)
+                    if os.path.isfile(os.path.join(path, file)))):
+            organize_files_by_year(path)
+
+
+def on_progress(stream, chunk, bytes_remaining):
+    total_size = stream.filesize
+    bytes_downloaded = total_size - bytes_remaining
+    percent_completed = bytes_downloaded / total_size * 100
+    percent = str(int(percent_completed))
+    progress_percent.configure(text=percent + "%")
+    progress_bar.set(float(percent_completed) / 100)
+    progress_percent.update()
+
+
+def delete_temp_files() -> None:
+    video_file, audio_file = find_media_files(".")
+    if video_file and os.path.exists(video_file):
+        os.remove(video_file)
+    if audio_file and os.path.exists(audio_file):
+        os.remove(audio_file)
+
+
+def format_view_count(number: int) -> str:
+    if number >= 1_000_000_000:  # Billions
+        return f"{number / 1_000_000_000:.1f}B"
+    elif number >= 1_000_000:  # Millions
+        return f"{number / 1_000_000:.1f}M"
+    elif number >= 100_000:  # Thousands
+        return f"{number / 1_000:.0f}K"
+    elif number >= 1_000:  # Thousands
+        return f"{number / 1_000:.1f}K"
+    else:
+        return str(number)
+
+
+def find_media_files(fmf_path: str) -> tuple[str | None, str | None]:
+    video_file = None
+    audio_file = None
+    for file in os.listdir(fmf_path):
+        if file.endswith((".mp4", ".webm")) and video_file is None:
+            video_file = file
+        elif file.endswith(".m4a") and audio_file is None:
+            audio_file = file
+
+        if video_file and audio_file:
+            break  # Stop searching once both files are found
+
+    return video_file, audio_file
+
+
+def rename_files_in_temp_directory() -> None:
+    """Removes ':' from filenames in a given directory."""
+    directory = os.getcwd()
+    if not os.path.exists(directory):
+        print("Error: Directory does not exist!")
+        return
+
+    for filename in os.listdir(directory):
+        if ":" in filename:  # Check if filename contains ':'
+            sanitized_name = filename.replace(":", "")
+            old_path = os.path.join(directory, filename)
+            new_path = os.path.join(directory, sanitized_name)
+            os.rename(old_path, new_path)
+
+
+def create_directories(restricted: bool, year: str) -> None:
+    if restricted:
+        if not os.path.exists(ytchannel_path.get() + f"{str(year)}/restricted"):
+            os.makedirs(ytchannel_path.get() + f"{str(year)}/restricted")
+    else:
+        if not os.path.exists(ytchannel_path.get() + f"{str(year)}"):
+            os.makedirs(ytchannel_path.get() + f"{str(year)}")
+
+
+def read_channel_txt_lines(filename: str) -> list[str]:
+    try:
+        with open(filename, "r", encoding="utf-8") as file:
+            rc_lines = [line.strip() for line in file if not line.lstrip().startswith("#")]
+        rc_lines.insert(0, "")
+        return rc_lines
+    except FileNotFoundError:
+        print("❌ Error: File not found.")
+        return []
+
+
+def check_channels_txt(filename: str, c_url: str) -> bool:
+    try:
+        # Read existing URLs and remove empty lines
+        with open(filename, "r", encoding="utf-8") as file:
+            urls = sorted(set(line.strip() for line in file if line.strip()))  # Remove duplicates and sort
+
+        if c_url in urls:
+            # print("✅ URL already exists in the file.")
+            return True
+        else:
+            return False
+    except FileNotFoundError:
+        # print("⚠️ File not found. Creating a new one and adding the URL.")
+        # with open(filename, "w", encoding="utf-8") as file:
+        #     file.write(url + "\n")
+        return False
+
+
+def update_download_log(text: str, color: str) -> None:
+    download_log_label.configure(text=text, text_color=color)
+    download_log_label.grid(row=23, column=2, columnspan=2, padx=PADDING_X, pady=PADDING_Y, sticky="nw") # row=23 / 12
+    download_log_label.update()
+
+
+def update_app_title():
+    app.title(APP_TITLE + AppConfig.VERSION + " - Free disk space: " + get_free_space(output_dir))
+
+
+def update_video_counts(text: str):
+    ytchannel_video_count.configure(text=text)
+
+
+def get_yt_channel(channel_url) -> Channel:
+    if web_client:
+        channel = Channel(channel_url, 'WEB')
+    else:
+        channel = Channel(channel_url)
+    return channel
+
+
+def disable_buttons():
+    video_button.configure(state="disabled")
+    audio_button.configure(state="disabled")
+    get_information_button.configure(state="disabled")
+    video_info_channel_button.configure(state="disabled")
+    create_channel_config_button.configure(state="disabled")
+    channel_dropdown.configure(state="disabled")
+    link.configure(state="disabled")
+    ytchannel_path.configure(state="disabled")
+
+
+def enable_buttons():
+    video_button.configure(state="normal")
+    audio_button.configure(state="normal")
+    get_information_button.configure(state="normal")
+    video_info_channel_button.configure(state="normal")
+    create_channel_config_button.configure(state="normal")
+    channel_dropdown.configure(state="normal")
+    link.configure(state="normal")
+    ytchannel_path.configure(state="normal")
 
 
 def get_information():
