@@ -9,15 +9,15 @@ from io import BytesIO
 
 
 class AppConfig:
-    version = " v1.0.4 (20250406)"
-    logo_path = "assets/logo.png"
-    channel_config_path = "/" + "_config_channel.json"
-    date_format_display = "%d.%m.%Y"
-    date_time_format = "%d.%m.%Y %H:%M:%S"
-    date_format_math = "%Y-%m-%d"
+    VERSION = " v1.0.5 (20250410)"
+    LOGO_PATH = "assets/logo.png"
+    ICON_PATH = "assets/icon.ico"
+    CHANNEL_CONFIG_PATH = "/" + "_config_channel.json"
+    DATE_FORMAT_DISPLAY = "%d.%m.%Y"
+    DATE_TIME_FORMAT = "%d.%m.%Y %H:%M:%S"
+    DATE_FORMAT_MATH = "%Y-%m-%d"
     # Set window size
-    win_width = 1280
-    win_height = 790
+    WIN_WIDTH, WIN_HEIGHT = 1280, 800
 
     REQUIRED_APP_CONFIG = {
         "output_directory": "",
@@ -46,7 +46,7 @@ class COLORS:
     white       = "#ffffff"
     black       = "#000000"
     dark        = "#111111"
-    gray        = "#777777"
+    gray        = "#999999"
     blue        = "#7777ff"
     cyan        = "#66f2ff"
     red         = "#ff6666"
@@ -57,8 +57,10 @@ class COLORS:
     pink        = "#ff83a6"
     yellow      = "#fffb8c"
     violet      = "#c7a8ff"
-    log_bg      = "#171717"
+    dark_violet = "#633da8"
+    log_bg      = "#191919"
     separator   = "#414141"
+    frame_bg    = "#131313"
 
 
 class Tooltip:
@@ -220,10 +222,13 @@ def find_file_by_string(directory: str, search_string: str, resolution: str, mp3
     return None  # Return None if no file is found
 
 
-def count_files(directory, ext):
+def count_files(directory, extensions):
+    if isinstance(extensions, str):
+        extensions = (extensions,)  # convert single string to tuple
+
     count = 0
     for root, dirs, files in os.walk(directory):
-        count += sum(1 for file in files if file.endswith(ext))
+        count += sum(1 for file in files if file.lower().endswith(tuple(ext.lower() for ext in extensions)))
     return count
 
 
@@ -235,6 +240,11 @@ def get_free_space(path: str) -> str:
     else:
         formatted_space = f"{free / 1_048_576:.0f} MB"  # Otherwise, use MB
     return formatted_space
+
+
+def format_time(seconds: int) -> str:
+    f_min, f_sec = divmod(seconds, 60)
+    return f"{f_min}m{f_sec}s"
 
 
 def clean_string_regex(text: str) -> str:
@@ -265,3 +275,4 @@ def grid_remove_elements(d_elements_to_destroy):
     for element in d_elements_to_destroy:
         element.grid_remove()  # Remove widget from the UI
     d_elements_to_destroy.clear()
+

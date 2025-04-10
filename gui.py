@@ -1,6 +1,5 @@
 import os
 import re
-import pytubefix.extract
 import tkinter
 import customtkinter
 import shutil
@@ -10,13 +9,14 @@ import threading
 from pytubefix import YouTube, Channel, Playlist
 from pytubefix.cli import on_progress
 from PIL import Image
-from functions import (AppConfig, COLORS, CcConfig, JSONConfig, load_config, find_file_by_string, count_files,
+from functions import (AppConfig, COLORS, CcConfig, JSONConfig, load_config, find_file_by_string, count_files, format_time,
                        get_free_space, clean_string_regex, string_to_list, load_image_from_url, grid_remove_elements)
 
 
 # dropdown with int for loop mode exit after int loops
-# copy video id field
-# delete party converted file in channel target dir if aborted during conversion
+# delete partly converted file in channel target dir if aborted during conversion
+# update channel config only restart configuration build from channel config file, not YT channel fetch again
+# fix: buttons are and stay enabled after first run in loop mode
 
 app_title = "YTDL.video"
 entry_width = 460
@@ -53,33 +53,33 @@ def update_channel_config(default_max_res, limit_resolution_to, default_min_dura
         app.focus_set()
 
         if default_max_res != limit_resolution_to:
-            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.channel_config_path, "c_max_resolution", limit_resolution_to)
+            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.CHANNEL_CONFIG_PATH, "c_max_resolution", limit_resolution_to)
         if default_min_duration_in_minutes != min_duration:
-            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.channel_config_path, "c_min_duration_in_minutes",
+            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.CHANNEL_CONFIG_PATH, "c_min_duration_in_minutes",
                                int(min_duration))
         if default_max_duration_in_minutes != max_duration:
-            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.channel_config_path, "c_max_duration_in_minutes",
+            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.CHANNEL_CONFIG_PATH, "c_max_duration_in_minutes",
                                int(max_duration))
         if default_minimum_year != min_year:
-            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.channel_config_path, "c_minimum_year", int(min_year))
+            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.CHANNEL_CONFIG_PATH, "c_minimum_year", int(min_year))
         if default_maximum_year != max_year:
-            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.channel_config_path, "c_maximum_year", int(max_year))
+            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.CHANNEL_CONFIG_PATH, "c_maximum_year", int(max_year))
         if default_only_restricted != only_restricted_videos:
-            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.channel_config_path, "c_only_restricted",
+            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.CHANNEL_CONFIG_PATH, "c_only_restricted",
                                only_restricted_videos)
         if default_skip_restricted != skip_restricted:
-            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.channel_config_path, "c_skip_restricted", skip_restricted)
+            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.CHANNEL_CONFIG_PATH, "c_skip_restricted", skip_restricted)
         if default_minimum_views != min_video_views:
-            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.channel_config_path, "c_minimum_views", int(min_video_views))
+            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.CHANNEL_CONFIG_PATH, "c_minimum_views", int(min_video_views))
         if default_year_subfolders != year_subfolders_temp:
-            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.channel_config_path, "c_year_subfolders", year_subfolders_temp)
+            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.CHANNEL_CONFIG_PATH, "c_year_subfolders", year_subfolders_temp)
         if default_exclude_videos != exclude_video_ids:
-            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.channel_config_path, "c_exclude_video_ids", exclude_video_ids[:-1])
+            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.CHANNEL_CONFIG_PATH, "c_exclude_video_ids", exclude_video_ids)
         if default_include_videos != include_video_ids:
-            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.channel_config_path, "c_include_video_ids", include_video_ids[:-1])
+            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.CHANNEL_CONFIG_PATH, "c_include_video_ids", include_video_ids)
         if default_filter_words != video_name_filter:
-            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.channel_config_path, "c_filter_words", video_name_filter[:-1])
-        get_information()
+            JSONConfig.update_json_config(ytchannel_path.get() + AppConfig.CHANNEL_CONFIG_PATH, "c_filter_words", video_name_filter)
+        # get_information()
 
 
 def create_channel_config(default_max_res, limit_resolution_to, default_min_duration_in_minutes, min_duration,
@@ -141,11 +141,11 @@ def create_channel_config(default_max_res, limit_resolution_to, default_min_dura
             "c_skip_restricted": json_skip_restricted,
             "c_minimum_views": int(json_min_video_views),
             "c_year_subfolders": json_year_subfolders_temp,
-            "c_exclude_video_ids": json_exclude_video_ids[:-1],
-            "c_include_video_ids": json_include_video_ids[:-1],
-            "c_filter_words": json_video_name_filter[:-1]
+            "c_exclude_video_ids": json_exclude_video_ids,
+            "c_include_video_ids": json_include_video_ids,
+            "c_filter_words": json_video_name_filter
         }
-        JSONConfig.create_json_config(ytchannel_path.get() + AppConfig.channel_config_path, custom_values)
+        JSONConfig.create_json_config(ytchannel_path.get() + AppConfig.CHANNEL_CONFIG_PATH, custom_values)
 
         channel_config_label.configure(text="Channel config file found!", text_color=COLORS.green)
         # create_channel_config_button.grid_remove()
@@ -167,6 +167,7 @@ def clean_youtube_urls(to_clean_video_list: list) -> list[str]:
 
 
 def add_url_in_order(filename: str, a_url: str) -> None:
+    global elements_to_destroy
     elements_to_destroy.remove(video_info_channel_button)
     video_info_channel_button.destroy()
     try:
@@ -249,9 +250,12 @@ def on_progress(stream, chunk, bytes_remaining):
     progress_percent.update()
 
 
-def format_time(seconds: int) -> str:
-    minutes, seconds = divmod(seconds, 60)
-    return f"{minutes}m{seconds}s"
+def delete_temp_files() -> None:
+    video_file, audio_file = find_media_files(".")
+    if video_file and os.path.exists(video_file):
+        os.remove(video_file)
+    if audio_file and os.path.exists(audio_file):
+        os.remove(audio_file)
 
 
 def format_view_count(number: int) -> str:
@@ -259,18 +263,12 @@ def format_view_count(number: int) -> str:
         return f"{number / 1_000_000_000:.1f}B"
     elif number >= 1_000_000:  # Millions
         return f"{number / 1_000_000:.1f}M"
+    elif number >= 100_000:  # Thousands
+        return f"{number / 1_000:.0f}K"
     elif number >= 1_000:  # Thousands
         return f"{number / 1_000:.1f}K"
     else:
         return str(number)
-
-
-def delete_temp_files() -> None:
-    video_file, audio_file = find_media_files(".")
-    if video_file and os.path.exists(video_file):
-        os.remove(video_file)
-    if audio_file and os.path.exists(audio_file):
-        os.remove(audio_file)
 
 
 def find_media_files(fmf_path: str) -> tuple[str | None, str | None]:
@@ -343,12 +341,12 @@ def check_channels_txt(filename: str, c_url: str) -> bool:
 
 def update_download_log(text: str, color: str) -> None:
     download_log_label.configure(text=text, text_color=color)
-    download_log_label.grid(row=23, column=2, padx=padding_x, pady=padding_y, sticky="w")
+    download_log_label.grid(row=23, column=2, columnspan=2, padx=padding_x, pady=padding_y, sticky="nw") # row=23 / 12
     download_log_label.update()
 
 
 def update_app_title():
-    app.title(app_title + AppConfig.version + " - Free disk space: " + get_free_space(output_dir))
+    app.title(app_title + AppConfig.VERSION + " - Free disk space: " + get_free_space(output_dir))
 
 
 def update_video_counts(text: str):
@@ -410,6 +408,8 @@ def enable_buttons():
 
 
 def get_information():
+    grid_remove_elements(elements_to_destroy_loop)
+    grid_remove_elements(elements_to_destroy)
     if channel_dropdown.get() == "" and link.get() == "":
         update_download_log("Empty selection", COLORS.red)
     else:
@@ -421,7 +421,7 @@ def get_information():
 def get_information_work():
     global total_channel_videos
     global total_channel_name
-    channel_in_link_field = False
+    global elements_to_destroy
 
     update_app_title()
     looper = False
@@ -470,11 +470,13 @@ def get_information_work():
     channel_info_video_urls = channel_info.video_urls
     count_files_from_channel_dir = count_files(output_dir + "/" +
                                                clean_string_regex(channel_info_name).rstrip(),
-                                               ".mp4")
+                                               [".mp4", ".mp3"])
     update_video_counts(str(count_files_from_channel_dir) + " / " + str(len(channel_info.video_urls)) + " Videos downloaded")
     total_channel_videos = len(channel_info.video_urls)
     total_channel_name = channel_info_name
     channel_info_thumbnail = channel_info.thumbnail_url
+
+
 
     # separator1.grid(row=2, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y * padding_y_factor)
     # elements_to_destroy.append(separator1)
@@ -482,18 +484,18 @@ def get_information_work():
     separator2.grid(row=6, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y)
     elements_to_destroy.append(separator2)
 
-    separator3.grid(row=14, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y)
-    elements_to_destroy.append(separator3)
+    # separator3.grid(row=14, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y)
+    # elements_to_destroy.append(separator3)
 
-    video_info_channel.grid(row=3, column=1, padx=padding_x, pady=padding_y, sticky="nw")
+    video_info_channel.grid(row=3, column=1, padx=padding_x, pady=padding_y * padding_y_factor, sticky="nw")
     elements_to_destroy.append(video_info_channel)
     video_info_channel.configure(text=channel_info_name[:29] + "..." if len(channel_info_name) > 29 else channel_info_name)
-    video_info_channel_url.grid(row=3, column=2, padx=padding_x, pady=padding_y, sticky="nw")
+    video_info_channel_url.grid(row=3, column=2, padx=padding_x, pady=padding_y * padding_y_factor, sticky="nw")
     elements_to_destroy.append(video_info_channel_url)
     video_info_channel_url.configure(text=channel_info_url)
     if not check_channels_txt("channels.txt", channel_info_url):
         video_info_channel_button.configure(command=lambda: add_url_in_order("channels.txt", channel_info_url))
-        video_info_channel_button.grid(row=3, column=3, padx=padding_x, pady=padding_y, sticky="nw")
+        video_info_channel_button.grid(row=3, column=3, padx=padding_x, pady=padding_y * padding_y_factor, sticky="nw")
         elements_to_destroy.append(video_info_channel_button)
 
     ytchannel_video_count.grid(row=4, column=1, padx=padding_x, pady=padding_y, sticky="nw")
@@ -511,7 +513,7 @@ def get_information_work():
 
     yt_channel_thumbnail = load_image_from_url(channel_info_thumbnail, size=(tn_height, tn_height))
     channel_thumbnail_label.configure(image=yt_channel_thumbnail)
-    channel_thumbnail_label.grid(row=3, column=0, rowspan=3, padx=padding_x, pady=padding_y, sticky="ne")
+    channel_thumbnail_label.grid(row=3, column=0, rowspan=3, padx=padding_x, pady=padding_y * padding_y_factor * 2, sticky="ne")
     elements_to_destroy.append(channel_thumbnail_label)
 
     default_max_res = "max"
@@ -533,11 +535,11 @@ def get_information_work():
     min_duration_bool = False
     max_duration_bool = False
 
-    if os.path.exists(ytchannel_path.get() + AppConfig.channel_config_path):
+    if os.path.exists(ytchannel_path.get() + AppConfig.CHANNEL_CONFIG_PATH):
         incomplete_config = False
         incomplete_string = []
         # Load channel config
-        channel_config = load_config(ytchannel_path.get() + AppConfig.channel_config_path)
+        channel_config = load_config(ytchannel_path.get() + AppConfig.CHANNEL_CONFIG_PATH)
         # Access and set settings
         if "c_max_resolution" in channel_config:
             if channel_config["c_max_resolution"] != "":
@@ -547,7 +549,7 @@ def get_information_work():
             incomplete_string.append("c_max_resolution")
 
         if "c_min_duration_in_minutes" in channel_config:
-            if channel_config["c_min_duration_in_minutes"] != "":
+            if int(channel_config["c_min_duration_in_minutes"]) != 0:
                 default_min_duration_in_minutes = channel_config["c_min_duration_in_minutes"]
                 min_duration_bool = True
         else:
@@ -555,7 +557,7 @@ def get_information_work():
             incomplete_string.append("c_min_duration_in_minutes")
 
         if "c_max_duration_in_minutes" in channel_config:
-            if channel_config["c_max_duration_in_minutes"] != "":
+            if int(channel_config["c_max_duration_in_minutes"]) != 0:
                 default_max_duration_in_minutes = channel_config["c_max_duration_in_minutes"]
                 max_duration_bool = True
         else:
@@ -563,14 +565,14 @@ def get_information_work():
             incomplete_string.append("c_max_duration_in_minutes")
 
         if "c_minimum_year" in channel_config:
-            if channel_config["c_minimum_year"] != "":
+            if int(channel_config["c_minimum_year"]) != 0:
                 default_minimum_year = channel_config["c_minimum_year"]
         else:
             incomplete_config = True
             incomplete_string.append("c_minimum_year")
 
         if "c_maximum_year" in channel_config:
-            if channel_config["c_maximum_year"] != "":
+            if int(channel_config["c_maximum_year"]) != 0:
                 default_maximum_year = channel_config["c_maximum_year"]
         else:
             incomplete_config = True
@@ -595,7 +597,7 @@ def get_information_work():
             incomplete_string.append("c_skip_restricted")
 
         if "c_minimum_views" in channel_config:
-            if channel_config["c_minimum_views"] != "":
+            if int(channel_config["c_minimum_views"]) != 0:
                 default_minimum_views = channel_config["c_minimum_views"]
         else:
             incomplete_config = True
@@ -634,7 +636,7 @@ def get_information_work():
         if incomplete_config:
             channel_config_label.configure(text=("Incomplete channel config file! --> Adding missing key(s) to file " +
                                                  str(incomplete_string)), text_color=COLORS.red)
-            CcConfig.cc_check_and_update_json_config(ytchannel_path.get() + AppConfig.channel_config_path, AppConfig.REQUIRED_VIDEO_CHANNEL_CONFIG)
+            CcConfig.cc_check_and_update_json_config(ytchannel_path.get() + AppConfig.CHANNEL_CONFIG_PATH, AppConfig.REQUIRED_VIDEO_CHANNEL_CONFIG)
         else:
             channel_config_label.configure(text="Channel config file found!", text_color=COLORS.green)
 
@@ -652,9 +654,9 @@ def get_information_work():
                                               default_minimum_views, configuration_min_views.get(),
                                               default_year_subfolders,
                                               "y" if configuration_year_subs.get() == 1 else "",
-                                              default_exclude_videos, configuration_excludes.get("0.0", "end"),
-                                              default_include_videos, configuration_includes.get("0.0", "end"),
-                                              default_filter_words, configuration_filter_words.get("0.0", "end")))
+                                              default_exclude_videos, configuration_excludes.get("0.0", "end").strip(),
+                                              default_include_videos, configuration_includes.get("0.0", "end").strip(),
+                                              default_filter_words, configuration_filter_words.get("0.0", "end").strip()))
 
     else:
         channel_config_label.configure(text="No channel config file found!", text_color=COLORS.gray)
@@ -667,16 +669,16 @@ def get_information_work():
                                         default_skip_restricted, "y" if configuration_skip_restricted.get() == 1 else "",
                                         default_minimum_views, configuration_min_views.get(),
                                         default_year_subfolders, "y" if configuration_year_subs.get() == 1 else "",
-                                        default_exclude_videos, configuration_excludes.get("0.0", "end"),
-                                        default_include_videos, configuration_includes.get("0.0", "end"),
-                                        default_filter_words, configuration_filter_words.get("0.0", "end")))
+                                        default_exclude_videos, configuration_excludes.get("0.0", "end").strip(),
+                                        default_include_videos, configuration_includes.get("0.0", "end").strip(),
+                                        default_filter_words, configuration_filter_words.get("0.0", "end").strip()))
         create_channel_config_button.configure(text="Create channel config")
 
     create_channel_config_button.grid(row=5, column=3, padx=padding_x, pady=padding_y, sticky="w")
     elements_to_destroy.append(create_channel_config_button)
 
     # channel config settings
-    configuration_resolution_label = customtkinter.CTkLabel(app, text="Max. Resolution:")
+    configuration_resolution_label = customtkinter.CTkLabel(channel_frame, text="Max. Resolution:", text_color=COLORS.gray)
     configuration_resolution_label.grid(row=7, column=0, padx=padding_x, pady=padding_y, sticky="e")
     elements_to_destroy.append(configuration_resolution_label)
     res_values = ["max", "2160p", "1440p", "1080p", "720p", "480p"]
@@ -685,7 +687,7 @@ def get_information_work():
     configuration_resolution.grid(row=7, column=1, padx=padding_x, pady=padding_y, sticky="w")
     elements_to_destroy.append(configuration_resolution)
 
-    configuration_min_views_label = customtkinter.CTkLabel(app, text="Min. Views:")
+    configuration_min_views_label = customtkinter.CTkLabel(channel_frame, text="Min. Views:", text_color=COLORS.gray)
     configuration_min_views_label.grid(row=7, column=1, padx=padding_x, pady=padding_y, sticky="e")
     elements_to_destroy.append(configuration_min_views_label)
     min_views_value = tkinter.StringVar(value=default_minimum_views)
@@ -694,7 +696,7 @@ def get_information_work():
     configuration_min_views.grid(row=7, column=2, padx=padding_x, pady=padding_y, sticky="w")
     elements_to_destroy.append(configuration_min_views)
 
-    configuration_year_subs_label = customtkinter.CTkLabel(app, text="Year sub dir structure:")
+    configuration_year_subs_label = customtkinter.CTkLabel(channel_frame, text="Year sub dir structure:", text_color=COLORS.gray)
     configuration_year_subs_label.grid(row=7, column=2, padx=padding_x, pady=padding_y, sticky="e")
     elements_to_destroy.append(configuration_year_subs_label)
     configuration_year_subs.configure(text="")
@@ -705,7 +707,7 @@ def get_information_work():
     configuration_year_subs.grid(row=7, column=3, padx=padding_x, pady=padding_y, sticky="w")
     elements_to_destroy.append(configuration_year_subs)
 
-    configuration_min_duration_label = customtkinter.CTkLabel(app, text="Min. duration (m):")
+    configuration_min_duration_label = customtkinter.CTkLabel(channel_frame, text="Min. duration (m):", text_color=COLORS.gray)
     configuration_min_duration_label.grid(row=8, column=0, padx=padding_x, pady=padding_y, sticky="e")
     elements_to_destroy.append(configuration_min_duration_label)
     min_duration_value = tkinter.StringVar(value=default_min_duration_in_minutes)
@@ -714,7 +716,7 @@ def get_information_work():
     configuration_min_duration.grid(row=8, column=1, padx=padding_x, pady=padding_y, sticky="w")
     elements_to_destroy.append(configuration_min_duration)
 
-    configuration_max_duration_label = customtkinter.CTkLabel(app, text="Max. duration (m):")
+    configuration_max_duration_label = customtkinter.CTkLabel(channel_frame, text="Max. duration (m):", text_color=COLORS.gray)
     configuration_max_duration_label.grid(row=8, column=1, padx=padding_x, pady=padding_y, sticky="e")
     elements_to_destroy.append(configuration_max_duration_label)
     max_duration_value = tkinter.StringVar(value=default_max_duration_in_minutes)
@@ -722,7 +724,7 @@ def get_information_work():
     configuration_max_duration.grid(row=8, column=2, padx=padding_x, pady=padding_y, sticky="w")
     elements_to_destroy.append(configuration_max_duration)
 
-    configuration_skip_restricted_label = customtkinter.CTkLabel(app, text="Skip restricted:")
+    configuration_skip_restricted_label = customtkinter.CTkLabel(channel_frame, text="Skip restricted:", text_color=COLORS.gray)
     configuration_skip_restricted_label.grid(row=8, column=2, padx=padding_x, pady=padding_y, sticky="e")
     elements_to_destroy.append(configuration_skip_restricted_label)
     configuration_skip_restricted.configure(text="")
@@ -733,7 +735,7 @@ def get_information_work():
     configuration_skip_restricted.grid(row=8, column=3, padx=padding_x, pady=padding_y, sticky="w")
     elements_to_destroy.append(configuration_skip_restricted)
 
-    configuration_only_restricted_label = customtkinter.CTkLabel(app, text="Only restricted:")
+    configuration_only_restricted_label = customtkinter.CTkLabel(channel_frame, text="Only restricted:", text_color=COLORS.gray)
     configuration_only_restricted_label.grid(row=9, column=2, padx=padding_x, pady=padding_y, sticky="e")
     elements_to_destroy.append(configuration_only_restricted_label)
     configuration_only_restricted.configure(text="")
@@ -745,7 +747,7 @@ def get_information_work():
     elements_to_destroy.append(configuration_only_restricted)
 
     # min year
-    configuration_min_year_label = customtkinter.CTkLabel(app, text="Min. year:")
+    configuration_min_year_label = customtkinter.CTkLabel(channel_frame, text="Min. year:", text_color=COLORS.gray)
     configuration_min_year_label.grid(row=9, column=0, padx=padding_x, pady=padding_y, sticky="e")
     elements_to_destroy.append(configuration_min_year_label)
     min_year_value = tkinter.StringVar(value=default_minimum_year)
@@ -754,7 +756,7 @@ def get_information_work():
     elements_to_destroy.append(configuration_min_year)
 
     # max year
-    configuration_max_year_label = customtkinter.CTkLabel(app, text="Max. year:")
+    configuration_max_year_label = customtkinter.CTkLabel(channel_frame, text="Max. year:", text_color=COLORS.gray)
     configuration_max_year_label.grid(row=9, column=1, padx=padding_x, pady=padding_y, sticky="e")
     elements_to_destroy.append(configuration_max_year_label)
     max_year_value = tkinter.StringVar(value=default_maximum_year)
@@ -763,7 +765,7 @@ def get_information_work():
     elements_to_destroy.append(configuration_max_year)
 
     # filter words
-    configuration_filter_words_label = customtkinter.CTkLabel(app, text="Filter words:")
+    configuration_filter_words_label = customtkinter.CTkLabel(channel_frame, text="Filter words:", text_color=COLORS.gray)
     configuration_filter_words_label.grid(row=10, column=0, padx=padding_x, pady=padding_y, sticky="en")
     elements_to_destroy.append(configuration_filter_words_label)
     configuration_filter_words.configure(width=170, height=50, fg_color=("white", "gray20"),  # Match Entry background color
@@ -775,7 +777,7 @@ def get_information_work():
     elements_to_destroy.append(configuration_filter_words)
 
     # excludes
-    configuration_excludes_label = customtkinter.CTkLabel(app, text="Excludes:")
+    configuration_excludes_label = customtkinter.CTkLabel(channel_frame, text="Excludes:", text_color=COLORS.gray)
     configuration_excludes_label.grid(row=10, column=1, padx=padding_x, pady=padding_y, sticky="en")
     elements_to_destroy.append(configuration_excludes_label)
     configuration_excludes.configure(width=300, height=50, fg_color=("white", "gray20"),  # Match Entry background color
@@ -787,7 +789,7 @@ def get_information_work():
     elements_to_destroy.append(configuration_excludes)
 
     # includes
-    configuration_includes_label = customtkinter.CTkLabel(app, text="Includes:")
+    configuration_includes_label = customtkinter.CTkLabel(channel_frame, text="Includes:", text_color=COLORS.gray)
     configuration_includes_label.grid(row=10, column=2, padx=padding_x, pady=padding_y, sticky="en")
     elements_to_destroy.append(configuration_includes_label)
     configuration_includes.configure(width=170, height=50, fg_color=("white", "gray20"),  # Match Entry background color
@@ -818,8 +820,12 @@ def get_information_work():
     count_total_videos = 0
 
     # Create empty lists
+    global video_list
+    global video_list_restricted
     video_list.clear()
     video_list_restricted.clear()
+
+    global video_watch_urls
     video_watch_urls.clear()
 
     if len(include_list) > 0:
@@ -834,13 +840,16 @@ def get_information_work():
                         video_watch_urls.append(url.watch_url)
                 # else:
                 video_watch_urls.append(url.watch_url)
-    video_math = customtkinter.CTkLabel(app, text=str(len(video_watch_urls)) + " (total videos minus excludes)", text_color=COLORS.gray)
-    video_math.grid(row=5, column=1, padx=padding_x, pady=padding_y, sticky="sw")
-    elements_to_destroy.append(video_math)
+    # video_math = customtkinter.CTkLabel(channel_frame, text=str(len(video_watch_urls)) + " (total videos minus excludes)", text_color=COLORS.gray)
+    # video_math.grid(row=5, column=1, padx=padding_x, pady=padding_y, sticky="sw")
+    # elements_to_destroy.append(video_math)
 
     # channel_videos_combobox = customtkinter.CTkComboBox(app, values=video_watch_urls)
     # channel_videos_combobox.grid(row=10, column=2, columnspan=2, padx=padding_x, pady=padding_y, sticky="se")
     # elements_to_destroy.append(channel_videos_combobox)
+
+    channel_frame.grid(row=3, column=0, columnspan=4, sticky="ew", padx=0, pady=padding_y * padding_y_factor)
+    elements_to_destroy.append(channel_frame)
 
     restricted_video = False
 
@@ -867,7 +876,7 @@ def get_information_work():
         yt_video_date_label.configure(text="Date:", text_color=COLORS.gray)
         yt_video_date_label.grid(row=17, column=1, padx=padding_x, pady=padding_y, sticky="e")
         elements_to_destroy.append(yt_video_date_label)
-        yt_video_date.configure(text=ytv.publish_date.strftime(AppConfig.date_format_display))
+        yt_video_date.configure(text=ytv.publish_date.strftime(AppConfig.DATE_FORMAT_DISPLAY))
         yt_video_date.grid(row=17, column=2, padx=padding_x, pady=padding_y, sticky="w")
         elements_to_destroy.append(yt_video_date)
 
@@ -883,14 +892,19 @@ def get_information_work():
         video_thumbnail_label.grid(row=15, column=0, rowspan=4, padx=padding_x, pady=padding_y, sticky="e")
         elements_to_destroy.append(video_thumbnail_label)
 
+        yt_video_id_value = tkinter.StringVar(value=ytv.video_id)
+        yt_video_id.configure(textvariable=yt_video_id_value)
+        yt_video_id.grid(row=20, column=0, padx=padding_x, pady=padding_y, sticky="e")
+        elements_to_destroy.append(yt_video_id)
 
 
-    audio_button.grid(row=13, column=1, padx=padding_x, pady=padding_y, sticky="e")
+
+    audio_button.grid(row=13, column=1, padx=padding_x, pady=padding_y * padding_y_factor * 2, sticky="e")
     elements_to_destroy.append(audio_button)
 
     if looper:
         audio_button.configure(command=lambda: loop_download(True, configuration_resolution.get(),
-                                                                configuration_filter_words.get("0.0", "end"),
+                                                                configuration_filter_words.get("0.0", "end").strip(),
                                                                 only_restricted_videos_bool, skip_restricted_bool,
                                                                 True if configuration_year_subs.get() == 1 else False,
                                                                 min_duration_bool, configuration_min_duration.get(),
@@ -898,7 +912,7 @@ def get_information_work():
                                                                 configuration_min_year.get(), configuration_max_year.get(),
                                                                 configuration_min_views.get()))
         video_button.configure(command=lambda: loop_download(False, configuration_resolution.get(),
-                                                                configuration_filter_words.get("0.0", "end"),
+                                                                configuration_filter_words.get("0.0", "end").strip(),
                                                                 only_restricted_videos_bool, skip_restricted_bool,
                                                                 True if configuration_year_subs.get() == 1 else False,
                                                                 min_duration_bool, configuration_min_duration.get(),
@@ -910,16 +924,25 @@ def get_information_work():
                                                               False, True if configuration_year_subs.get() == 1 else False))
         video_button.configure(command=lambda: start_download(False, restricted_video, ytv.video_id,
                                                               False, True if configuration_year_subs.get() == 1 else False))
-    video_button.grid(row=13, column=2, padx=padding_x, pady=padding_y, sticky="w")
+    video_button.grid(row=13, column=2, padx=padding_x, pady=padding_y * padding_y_factor * 2, sticky="w")
     elements_to_destroy.append(video_button)
+
+    if looper:
+        skip_videos_label.grid(row=13, column=2, padx=padding_x, pady=padding_y * padding_y_factor * 2, sticky="e")
+        elements_to_destroy.append(skip_videos_label)
+
+        # skip_videos_value.set("0")
+        skip_videos.configure(fg_color=COLORS.dark_violet, width=60)
+        skip_videos.grid(row=13, column=3, padx=padding_x, pady=padding_y * padding_y_factor * 2, sticky="w")
+        elements_to_destroy.append(skip_videos)
 
     ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON
     ##### AUDIO OR VIDEO BUTTON #####                             AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON
     ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON
 
-    if count_files_from_channel_dir >= len(video_watch_urls):
-        video_button.grid_remove()
-        audio_button.grid_remove()
+    # if count_files_from_channel_dir >= len(video_watch_urls):
+    #     video_button.grid_remove()
+    #     audio_button.grid_remove()
 
     enable_buttons()
 
@@ -958,6 +981,16 @@ def loop_download(audio_or_video_bool, default_max_res, default_filter_words, on
                         min_year, max_year, min_video_views), daemon=True)
     t_loop_download.start()
     # t_loop_download.join()
+    app.focus_set()
+
+
+def reset_config_entry_box_colors():
+    configuration_min_duration.configure(fg_color="gray20")
+    configuration_max_duration.configure(fg_color="gray20")
+    configuration_filter_words.configure(fg_color="gray20")
+    configuration_min_year.configure(fg_color="gray20")
+    configuration_max_year.configure(fg_color="gray20")
+    configuration_min_views.configure(fg_color="gray20")
 
 
 def loop_download_work(audio_or_video_bool, default_max_res, default_filter_words, only_restricted_videos_bool,
@@ -968,49 +1001,83 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
     count_this_run = 0
     count_skipped = 0
     v_counter = 0
+    skip_count = 0
+    if skip_videos.get() !="":
+        skip_count = int(skip_videos.get())
+
+    global video_watch_urls
+    global elements_to_destroy_loop
 
     for url in video_watch_urls:
+        only_video_id = str(url).split("=")[1]
         v_counter += 1
-        only_video_id = pytubefix.extract.video_id(url)
-        if find_file_by_string(ytchannel_path.get(), only_video_id, default_max_res, audio_or_video_bool) is not None:
-            count_ok_videos += 1
-            count_skipped += 1
-            update_download_log("Skipping " + str(count_skipped) + " Video(s)", COLORS.violet)
-        else:
-            do_not_download = 0
+        # only_video_id = pytubefix.extract.video_id(url)
+        if v_counter >= skip_count:
             grid_remove_elements(elements_to_destroy_loop)
-            # update_download_log("checking videos...", COLORS.violet)
-            if web_client:
-                video = YouTube(youtube_watch_url + only_video_id, 'WEB', on_progress_callback=on_progress)
+            if find_file_by_string(ytchannel_path.get(), only_video_id, default_max_res, audio_or_video_bool) is not None:
+                count_ok_videos += 1
+                count_skipped += 1
+                update_download_log("Skipping   " + str(count_skipped) + "   already downloaded Video(s)", COLORS.violet)
+                reset_config_entry_box_colors()
             else:
-                video = YouTube(youtube_watch_url + only_video_id, on_progress_callback=on_progress)
+                do_not_download = 0
+                if web_client:
+                    video = YouTube(youtube_watch_url + only_video_id, 'WEB', on_progress_callback=on_progress)
+                else:
+                    video = YouTube(youtube_watch_url + only_video_id, on_progress_callback=on_progress)
 
-            if default_filter_words == "" or any(
-                    word.lower() in video.title.lower() for word in string_to_list(default_filter_words)):
+                v_title_text_length = 45
+                v_title = video.title[:v_title_text_length] + "..." if len(video.title) > v_title_text_length else video.title
+                v_title_update_full = (str(v_counter) + " / " + str(len(video_watch_urls)) + "  |  " +
+                                     str(video.publish_date.strftime(AppConfig.DATE_FORMAT_DISPLAY)) + "  |  " +
+                                     format_time(video.length) + "  |  " +
+                                     ("R" if video.age_restricted else "_") + "  |  " +
+                                     format_view_count(video.views) + "  |  " +
+                                     v_title)
+                update_download_log("Searching match:  " + v_title_update_full, COLORS.violet)
+
+                if default_filter_words == "" or any(
+                        word.lower() in video.title.lower() for word in string_to_list(default_filter_words)):
+                    if default_filter_words != "":
+                        configuration_filter_words.configure(fg_color=COLORS.dark_green)
+                else:
+                    do_not_download = 1
+                    configuration_filter_words.configure(fg_color=COLORS.dark_red)
                 if min_duration_bool:
                     video_duration = int(video.length)
+                    configuration_min_duration.configure(fg_color=COLORS.dark_green)
                     if video_duration <= int(min_duration) * 60:
                         do_not_download = 1
+                        configuration_min_duration.configure(fg_color=COLORS.dark_red)
                 if max_duration_bool and max_duration > min_duration:
                     video_duration = int(video.length)
+                    configuration_max_duration.configure(fg_color=COLORS.dark_green)
                     if video_duration >= int(max_duration) * 60:
                         do_not_download = 1
+                        configuration_max_duration.configure(fg_color=COLORS.dark_red)
+                    # separator2.update()
                 if int(min_year) > 0:
+                    configuration_min_year.configure(fg_color=COLORS.dark_green)
                     if int(video.publish_date.strftime("%Y")) <= int(min_year):
+                        configuration_min_year.configure(fg_color=COLORS.dark_red)
                         # do_not_download = 1
                         break
                 if int(max_year) > 0:
+                    configuration_max_year.configure(fg_color=COLORS.dark_green)
                     if int(video.publish_date.strftime("%Y")) >= int(max_year):
                         do_not_download = 1
+                        configuration_max_year.configure(fg_color=COLORS.dark_red)
                 if int(min_video_views) > 0:
+                    configuration_min_views.configure(fg_color=COLORS.dark_green)
                     if video.views <= int(min_video_views):
                         do_not_download = 1
+                        configuration_min_views.configure(fg_color=COLORS.dark_red)
 
-                v_title_text_length = 25
-                v_title = video.title[:v_title_text_length] + "..." if len(video.title) > v_title_text_length else video.title
-                update_download_log("Find match:  " + str(v_counter) + "/" + str(len(video_watch_urls)) + "  |  " +
-                                    str(video.publish_date.strftime(AppConfig.date_format_math)) + "  |  " + ("R" if video.age_restricted else "_") +
-                                    "  |  " + format_time(video.length) + "  |  " + v_title, (COLORS.violet if do_not_download == 1 else COLORS.green))
+                # v_title_text_length = 42
+                if do_not_download == 1:
+                    update_download_log("Searching match:  " + v_title_update_full, COLORS.violet)
+                else:
+                    update_download_log("FOUND match!  " + v_title_update_full, COLORS.green)
 
                 if (not video.age_restricted and
                         video.vid_info.get('playabilityStatus', {}).get('status') != 'UNPLAYABLE' and
@@ -1018,7 +1085,7 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                         do_not_download == 0 and not only_restricted_videos_bool):
                     count_ok_videos += 1
                     count_this_run += 1
-                    count_skipped = 0
+                    # count_skipped = 0
                     video_list.append(video.video_id)
 
                     start_download_work(audio_or_video_bool, False, video.video_id, True, year_subfolders)
@@ -1037,16 +1104,19 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                             start_download_work(audio_or_video_bool, True, video.video_id, True, year_subfolders)
 
 
-            update_video_counts(
-                str(count_files(output_dir + "/" + clean_string_regex(total_channel_name).rstrip(), ".mp4")) +
-                " / " + str(total_channel_videos) + " Videos downloaded")
+                update_video_counts(
+                    str(count_files(output_dir + "/" + clean_string_regex(total_channel_name).rstrip(), [".mp4", ".mp3"])) +
+                    " / " + str(total_channel_videos) + " Videos downloaded")
 
+        channel_frame.update()
 
     if count_this_run == 0:
         update_download_log("Nothing to do...", COLORS.green)
+        reset_config_entry_box_colors()
     else:
         enable_buttons()
         update_download_log("DONE!", COLORS.green)
+        reset_config_entry_box_colors()
 
 
 
@@ -1055,10 +1125,17 @@ def start_download(audio_or_video_bool: bool, restricted: bool, video_id: str, l
     t_start_download_b = threading.Thread(target=lambda: start_download_work(audio_or_video_bool, restricted, video_id, looper, year_subfolders), daemon=True)
     t_start_download_b.start()
     # t_start_download_b.join()
+    app.focus_set()
 
 
 def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: str, looper: bool, year_subfolders: bool):
+    global elements_to_destroy_loop
     update_app_title()
+
+    download_console_label.configure(text="")
+    download_console_label.grid(row=24, column=2, columnspan=2, padx=padding_x, pady=padding_y, sticky="nw")
+    elements_to_destroy_loop.append(download_console_label)
+
     if restricted:
         if web_client:
             y_tube = YouTube(youtube_watch_url + video_id, 'WEB', use_oauth=True, allow_oauth_cache=True,
@@ -1077,6 +1154,11 @@ def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: s
         video_thumbnail_label.configure(image=yt_video_thumbnail, text="")
         video_thumbnail_label.grid(row=15, column=0, rowspan=4, padx=padding_x, pady=padding_y, sticky="e")
         elements_to_destroy_loop.append(video_thumbnail_label)
+
+        yt_video_id_value = tkinter.StringVar(value=y_tube.video_id)
+        yt_video_id.configure(textvariable=yt_video_id_value)
+        yt_video_id.grid(row=20, column=0, padx=padding_x, pady=padding_y, sticky="e")
+        elements_to_destroy_loop.append(yt_video_id)
 
         yt_video_title_label.configure(text="Title:", text_color=COLORS.gray)
         yt_video_title_label.grid(row=15, column=1, padx=padding_x, pady=padding_y, sticky="e")
@@ -1099,7 +1181,7 @@ def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: s
         yt_video_date_label.configure(text="Date:", text_color=COLORS.gray)
         yt_video_date_label.grid(row=17, column=1, padx=padding_x, pady=padding_y, sticky="e")
         elements_to_destroy_loop.append(yt_video_date_label)
-        yt_video_date.configure(text=y_tube.publish_date.strftime(AppConfig.date_format_display))
+        yt_video_date.configure(text=y_tube.publish_date.strftime(AppConfig.DATE_FORMAT_DISPLAY))
         yt_video_date.grid(row=17, column=2, padx=padding_x, pady=padding_y, sticky="w")
         elements_to_destroy_loop.append(yt_video_date)
 
@@ -1130,7 +1212,7 @@ def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: s
     ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON                       ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON
     ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON ##### DOWNLOAD BUTTON
 
-    if looper:
+    if looper or audio_or_video_bool:
         download_video(audio_or_video_bool, y_tube, res, restricted, year_subfolders, looper)
     else:
         # enable_buttons()
@@ -1138,6 +1220,7 @@ def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: s
                                                                                   video_resolution.get(),
                                                                                   restricted, year_subfolders, looper))
         download_button.grid(row=21, column=2, padx=padding_x, pady=padding_y * padding_y_factor, sticky="w")
+        global elements_to_destroy
         elements_to_destroy.append(download_button)
 
 
@@ -1151,18 +1234,7 @@ def download_video(audio_or_video_bool: bool, y_tube: YouTube, res: str, restric
 
 
 def download_video_work(audio_or_video_bool: bool, y_tube: YouTube, res: str, restricted: bool, year_subfolders: bool):
-    abort_button.configure(fg_color=COLORS.dark_red, command=abort_download)
-    abort_button.grid(row=22, column=3, rowspan=2, padx=padding_x, pady=padding_y, sticky="nw")
-    elements_to_destroy_loop.append(abort_button)
-
-    progress_percent.configure(text="0%")
-    progress_percent.grid(row=22, column=1, padx=padding_x, pady=padding_y, sticky="e")
-    elements_to_destroy_loop.append(progress_percent)
-
-    progress_bar.set(0)
-    progress_bar.configure(progress_color=COLORS.green)
-    progress_bar.grid(row=22, column=2, padx=padding_x, pady=padding_y, sticky="w")
-    elements_to_destroy_loop.append(progress_bar)
+    global elements_to_destroy_loop
 
     update_download_log("", COLORS.gray)
 
@@ -1173,11 +1245,11 @@ def download_video_work(audio_or_video_bool: bool, y_tube: YouTube, res: str, re
         restricted_path_snippet = "restricted/"
 
     try:
-        publishing_date = y_tube_publish_date.strftime(AppConfig.date_format_math)
+        publishing_date = y_tube_publish_date.strftime(AppConfig.DATE_FORMAT_MATH)
     except Exception as eee:
         publishing_date = eee
 
-    update_download_log("Starting download to " + ytchannel_path.get(), COLORS.gray)
+    update_download_log("Starting download to " + ytchannel_path.get(), COLORS.violet)
 
     if year_subfolders:
         year = "/" + str(y_tube_publish_date.strftime("%Y"))
@@ -1205,7 +1277,7 @@ def download_video_work(audio_or_video_bool: bool, y_tube: YouTube, res: str, re
                 path = (ytchannel_path.get() + str(year) + "/" + restricted_path_snippet + str(
                     publishing_date) + " - " + res + " - "
                         + clean_string_regex(os.path.splitext(video_file_tmp)[0]) + " - " + y_tube.video_id + ".mp4")
-                update_download_log("Merged file still available!", COLORS.gray)
+                update_download_log("Merged file still available!", COLORS.violet)
                 convert_webm_to_mp4("tmp/" + video_file_tmp, path, year, restricted)
             else:
                 download_video_process(audio_or_video_bool, y_tube, res, more_than1080p, publishing_date, year, restricted)
@@ -1215,14 +1287,29 @@ def download_video_work(audio_or_video_bool: bool, y_tube: YouTube, res: str, re
 
 def download_video_process(audio_or_video_bool: bool, yt: YouTube, res: str, more_than1080p: bool, publishing_date: str, year: str,
                            restricted: bool) -> None:
+    abort_button.configure(fg_color=COLORS.dark_red, command=abort_download)
+    abort_button.grid(row=22, column=3, rowspan=2, padx=padding_x, pady=padding_y, sticky="nw")
+    elements_to_destroy_loop.append(abort_button)
+
+    progress_percent.configure(text="0%")
+    progress_percent.grid(row=22, column=1, padx=padding_x, pady=padding_y, sticky="e")
+    elements_to_destroy_loop.append(progress_percent)
+
+    progress_bar.set(0)
+    progress_bar.configure(progress_color=COLORS.green)
+    progress_bar.grid(row=22, column=2, padx=padding_x, pady=padding_y, sticky="w")
+    elements_to_destroy_loop.append(progress_bar)
+
     if not audio_or_video_bool:
-        update_download_log("Downloading VIDEO...", COLORS.gray)
+        update_download_log("Downloading VIDEO...", COLORS.violet)
         for idx, i in enumerate(yt.streams):
             if i.resolution == res:
                 break
         yt.streams[idx].download()
 
-    update_download_log("Downloading AUDIO...", COLORS.gray)
+    progress_percent.configure(text="0%")
+    progress_bar.set(0)
+    update_download_log("Downloading AUDIO...", COLORS.violet)
     for idx, i in enumerate(yt.streams):
         if i.bitrate == "128kbps":
             break
@@ -1239,6 +1326,15 @@ def download_video_process(audio_or_video_bool: bool, yt: YouTube, res: str, mor
             merge_video_audio(yt.video_id, publishing_date, res, year, restricted)
 
 
+def after_download_action():
+    abort_button.grid_remove()
+    enable_buttons()
+    update_video_counts(
+        str(count_files(output_dir + "/" + clean_string_regex(total_channel_name).rstrip(), [".mp4", ".mp3"])) +
+        " / " + str(total_channel_videos) + " Videos downloaded")
+    reset_config_entry_box_colors()
+
+
 def convert_m4a_to_mp3(video_id: str, publish_date: str, year: str, restricted: bool) -> None:
     video_file, audio_file = find_media_files(".")
     if not audio_file:
@@ -1252,7 +1348,7 @@ def convert_m4a_to_mp3(video_id: str, publish_date: str, year: str, restricted: 
     create_directories(restricted, year)
     output_file = (ytchannel_path.get() + str(year) + restricted_path + publish_date +
                    " - " + clean_string_regex(os.path.splitext(audio_file)[0]) + " - " + video_id + ".mp3")
-    update_download_log("Converting to MP3...", COLORS.gray)
+    update_download_log("Converting to MP3...", COLORS.violet)
     try:
         command = [
             "ffmpeg", "-loglevel", "quiet", "-stats",
@@ -1261,7 +1357,20 @@ def convert_m4a_to_mp3(video_id: str, publish_date: str, year: str, restricted: 
             "-q:a", "2",  # Quality setting (lower is better)
             output_file
         ]
-        subprocess.run(command, check=True)
+        # subprocess.run(command, check=True)
+        process = subprocess.Popen(
+            command,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            universal_newlines=True,
+            bufsize=1
+        )
+        for line in process.stdout:
+            # update_download_log("Converting to MP3... " + line, COLORS.violet)
+            download_console_label.configure(text=line, text_color=COLORS.gray)
+        process.stdout.close()
+        process.wait()
+
 
     except Exception as ee:
         print(f"❌ Error merging files: {ee}")
@@ -1269,6 +1378,8 @@ def convert_m4a_to_mp3(video_id: str, publish_date: str, year: str, restricted: 
 
     update_download_log("MP3 downloaded", COLORS.green)
     delete_temp_files()
+    after_download_action()
+    print()
 
 
 def merge_video_audio(video_id: str, publish_date: str, vid_res: str, year: str, restricted: bool) -> None:
@@ -1287,26 +1398,34 @@ def merge_video_audio(video_id: str, publish_date: str, vid_res: str, year: str,
                    + " - " + clean_string_regex(os.path.splitext(video_file)[0]) + " - " + video_id + ".mp4")
 
     try:
-        update_download_log("Merging to MP4...", COLORS.gray)
+        update_download_log("Merging to MP4...", COLORS.violet)
         abort_button.grid_remove()
         command = [
             "ffmpeg", "-loglevel", "quiet", "-stats", "-i", video_file, "-i", audio_file,
             "-c:v", "copy", "-c:a", "aac", output_file
         ]
-        subprocess.run(command, check=True)
+        # subprocess.run(command, check=True)
+        process = subprocess.Popen(
+            command,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            universal_newlines=True,
+            bufsize=1
+        )
+        for line in process.stdout:
+            # update_download_log("Merging to MP4... " + line, COLORS.violet)
+            download_console_label.configure(text=line, text_color=COLORS.gray)
+        process.stdout.close()
+        process.wait()
 
         if restricted:
             update_download_log("Restricted Video downloaded", COLORS.green)
         else:
             update_download_log("Video downloaded", COLORS.green)
 
-        abort_button.grid_remove()
-        enable_buttons()
-        update_video_counts(
-            str(count_files(output_dir + "/" + clean_string_regex(total_channel_name).rstrip(), ".mp4")) +
-            " / " + str(total_channel_videos) + " Videos downloaded")
-
         delete_temp_files()
+        after_download_action()
+        print()
 
     except Exception as ee:
         print(f"❌ Error merging files: {ee}")
@@ -1316,23 +1435,48 @@ def merge_video_audio(video_id: str, publish_date: str, vid_res: str, year: str,
 def convert_m4a_to_opus_and_merge(video_id: str, publish_date: str, vid_res: str, year: str,
                                   restricted: bool) -> None:
     video_file, audio_file = find_media_files(".")
-    update_download_log("Convert M4A audio to Opus format (WebM compatible)...", COLORS.gray)
+    update_download_log("Convert M4A audio to Opus format (WebM compatible)...", COLORS.violet)
     command = [
         "ffmpeg", "-loglevel", "quiet", "-stats", "-i", audio_file, "-c:a", "libopus", "audio.opus"
     ]
-    subprocess.run(command, check=True)
+    # subprocess.run(command, check=True)
+    process = subprocess.Popen(
+        command,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        universal_newlines=True,
+        bufsize=1
+    )
+    for line in process.stdout:
+        # update_download_log("Convert M4A audio to Opus format (WebM compatible)... " + line, COLORS.violet)
+        download_console_label.configure(text=line, text_color=COLORS.gray)
+    process.stdout.close()
+    process.wait()
+
     merge_webm_opus(video_id, publish_date, vid_res, year, restricted)
 
 
 def merge_webm_opus(video_id: str, publish_date: str, vid_res: str, year: str, restricted: bool) -> None:
     video_file, audio_file = find_media_files(".")
     output_file = "tmp/" + video_file
-    update_download_log("Merging WebM video with Opus audio...", COLORS.gray)
+    update_download_log("Merging WebM video with Opus audio...", COLORS.violet)
     command = [
         "ffmpeg", "-loglevel", "quiet", "-stats", "-i", video_file, "-i", "audio.opus",
         "-c:v", "copy", "-c:a", "copy", output_file
     ]
-    subprocess.run(command, check=True)
+    # subprocess.run(command, check=True)
+    process = subprocess.Popen(
+        command,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        universal_newlines=True,
+        bufsize=1
+    )
+    for line in process.stdout:
+        # update_download_log("Merging WebM video + Opus audio... " + line, COLORS.violet)
+        download_console_label.configure(text=line, text_color=COLORS.gray)
+    process.stdout.close()
+    process.wait()
 
     delete_temp_files()
     os.remove("audio.opus")
@@ -1347,7 +1491,7 @@ def merge_webm_opus(video_id: str, publish_date: str, vid_res: str, year: str, r
 
 def convert_webm_to_mp4(input_file: str, output_file: str, year: str, restricted: bool) -> None:
     create_directories(restricted, year)
-    update_download_log("Converting WebM to MP4... (this may take a while)", COLORS.gray)
+    update_download_log("Converting WebM to MP4... (this may take a while)", COLORS.violet)
     abort_button.grid_remove()
     command = [
         "ffmpeg", "-loglevel", "quiet", "-stats", "-i", input_file,
@@ -1356,18 +1500,28 @@ def convert_webm_to_mp4(input_file: str, output_file: str, year: str, restricted
         "-movflags", "+faststart",  # Optimize MP4 for streaming
         output_file
     ]
-    subprocess.run(command, check=True)
+    # subprocess.run(command, check=True)
+    process = subprocess.Popen(
+        command,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        universal_newlines=True,
+        bufsize=1
+    )
+    for line in process.stdout:
+        # update_download_log("Converting WebM to MP4... " + line, COLORS.violet)
+        download_console_label.configure(text=line, text_color=COLORS.gray)
+    process.stdout.close()
+    process.wait()
+
     os.remove(input_file)
     if restricted:
         update_download_log("Restricted Video downloaded", COLORS.green)
     else:
         update_download_log("Video downloaded", COLORS.green)
 
-    abort_button.grid_remove()
-    enable_buttons()
-    update_video_counts(
-        str(count_files(output_dir + "/" + clean_string_regex(total_channel_name).rstrip(), ".mp4")) +
-        " / " + str(total_channel_videos) + " Videos downloaded")
+    after_download_action()
+    print()
 
 
 
@@ -1396,8 +1550,9 @@ customtkinter.set_default_color_theme("blue")
 
 # App frame
 app = customtkinter.CTk()
+app.iconbitmap(AppConfig.ICON_PATH)
 # app.geometry(app_resolution + "+0+0")
-app.geometry(f"{AppConfig.win_width}x{AppConfig.win_height}" + "+0+0")
+app.geometry(f"{AppConfig.WIN_WIDTH}x{AppConfig.WIN_HEIGHT}" + "+0+0")
 update_app_title()
 app.configure(bg_color=COLORS.black)
 app.protocol("WM_DELETE_WINDOW", on_closing)
@@ -1407,7 +1562,7 @@ app.grid_columnconfigure(2, minsize=480)
 app.grid_columnconfigure(3, minsize=250)
 
 # Add UI elements
-logo = customtkinter.CTkImage(light_image=Image.open(AppConfig.logo_path), size=(87, 58)) # 180x120
+logo = customtkinter.CTkImage(light_image=Image.open(AppConfig.LOGO_PATH), size=(87, 58)) # 180x120
 logo_label = customtkinter.CTkLabel(app, text="", image=logo)
 logo_label.grid(row=0, column=0, rowspan=2, padx=padding_x, pady=padding_y, sticky="nw")
 
@@ -1431,27 +1586,54 @@ link.grid(row=1, column=2, padx=padding_x, pady=padding_y, sticky="sw")
 get_information_button = customtkinter.CTkButton(app, text="Get Information", command=get_information)
 get_information_button.grid(row=1, column=3, padx=padding_x, pady=padding_y, sticky="sw")
 
-separator1 = customtkinter.CTkFrame(app, height=2, fg_color=COLORS.separator)
-separator1.grid(row=2, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y)
-# elements_to_destroy.append(separator1)
-separator2 = customtkinter.CTkFrame(app, height=2, fg_color=COLORS.separator)
-separator3 = customtkinter.CTkFrame(app, height=2, fg_color=COLORS.separator)
+# separator1 = customtkinter.CTkFrame(app, height=2, fg_color=COLORS.separator)
+# separator1.grid(row=2, column=0, columnspan=4, sticky="ew", padx=padding_x, pady=padding_y)
 
-video_info_channel = customtkinter.CTkLabel(app, text="", font=("Arial", 16, "bold"))
-video_info_channel_url = customtkinter.CTkLabel(app, text="", text_color=COLORS.gray)
-video_info_channel_button = customtkinter.CTkButton(app, text="Add to channels.txt")
-after_adding_to_channels_txt_label = customtkinter.CTkLabel(app, text="", text_color=COLORS.gray)
+channel_frame = customtkinter.CTkFrame(app, fg_color=COLORS.frame_bg)
+channel_frame.grid_columnconfigure(0, minsize=250)
+channel_frame.grid_columnconfigure(1, minsize=300)
+channel_frame.grid_columnconfigure(2, minsize=480)
+channel_frame.grid_columnconfigure(3, minsize=250)
 
-ytchannel_path_label = customtkinter.CTkLabel(app, text="Save Path:", text_color=COLORS.gray)
-ytchannel_path = customtkinter.CTkEntry(app, width=entry_width)
+separator2 = customtkinter.CTkFrame(channel_frame, height=2, fg_color=COLORS.separator)
+# separator3 = customtkinter.CTkFrame(app, height=2, fg_color=COLORS.separator)
 
-ytchannel_video_count = customtkinter.CTkLabel(app, text="")
+video_info_channel = customtkinter.CTkLabel(channel_frame, text="", font=("Arial", 16, "bold"))
+video_info_channel_url = customtkinter.CTkLabel(channel_frame, text="", text_color=COLORS.gray)
+video_info_channel_button = customtkinter.CTkButton(channel_frame, text="Add to channels.txt")
+after_adding_to_channels_txt_label = customtkinter.CTkLabel(channel_frame, text="", text_color=COLORS.gray)
 
-channel_config_label = customtkinter.CTkLabel(app, text="")
-create_channel_config_button = customtkinter.CTkButton(app)
+ytchannel_path_label = customtkinter.CTkLabel(channel_frame, text="Save Path:", text_color=COLORS.gray)
+ytchannel_path = customtkinter.CTkEntry(channel_frame, width=entry_width)
 
-channel_thumbnail_label = customtkinter.CTkLabel(app, text="")
+ytchannel_video_count = customtkinter.CTkLabel(channel_frame, text="")
 
+channel_config_label = customtkinter.CTkLabel(channel_frame, text="")
+create_channel_config_button = customtkinter.CTkButton(channel_frame)
+
+channel_thumbnail_label = customtkinter.CTkLabel(channel_frame, text="")
+
+configuration_resolution = customtkinter.CTkComboBox(channel_frame)
+configuration_min_duration = customtkinter.CTkEntry(channel_frame)
+configuration_min_views = customtkinter.CTkEntry(channel_frame)
+configuration_year_subs = customtkinter.CTkCheckBox(channel_frame)
+configuration_max_duration = customtkinter.CTkEntry(channel_frame)
+configuration_skip_restricted = customtkinter.CTkCheckBox(channel_frame)
+configuration_only_restricted = customtkinter.CTkCheckBox(channel_frame)
+configuration_min_year = customtkinter.CTkEntry(channel_frame)
+configuration_max_year = customtkinter.CTkEntry(channel_frame)
+configuration_filter_words = customtkinter.CTkTextbox(channel_frame)
+configuration_excludes = customtkinter.CTkTextbox(channel_frame)
+configuration_includes = customtkinter.CTkTextbox(channel_frame)
+
+audio_button = customtkinter.CTkButton(channel_frame, text="Audio (mp3)")
+video_button = customtkinter.CTkButton(channel_frame, text="Video (mp4)")
+
+skip_videos_value = tkinter.StringVar(value="")
+skip_videos = customtkinter.CTkEntry(channel_frame, textvariable=skip_videos_value)
+skip_videos_label = customtkinter.CTkLabel(channel_frame, text="Skip", text_color=COLORS.gray)
+
+yt_video_id = customtkinter.CTkEntry(app)
 yt_video_title_label = customtkinter.CTkLabel(app, text="")
 yt_video_views_label = customtkinter.CTkLabel(app, text="")
 yt_video_date_label = customtkinter.CTkLabel(app, text="")
@@ -1462,8 +1644,6 @@ yt_video_date = customtkinter.CTkLabel(app, text="")
 yt_video_length = customtkinter.CTkLabel(app, text="")
 video_thumbnail_label = customtkinter.CTkLabel(app, text="")
 
-audio_button = customtkinter.CTkButton(app, text="Audio (mp3)")
-video_button = customtkinter.CTkButton(app, text="Video (mp4)")
 abort_button = customtkinter.CTkButton(app, text="Abort")
 
 video_resolution_label = customtkinter.CTkLabel(app, text="")
@@ -1476,19 +1656,7 @@ progress_percent = customtkinter.CTkLabel(app, text="")
 progress_bar = customtkinter.CTkProgressBar(app, width=entry_width)
 
 download_log_label = customtkinter.CTkLabel(app, text="")
-
-configuration_resolution = customtkinter.CTkComboBox(app)
-configuration_min_duration = customtkinter.CTkEntry(app)
-configuration_min_views = customtkinter.CTkEntry(app)
-configuration_year_subs = customtkinter.CTkCheckBox(app)
-configuration_max_duration = customtkinter.CTkEntry(app)
-configuration_skip_restricted = customtkinter.CTkCheckBox(app)
-configuration_only_restricted = customtkinter.CTkCheckBox(app)
-configuration_min_year = customtkinter.CTkEntry(app)
-configuration_max_year = customtkinter.CTkEntry(app)
-configuration_filter_words = customtkinter.CTkTextbox(app)
-configuration_excludes = customtkinter.CTkTextbox(app)
-configuration_includes = customtkinter.CTkTextbox(app)
+download_console_label = customtkinter.CTkLabel(app, text="")
 
 if len(sys.argv) > 1 and youtube_url in str(sys.argv[1]):
     channel_dropdown.set(sys.argv[1])
