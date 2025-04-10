@@ -1154,7 +1154,7 @@ def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: s
         video_thumbnail_label.grid(row=15, column=0, rowspan=4, padx=PADDING_X, pady=PADDING_Y, sticky="e")
         elements_to_destroy_loop.append(video_thumbnail_label)
 
-        yt_video_counter_label.configure(text=v_counter + " / " + total_counter)
+        yt_video_counter_label.configure(text=str(v_counter) + " / " + str(total_counter))
         yt_video_counter_label.grid(row=19, column=0, padx=PADDING_X, pady=PADDING_Y, sticky="e")
         elements_to_destroy_loop.append(yt_video_counter_label)
 
