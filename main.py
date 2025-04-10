@@ -8,7 +8,7 @@ from functions import (AppConfig, COLORS, CcConfig, Tooltip, load_config, find_f
                        get_free_space, clean_string_regex, string_to_list, destroy_elements)
 
 
-app_title = "YTDL.channels"
+app_title = "YTDL.manager"
 row_height = 23
 padding_x = 5
 padding_y = 1
@@ -289,7 +289,7 @@ def list_channels_work():
                 youtube_vo_age_restricted = youtube_video_object.age_restricted
                 youtube_vo_publish_date = youtube_video_object.publish_date
 
-                update_log("Find match:  " + str(counter) + "/" + str(len(size)) + "     |     " +
+                update_log("Find match:  " + str(counter) + " / " + str(len(size)) + "     |     " +
                            str(youtube_vo_publish_date.strftime(AppConfig.DATE_FORMAT_DISPLAY)) + "     |     " +
                                                     format_time(youtube_vo_length) + "     |     " +
                                         ("R" if youtube_vo_age_restricted else "_") + "     |     " + youtube_vo_title)
@@ -382,7 +382,7 @@ def list_channels_work():
                                                         text_color=COLORS.gray)
             elements_to_destroy.append(label_last_updated)
 
-            label_last_updated.grid(row=i + row_factor, column=0, padx=padding_x, pady=padding_y, sticky="w")
+            label_last_updated.grid(row=i + row_factor, column=14, padx=padding_x, pady=padding_y, sticky="w")
             elements_to_destroy.append(label_last_updated)
 
         row_factor += 1
@@ -478,8 +478,8 @@ header_frame.grid_columnconfigure(8, minsize=50)     # Min year
 header_frame.grid_columnconfigure(9, minsize=50)     # Max year
 header_frame.grid_columnconfigure(10, minsize=50)     # excludes
 header_frame.grid_columnconfigure(11, minsize=50)     # includes
-header_frame.grid_columnconfigure(12, minsize=80)    # Filter words
-header_frame.grid_columnconfigure(13, minsize=90)     # Video count
+header_frame.grid_columnconfigure(12, minsize=90)    # Filter words
+header_frame.grid_columnconfigure(13, minsize=80)     # Video count
 header_frame.grid_columnconfigure(14, minsize=100)    # Latest updated 160 / Latest video date
 header_frame.grid_columnconfigure(15, minsize=0)    # Thumbnail 40
 header_frame.grid_columnconfigure(16, minsize=110)    # Latest video ID
@@ -497,8 +497,8 @@ app.grid_columnconfigure(8, minsize=50)     # Min year
 app.grid_columnconfigure(9, minsize=50)     # Max year
 app.grid_columnconfigure(10, minsize=50)     # excludes
 app.grid_columnconfigure(11, minsize=50)     # includes
-app.grid_columnconfigure(12, minsize=80)    # Filter words
-app.grid_columnconfigure(13, minsize=90)     # Video count
+app.grid_columnconfigure(12, minsize=90)    # Filter words
+app.grid_columnconfigure(13, minsize=80)     # Video count
 app.grid_columnconfigure(14, minsize=100)    # Latest updated 160 / Latest video date
 app.grid_columnconfigure(15, minsize=0)    # Thumbnail 40
 app.grid_columnconfigure(16, minsize=110)    # Latest video ID

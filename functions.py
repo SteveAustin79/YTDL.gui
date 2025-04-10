@@ -9,7 +9,7 @@ from io import BytesIO
 
 
 class AppConfig:
-    VERSION = " v1.0.5 (20250410)"
+    VERSION = " v1.0.5 (20250411)"
     LOGO_PATH = "assets/logo.png"
     ICON_PATH = "assets/icon.ico"
     CHANNEL_CONFIG_PATH = "/" + "_config_channel.json"
@@ -60,7 +60,7 @@ class COLORS:
     dark_violet = "#633da8"
     log_bg      = "#191919"
     separator   = "#414141"
-    frame_bg    = "#131313"
+    frame_bg    = "#141414"
 
 
 class Tooltip:
