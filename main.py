@@ -7,6 +7,7 @@ from PIL import Image
 from functions import (AppConfig, COLORS, CcConfig, Tooltip, load_config, find_file_by_string, count_files, format_time,
                        get_free_space, clean_string_regex, string_to_list, destroy_elements)
 
+# latest video mode n/f
 
 app_title = "YTDL.channels"
 row_height = 23
@@ -382,7 +383,7 @@ def list_channels_work():
                                                         text_color=COLORS.gray)
             elements_to_destroy.append(label_last_updated)
 
-            label_last_updated.grid(row=i + row_factor, column=0, padx=padding_x, pady=padding_y, sticky="w")
+            label_last_updated.grid(row=i + row_factor, column=14, padx=padding_x, pady=padding_y, sticky="w")
             elements_to_destroy.append(label_last_updated)
 
         row_factor += 1
