@@ -8,7 +8,7 @@ from functions import (AppConfig, COLORS, CcConfig, Tooltip, load_config, find_f
                        get_free_space, clean_string_regex, string_to_list, destroy_elements)
 
 
-app_title = "YTDL.channels"
+app_title = "YTDL.manager"
 row_height = 23
 padding_x = 5
 padding_y = 1
