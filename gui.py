@@ -1362,7 +1362,7 @@ def download_video_process(audio_or_video_bool: bool, yt: YouTube, res: str, mor
 
 def after_download_action():
     abort_button.grid_remove()
-    enable_buttons()
+    # enable_buttons()
     update_video_counts(
         str(count_files(output_dir + "/" + clean_string_regex(total_channel_name).rstrip(), [".mp4", ".mp3"])) +
         " / " + str(total_channel_videos) + " Videos downloaded")
