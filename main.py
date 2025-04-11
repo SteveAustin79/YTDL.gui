@@ -334,12 +334,12 @@ def list_channels_work():
                     color_video_id = COLORS.gray
                 color_else = COLORS.gray
 
-            button_channel_name.configure(text_color=color_video_id)
+            button_channel_name.configure(text_color=color_video_date)
 
             if color_video_date == COLORS.red:
                 button_latest_video_date = customtkinter.CTkButton(app, text=latest_date, height=row_height, width=70,
                                                                    fg_color=COLORS.log_bg,
-                                                                   text_color=COLORS.red,
+                                                                   text_color=color_video_date,
                                                                    command=lambda i=latest_video_id_text: open_script(
                                                                        i))
                 button_latest_video_date.grid(row=i + row_factor, column=14, padx=padding_x, pady=padding_y,
