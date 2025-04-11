@@ -334,7 +334,7 @@ def list_channels_work():
                     color_video_id = COLORS.gray
                 color_else = COLORS.gray
 
-            button_channel_name.configure(text_color=color_else)
+            button_channel_name.configure(text_color=color_video_id)
 
             if color_video_date == COLORS.red:
                 button_latest_video_date = customtkinter.CTkButton(app, text=latest_date, height=row_height, width=70,
