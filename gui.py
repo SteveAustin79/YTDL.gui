@@ -846,9 +846,9 @@ def get_information_work():
     # video_math.grid(row=5, column=1, padx=PADDING_X, pady=PADDING_Y, sticky="sw")
     # elements_to_destroy.append(video_math)
 
-    # channel_videos_combobox = customtkinter.CTkComboBox(app, values=video_watch_urls)
-    # channel_videos_combobox.grid(row=10, column=2, columnspan=2, padx=PADDING_X, pady=PADDING_Y, sticky="se")
-    # elements_to_destroy.append(channel_videos_combobox)
+    channel_videos_combobox = customtkinter.CTkComboBox(app, values=video_watch_urls)
+    channel_videos_combobox.grid(row=10, column=0, columnspan=2, padx=PADDING_X, pady=PADDING_Y, sticky="se")
+    elements_to_destroy.append(channel_videos_combobox)
 
     channel_frame.grid(row=3, column=0, columnspan=4, sticky="ew", padx=0, pady=PADDING_Y * PADDING_Y_FACTOR)
     elements_to_destroy.append(channel_frame)
