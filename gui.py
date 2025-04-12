@@ -1344,6 +1344,7 @@ def after_download_action():
         str(count_files(output_dir + "/" + clean_string_regex(total_channel_name).rstrip(), [".mp4", ".mp3"])) +
         " / " + str(total_channel_videos) + " Videos downloaded")
     reset_config_entry_box_colors()
+    download_console_label.configure(text="")
 
 
 def convert_m4a_to_mp3(video_id: str, publish_date: str, year: str, restricted: bool) -> None:
