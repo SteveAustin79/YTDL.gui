@@ -829,10 +829,12 @@ def get_information_work():
 
     global video_watch_urls
     video_watch_urls.clear()
+    video_watch_urls_only_ids = []
 
     if len(include_list) > 0:
         for include in include_list:
             video_watch_urls.append(youtube_watch_url + include)
+            video_watch_urls_only_ids.append(include)
     else:
         for url in channel_info_video_urls:
             count_total_videos += 1
@@ -840,13 +842,15 @@ def get_information_work():
                 if len(include_list) > 0:
                     if url.video_id in include_list:
                         video_watch_urls.append(url.watch_url)
+                        video_watch_urls_only_ids.append(str(url.watch_url).split("=")[1])
                 # else:
                 video_watch_urls.append(url.watch_url)
+                video_watch_urls_only_ids.append(str(url.watch_url).split("=")[1])
     # video_math = customtkinter.CTkLabel(channel_frame, text=str(len(video_watch_urls)) + " (total videos minus excludes)", text_color=COLORS.gray)
     # video_math.grid(row=5, column=1, padx=PADDING_X, pady=PADDING_Y, sticky="sw")
     # elements_to_destroy.append(video_math)
 
-    channel_videos_combobox = customtkinter.CTkComboBox(channel_frame, values=video_watch_urls, width=320)
+    channel_videos_combobox = customtkinter.CTkComboBox(channel_frame, values=video_watch_urls_only_ids, width=90)
     channel_videos_combobox.grid(row=13, column=0, columnspan=2, padx=PADDING_X, pady=PADDING_Y, sticky="w")
     elements_to_destroy.append(channel_videos_combobox)
 
