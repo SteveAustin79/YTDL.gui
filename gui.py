@@ -1048,16 +1048,18 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                     configuration_filter_words.configure(fg_color=COLORS.dark_red)
                 if min_duration_bool:
                     video_duration = int(video.length)
-                    configuration_min_duration.configure(fg_color=COLORS.dark_green)
                     if video_duration <= int(min_duration) * 60:
                         do_not_download = 1
                         configuration_min_duration.configure(fg_color=COLORS.dark_red)
+                    else:
+                        configuration_min_duration.configure(fg_color=COLORS.dark_green)
                 if max_duration_bool and max_duration > min_duration:
                     video_duration = int(video.length)
-                    configuration_max_duration.configure(fg_color=COLORS.dark_green)
                     if video_duration >= int(max_duration) * 60:
                         do_not_download = 1
                         configuration_max_duration.configure(fg_color=COLORS.dark_red)
+                    else:
+                        configuration_max_duration.configure(fg_color=COLORS.dark_green)
                 if int(min_year) > 0:
                     configuration_min_year.configure(fg_color=COLORS.dark_green)
                     if int(video.publish_date.strftime("%Y")) <= int(min_year):
@@ -1065,15 +1067,17 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                         # do_not_download = 1
                         break
                 if int(max_year) > 0:
-                    configuration_max_year.configure(fg_color=COLORS.dark_green)
                     if int(video.publish_date.strftime("%Y")) >= int(max_year):
                         do_not_download = 1
                         configuration_max_year.configure(fg_color=COLORS.dark_red)
+                    else:
+                        configuration_max_year.configure(fg_color=COLORS.dark_green)
                 if int(min_video_views) > 0:
-                    configuration_min_views.configure(fg_color=COLORS.dark_green)
                     if video.views <= int(min_video_views):
                         do_not_download = 1
                         configuration_min_views.configure(fg_color=COLORS.dark_red)
+                    else:
+                        configuration_min_views.configure(fg_color=COLORS.dark_green)
 
                 if do_not_download == 1:
                     update_download_log("Searching match:  " + v_title_update_full, COLORS.violet)
