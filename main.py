@@ -362,7 +362,7 @@ def list_channels_work():
             label_latest_video_id.grid(row=i + row_factor, column=16, padx=padding_x, pady=padding_y, sticky="w")
             elements_to_destroy.append(label_latest_video_id)
 
-            title_width = 27
+            title_width = 25
             label_latest_video_title = customtkinter.CTkLabel(main_frame,
                                                               text=latest_video_title_text[:title_width] + "..." if len(
                                                                   latest_video_title_text) > title_width else latest_video_title_text,
@@ -487,7 +487,7 @@ header_frame.grid_columnconfigure(13, minsize=80)     # Video count
 header_frame.grid_columnconfigure(14, minsize=100)    # Latest updated 160 / Latest video date
 header_frame.grid_columnconfigure(15, minsize=0)    # Thumbnail 40
 header_frame.grid_columnconfigure(16, minsize=110)    # Latest video ID
-header_frame.grid_columnconfigure(17, minsize=210)    # Latest video title 164
+header_frame.grid_columnconfigure(17, minsize=200)    # Latest video title 164
 
 main_frame.grid_columnconfigure(0, minsize=210)    # Channel Name
 main_frame.grid_columnconfigure(1, minsize=50)     # Resolution
@@ -506,6 +506,6 @@ main_frame.grid_columnconfigure(13, minsize=80)     # Video count
 main_frame.grid_columnconfigure(14, minsize=100)    # Latest updated 160 / Latest video date
 main_frame.grid_columnconfigure(15, minsize=0)    # Thumbnail 40
 main_frame.grid_columnconfigure(16, minsize=110)    # Latest video ID
-main_frame.grid_columnconfigure(17, minsize=200)    # Latest video title 164
+main_frame.grid_columnconfigure(17, minsize=190)    # Latest video title 164
 
 app.mainloop()
