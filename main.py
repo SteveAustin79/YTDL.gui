@@ -445,7 +445,7 @@ header_frame = customtkinter.CTkFrame(app, fg_color=COLORS.frame_bg)
 header_frame.grid(row=0, column=0, columnspan=18, padx=0, pady=padding_y, sticky="nw")
 
 main_frame = customtkinter.CTkScrollableFrame(app, width=AppConfig.WIN_WIDTH - 20, height=AppConfig.WIN_HEIGHT - 57,
-                                              fg_color="#272727")
+                                              fg_color="#262626")
 main_frame.grid(row=1, column=0, columnspan=18, padx=0, pady=0, sticky="nw")
 
 logo = customtkinter.CTkImage(light_image=Image.open(AppConfig.LOGO_PATH), size=(60, 40)) # 180x120
