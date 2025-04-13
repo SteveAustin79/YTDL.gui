@@ -88,7 +88,7 @@ def list_channels_work():
         channel_object = Channel(channel)
 
         # Channel Name
-        button_channel_name = customtkinter.CTkButton(app, text=channel.replace(youtube_url, "")[1:], height=row_height,
+        button_channel_name = customtkinter.CTkButton(main_frame, text=channel.replace(youtube_url, "")[1:], height=row_height,
                                                       width=180, fg_color=COLORS.log_bg,
                                                       command=lambda i=channel: open_script(i))
         button_channel_name.grid(row=i + row_factor, column=0, padx=padding_x, pady=padding_y, sticky="w")
@@ -443,7 +443,7 @@ app.configure(bg_color=COLORS.black)
 header_frame = customtkinter.CTkFrame(app, fg_color=COLORS.frame_bg)
 header_frame.grid(row=0, column=0, columnspan=18, padx=0, pady=padding_y, sticky="nw")
 
-main_frame = customtkinter.CTkScrollableFrame(app)
+main_frame = customtkinter.CTkScrollableFrame(app, width=AppConfig.WIN_WIDTH)
 main_frame.grid(row=1, column=0, columnspan=18, padx=0, pady=padding_y, sticky="nw")
 
 logo = customtkinter.CTkImage(light_image=Image.open(AppConfig.LOGO_PATH), size=(60, 40)) # 180x120
