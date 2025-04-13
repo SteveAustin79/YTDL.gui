@@ -81,7 +81,7 @@ def list_channels():
 
 def list_channels_work():
     row_factor = 1
-    separator1.grid(row=row_factor, column=0, columnspan=18, sticky="ew", padx=0, pady=padding_y * padding_y_factor)
+    # separator1.grid(row=row_factor, column=0, columnspan=18, sticky="ew", padx=0, pady=padding_y * padding_y_factor)
 
     for i, channel in enumerate(channel_lines, start=1):
         update_log("Scanning channel... " + channel.replace(youtube_url, "")[1:])
@@ -391,6 +391,9 @@ def list_channels_work():
         elements_to_destroy.append(separator_label)
 
         update_log("")
+
+        separator1.grid(row=row_factor, column=0, columnspan=18, sticky="ew", padx=0, pady=padding_y * padding_y_factor)
+
     update_app_title()
 
     add_button_and_checkboxes()
@@ -443,7 +446,7 @@ app.configure(bg_color=COLORS.black)
 header_frame = customtkinter.CTkFrame(app, fg_color=COLORS.frame_bg)
 header_frame.grid(row=0, column=0, columnspan=18, padx=0, pady=padding_y, sticky="nw")
 
-main_frame = customtkinter.CTkScrollableFrame(app, width=AppConfig.WIN_WIDTH - 20)
+main_frame = customtkinter.CTkScrollableFrame(app, width=AppConfig.WIN_WIDTH - 20, height=AppConfig.WIN_HEIGHT - 70)
 main_frame.grid(row=1, column=0, columnspan=18, padx=0, pady=0, sticky="nw")
 
 logo = customtkinter.CTkImage(light_image=Image.open(AppConfig.LOGO_PATH), size=(60, 40)) # 180x120
