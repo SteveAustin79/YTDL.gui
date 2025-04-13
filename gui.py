@@ -790,7 +790,8 @@ def get_information_work():
 
     video_info_channel.grid(row=3, column=1, padx=PADDING_X, pady=PADDING_Y * PADDING_Y_FACTOR, sticky="nw")
     elements_to_destroy.append(video_info_channel)
-    video_info_channel.configure(text=channel_info_name[:29] + "..." if len(channel_info_name) > 29 else channel_info_name)
+    video_info_channel.configure(text=channel_info_name[:29] + "..." if len(channel_info_name) > 29 else channel_info_name,
+                                 font=("Arial", 18, "bold"))
     video_info_channel_url.grid(row=3, column=2, padx=PADDING_X, pady=PADDING_Y * PADDING_Y_FACTOR, sticky="nw")
     elements_to_destroy.append(video_info_channel_url)
     video_info_channel_url.configure(text=channel_info_url)
@@ -1175,7 +1176,8 @@ def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: s
         yt_video_title_label.grid(row=15, column=1, padx=PADDING_X, pady=PADDING_Y, sticky="e")
         elements_to_destroy_loop.append(yt_video_title_label)
         yt_video_title.configure(text=str(y_tube.title)[:VIDEO_TITLE_WIDTH] +
-                        "..." if len(str(y_tube.title)) > VIDEO_TITLE_WIDTH else str(y_tube.title), text_color=COLORS.white, font=("Arial", 16, "bold"))
+                        "..." if len(str(y_tube.title)) > VIDEO_TITLE_WIDTH else str(y_tube.title), text_color=COLORS.white,
+                                 font=("Arial", 16, "bold"))
         if restricted:
             yt_video_title.configure(text_color=COLORS.red)
             # log_label.configure(text="Restricted Video!", text_color=COLORS.red)
@@ -1607,7 +1609,7 @@ channel_frame.grid_columnconfigure(3, minsize=250)
 separator2 = customtkinter.CTkFrame(channel_frame, height=2, fg_color=COLORS.separator)
 # separator3 = customtkinter.CTkFrame(app, height=2, fg_color=COLORS.separator)
 
-video_info_channel = customtkinter.CTkLabel(channel_frame, text="", font=("Arial", 17, "bold"))
+video_info_channel = customtkinter.CTkLabel(channel_frame, text="")
 video_info_channel_url = customtkinter.CTkLabel(channel_frame, text="", text_color=COLORS.gray)
 video_info_channel_button = customtkinter.CTkButton(channel_frame, text="Add to channels.txt")
 after_adding_to_channels_txt_label = customtkinter.CTkLabel(channel_frame, text="", text_color=COLORS.gray)

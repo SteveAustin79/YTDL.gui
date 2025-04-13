@@ -9,7 +9,7 @@ from io import BytesIO
 
 
 class AppConfig:
-    VERSION = " v1.0.6 (20250413)"
+    VERSION = " v1.0.6 (20250414)"
     LOGO_PATH = "assets/logo.png"
     ICON_PATH = "assets/icon.ico"
     CHANNEL_CONFIG_PATH = "/" + "_config_channel.json"
