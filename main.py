@@ -449,7 +449,7 @@ main_frame.grid(row=1, column=0, columnspan=18, padx=0, pady=0, sticky="nwe")
 
 logo = customtkinter.CTkImage(light_image=Image.open(AppConfig.LOGO_PATH), size=(60, 40)) # 180x120
 logo_label = customtkinter.CTkLabel(header_frame, text="", image=logo)
-logo_label.grid(row=0, column=0, padx=padding_x, pady=padding_y, sticky="nw")
+logo_label.grid(row=0, column=0, padx=padding_x, pady=(padding_y, padding_y * 2), sticky="nw")
 
 channel_lines = read_channel_txt_lines("channels.txt")
 
