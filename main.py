@@ -392,7 +392,7 @@ def list_channels_work():
 
         update_log("")
 
-        separator1.grid(row=row_factor, column=0, columnspan=18, sticky="ew", padx=0, pady=padding_y * padding_y_factor)
+        separator1.grid(row=i + row_factor, column=0, columnspan=18, sticky="ew", padx=0, pady=padding_y * padding_y_factor)
 
     update_app_title()
 
