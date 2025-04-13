@@ -292,12 +292,8 @@ def list_channels_work():
                 update_log("Find match:  " + str(counter) + " / " + str(len(size)) + "     |     " +
                            str(youtube_vo_publish_date.strftime(AppConfig.DATE_FORMAT_DISPLAY)) + "     |     " +
                                                     format_time(youtube_vo_length) + "     |     " +
-                                        ("R" if youtube_vo_age_restricted else "_") + "     |     " + youtube_vo_title)
-                # update_download_log("Find match:  " + str(v_counter) + "/" + str(len(video_watch_urls)) + "  |  " +
-                #                     ("R" if video.age_restricted else "_") + "  |  " +
-                #                     str(video.publish_date.strftime(AppConfig.date_format_display)) + "  |  " +
-                #                     format_time(video.length) + "  |  " +
-                #                     v_title, (COLORS.violet if do_not_download == 1 else COLORS.green))
+                                        ("R" if youtube_vo_age_restricted else "_") + "     |     " +
+                                        format_view_count(youtube_vo_views) + "     |     " + youtube_vo_title)
 
                 if (youtube_vo_vid_info.get('playabilityStatus', {}).get('status') != 'UNPLAYABLE' and
                         youtube_vo_vid_info.get('playabilityStatus', {}).get(
