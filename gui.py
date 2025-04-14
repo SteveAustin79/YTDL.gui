@@ -21,8 +21,8 @@ ENTRY_WIDTH = 460
 PADDING_X = 6
 PADDING_Y = 3
 PADDING_Y_FACTOR = 2
-TN_WIDTH = 14 * 16
-TN_HEIGHT = 14 * 9
+TN_WIDTH = 13 * 16
+TN_HEIGHT = 13 * 9
 VIDEO_TITLE_WIDTH = 84
 
 total_channel_videos = 0
@@ -790,7 +790,8 @@ def get_information_work():
 
     video_info_channel.grid(row=3, column=1, padx=PADDING_X, pady=PADDING_Y * PADDING_Y_FACTOR, sticky="nw")
     elements_to_destroy.append(video_info_channel)
-    video_info_channel.configure(text=channel_info_name[:29] + "..." if len(channel_info_name) > 29 else channel_info_name)
+    video_info_channel.configure(text=channel_info_name[:29] + "..." if len(channel_info_name) > 29 else channel_info_name,
+                                 font=("Arial", 18, "bold"))
     video_info_channel_url.grid(row=3, column=2, padx=PADDING_X, pady=PADDING_Y * PADDING_Y_FACTOR, sticky="nw")
     elements_to_destroy.append(video_info_channel_url)
     video_info_channel_url.configure(text=channel_info_url)
@@ -829,10 +830,12 @@ def get_information_work():
 
     global video_watch_urls
     video_watch_urls.clear()
+    video_watch_urls_only_ids = []
 
     if len(include_list) > 0:
         for include in include_list:
             video_watch_urls.append(youtube_watch_url + include)
+            video_watch_urls_only_ids.append(include)
     else:
         for url in channel_info_video_urls:
             count_total_videos += 1
@@ -840,15 +843,17 @@ def get_information_work():
                 if len(include_list) > 0:
                     if url.video_id in include_list:
                         video_watch_urls.append(url.watch_url)
+                        video_watch_urls_only_ids.append(str(url.watch_url).split("=")[1])
                 # else:
                 video_watch_urls.append(url.watch_url)
+                video_watch_urls_only_ids.append(str(url.watch_url).split("=")[1])
     # video_math = customtkinter.CTkLabel(channel_frame, text=str(len(video_watch_urls)) + " (total videos minus excludes)", text_color=COLORS.gray)
     # video_math.grid(row=5, column=1, padx=PADDING_X, pady=PADDING_Y, sticky="sw")
     # elements_to_destroy.append(video_math)
 
-    # channel_videos_combobox = customtkinter.CTkComboBox(app, values=video_watch_urls)
-    # channel_videos_combobox.grid(row=10, column=2, columnspan=2, padx=PADDING_X, pady=PADDING_Y, sticky="se")
-    # elements_to_destroy.append(channel_videos_combobox)
+    channel_videos_combobox = customtkinter.CTkComboBox(channel_frame, values=video_watch_urls_only_ids, width=140)
+    channel_videos_combobox.grid(row=5, column=1, padx=PADDING_X, pady=PADDING_Y, sticky="w")
+    elements_to_destroy.append(channel_videos_combobox)
 
     channel_frame.grid(row=3, column=0, columnspan=4, sticky="ew", padx=0, pady=PADDING_Y * PADDING_Y_FACTOR)
     elements_to_destroy.append(channel_frame)
@@ -860,7 +865,7 @@ def get_information_work():
         yt_video_title_label.grid(row=15, column=1, padx=PADDING_X, pady=PADDING_Y, sticky="e")
         elements_to_destroy.append(yt_video_title_label)
         yt_video_title.configure(text=str(ytv.title)[:VIDEO_TITLE_WIDTH] +
-                        "..." if len(str(ytv.title)) > VIDEO_TITLE_WIDTH else str(ytv.title), font=("Arial", 15, "bold"))
+                        "..." if len(str(ytv.title)) > VIDEO_TITLE_WIDTH else str(ytv.title), font=("Arial", 16, "bold"))
         if ytv.age_restricted:
             yt_video_title.configure(text_color=COLORS.red)
             restricted_video = True
@@ -1044,16 +1049,18 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                     configuration_filter_words.configure(fg_color=COLORS.dark_red)
                 if min_duration_bool:
                     video_duration = int(video.length)
-                    configuration_min_duration.configure(fg_color=COLORS.dark_green)
                     if video_duration <= int(min_duration) * 60:
                         do_not_download = 1
                         configuration_min_duration.configure(fg_color=COLORS.dark_red)
+                    else:
+                        configuration_min_duration.configure(fg_color=COLORS.dark_green)
                 if max_duration_bool and max_duration > min_duration:
                     video_duration = int(video.length)
-                    configuration_max_duration.configure(fg_color=COLORS.dark_green)
                     if video_duration >= int(max_duration) * 60:
                         do_not_download = 1
                         configuration_max_duration.configure(fg_color=COLORS.dark_red)
+                    else:
+                        configuration_max_duration.configure(fg_color=COLORS.dark_green)
                 if int(min_year) > 0:
                     configuration_min_year.configure(fg_color=COLORS.dark_green)
                     if int(video.publish_date.strftime("%Y")) <= int(min_year):
@@ -1061,15 +1068,17 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                         # do_not_download = 1
                         break
                 if int(max_year) > 0:
-                    configuration_max_year.configure(fg_color=COLORS.dark_green)
                     if int(video.publish_date.strftime("%Y")) >= int(max_year):
                         do_not_download = 1
                         configuration_max_year.configure(fg_color=COLORS.dark_red)
+                    else:
+                        configuration_max_year.configure(fg_color=COLORS.dark_green)
                 if int(min_video_views) > 0:
-                    configuration_min_views.configure(fg_color=COLORS.dark_green)
                     if video.views <= int(min_video_views):
                         do_not_download = 1
                         configuration_min_views.configure(fg_color=COLORS.dark_red)
+                    else:
+                        configuration_min_views.configure(fg_color=COLORS.dark_green)
 
                 if do_not_download == 1:
                     update_download_log("Searching match:  " + v_title_update_full, COLORS.violet)
@@ -1167,7 +1176,8 @@ def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: s
         yt_video_title_label.grid(row=15, column=1, padx=PADDING_X, pady=PADDING_Y, sticky="e")
         elements_to_destroy_loop.append(yt_video_title_label)
         yt_video_title.configure(text=str(y_tube.title)[:VIDEO_TITLE_WIDTH] +
-                        "..." if len(str(y_tube.title)) > VIDEO_TITLE_WIDTH else str(y_tube.title), text_color=COLORS.white, font=("Arial", 15, "bold"))
+                        "..." if len(str(y_tube.title)) > VIDEO_TITLE_WIDTH else str(y_tube.title), text_color=COLORS.white,
+                                 font=("Arial", 16, "bold"))
         if restricted:
             yt_video_title.configure(text_color=COLORS.red)
             # log_label.configure(text="Restricted Video!", text_color=COLORS.red)
@@ -1229,7 +1239,7 @@ def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: s
 
 def download_video(audio_or_video_bool: bool, y_tube: YouTube, res: str, restricted: bool, year_subfolders: bool, looper: bool):
     if not looper:
-        # enable_buttons()
+        enable_buttons()
         t_download_video = threading.Thread(target=lambda: download_video_work(audio_or_video_bool, y_tube, res, restricted, year_subfolders), daemon=True)
         t_download_video.start()
     else:
@@ -1336,6 +1346,7 @@ def after_download_action():
         str(count_files(output_dir + "/" + clean_string_regex(total_channel_name).rstrip(), [".mp4", ".mp3"])) +
         " / " + str(total_channel_videos) + " Videos downloaded")
     reset_config_entry_box_colors()
+    download_console_label.configure(text="")
 
 
 def convert_m4a_to_mp3(video_id: str, publish_date: str, year: str, restricted: bool) -> None:
@@ -1598,7 +1609,7 @@ channel_frame.grid_columnconfigure(3, minsize=250)
 separator2 = customtkinter.CTkFrame(channel_frame, height=2, fg_color=COLORS.separator)
 # separator3 = customtkinter.CTkFrame(app, height=2, fg_color=COLORS.separator)
 
-video_info_channel = customtkinter.CTkLabel(channel_frame, text="", font=("Arial", 16, "bold"))
+video_info_channel = customtkinter.CTkLabel(channel_frame, text="")
 video_info_channel_url = customtkinter.CTkLabel(channel_frame, text="", text_color=COLORS.gray)
 video_info_channel_button = customtkinter.CTkButton(channel_frame, text="Add to channels.txt")
 after_adding_to_channels_txt_label = customtkinter.CTkLabel(channel_frame, text="", text_color=COLORS.gray)

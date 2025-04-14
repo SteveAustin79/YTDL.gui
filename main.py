@@ -81,14 +81,14 @@ def list_channels():
 
 def list_channels_work():
     row_factor = 1
-    separator1.grid(row=row_factor, column=0, columnspan=18, sticky="ew", padx=0, pady=padding_y * padding_y_factor)
+    # separator1.grid(row=row_factor, column=0, columnspan=18, sticky="ew", padx=0, pady=padding_y * padding_y_factor)
 
     for i, channel in enumerate(channel_lines, start=1):
         update_log("Scanning channel... " + channel.replace(youtube_url, "")[1:])
         channel_object = Channel(channel)
 
         # Channel Name
-        button_channel_name = customtkinter.CTkButton(app, text=channel.replace(youtube_url, "")[1:], height=row_height,
+        button_channel_name = customtkinter.CTkButton(main_frame, text=channel.replace(youtube_url, "")[1:], height=row_height,
                                                       width=180, fg_color=COLORS.log_bg,
                                                       command=lambda i=channel: open_script(i))
         button_channel_name.grid(row=i + row_factor, column=0, padx=padding_x, pady=padding_y, sticky="w")
@@ -100,14 +100,14 @@ def list_channels_work():
                 channel_object.channel_name).rstrip() + AppConfig.CHANNEL_CONFIG_PATH)
 
             # Resolution
-            label_config_resolution = customtkinter.CTkLabel(app, text="max", height=row_height, text_color=COLORS.gray)
+            label_config_resolution = customtkinter.CTkLabel(main_frame, text="max", height=row_height, text_color=COLORS.gray)
             label_config_resolution.grid(row=i + row_factor, column=1, padx=padding_x, pady=padding_y, sticky="nswe")
             elements_to_destroy.append(label_config_resolution)
             if channel_config["c_max_resolution"] != "":
                 label_config_resolution.configure(text=channel_config["c_max_resolution"], text_color=COLORS.orange)
 
             # Min duration
-            label_config_min_duration = customtkinter.CTkLabel(app, text="0m", height=row_height,
+            label_config_min_duration = customtkinter.CTkLabel(main_frame, text="0m", height=row_height,
                                                                text_color=COLORS.gray)
             label_config_min_duration.grid(row=i + row_factor, column=2, padx=padding_x, pady=padding_y, sticky="e")
             elements_to_destroy.append(label_config_min_duration)
@@ -116,7 +116,7 @@ def list_channels_work():
                                                     text_color=COLORS.yellow)
 
             # Max duration
-            label_config_max_duration = customtkinter.CTkLabel(app, text="0m", height=row_height,
+            label_config_max_duration = customtkinter.CTkLabel(main_frame, text="0m", height=row_height,
                                                                text_color=COLORS.gray)
             label_config_max_duration.grid(row=i + row_factor, column=3, padx=padding_x, pady=padding_y, sticky="e")
             elements_to_destroy.append(label_config_max_duration)
@@ -125,7 +125,7 @@ def list_channels_work():
                                                     text_color=COLORS.yellow)
 
             # Skip restricted
-            label_config_skip_restricted = customtkinter.CTkLabel(app, text="S", height=row_height,
+            label_config_skip_restricted = customtkinter.CTkLabel(main_frame, text="S", height=row_height,
                                                                   text_color=COLORS.gray)
             label_config_skip_restricted.grid(row=i + row_factor, column=4, padx=padding_x, pady=padding_y,
                                               sticky="nswe")
@@ -134,7 +134,7 @@ def list_channels_work():
                 label_config_skip_restricted.configure(text_color=COLORS.red)
 
             # Restricted
-            label_config_only_restricted = customtkinter.CTkLabel(app, text="R", height=row_height,
+            label_config_only_restricted = customtkinter.CTkLabel(main_frame, text="R", height=row_height,
                                                                   text_color=COLORS.gray)
             if channel_config["c_skip_restricted"] != "y":
                 label_config_only_restricted.grid(row=i + row_factor, column=5, padx=padding_x, pady=padding_y,
@@ -144,7 +144,7 @@ def list_channels_work():
                 label_config_only_restricted.configure(text_color=COLORS.dark_red)
 
             # Min views
-            label_config_min_views = customtkinter.CTkLabel(app, text="0", height=row_height,
+            label_config_min_views = customtkinter.CTkLabel(main_frame, text="0", height=row_height,
                                                             text_color=COLORS.gray)
             label_config_min_views.grid(row=i + row_factor, column=6, padx=padding_x, pady=padding_y, sticky="e")
             elements_to_destroy.append(label_config_min_views)
@@ -153,14 +153,14 @@ def list_channels_work():
                                                  text_color=COLORS.yellow)
 
             # Year subs
-            label_config_year_subs = customtkinter.CTkLabel(app, text="Y", height=row_height, text_color=COLORS.gray)
+            label_config_year_subs = customtkinter.CTkLabel(main_frame, text="Y", height=row_height, text_color=COLORS.gray)
             label_config_year_subs.grid(row=i + row_factor, column=7, padx=padding_x, pady=padding_y, sticky="nswe")
             elements_to_destroy.append(label_config_year_subs)
             if channel_config["c_year_subfolders"] == "y":
                 label_config_year_subs.configure(text_color=COLORS.green)
 
             # Min year
-            label_config_min_year = customtkinter.CTkLabel(app, text="-", height=row_height, text_color=COLORS.gray)
+            label_config_min_year = customtkinter.CTkLabel(main_frame, text="-", height=row_height, text_color=COLORS.gray)
             label_config_min_year.grid(row=i + row_factor, column=8, padx=padding_x, pady=padding_y, sticky="e")
             elements_to_destroy.append(label_config_min_year)
             if int(channel_config["c_minimum_year"]) != 0:
@@ -168,7 +168,7 @@ def list_channels_work():
                                                 text_color=COLORS.dark_green)
 
             # Max year
-            label_config_max_year = customtkinter.CTkLabel(app, text="-", height=row_height, text_color=COLORS.gray)
+            label_config_max_year = customtkinter.CTkLabel(main_frame, text="-", height=row_height, text_color=COLORS.gray)
             label_config_max_year.grid(row=i + row_factor, column=9, padx=padding_x, pady=padding_y, sticky="e")
             elements_to_destroy.append(label_config_max_year)
             if int(channel_config["c_maximum_year"]) != 0:
@@ -176,7 +176,7 @@ def list_channels_work():
                                                 text_color=COLORS.dark_green)
 
             # excludes
-            label_config_excludes = customtkinter.CTkLabel(app, text="excl", height=row_height, text_color=COLORS.gray)
+            label_config_excludes = customtkinter.CTkLabel(main_frame, text="excl", height=row_height, text_color=COLORS.gray)
             label_config_excludes.grid(row=i + row_factor, column=10, padx=padding_x, pady=padding_y, sticky="nswe")
             elements_to_destroy.append(label_config_excludes)
             if channel_config["c_exclude_video_ids"] != "":
@@ -184,7 +184,7 @@ def list_channels_work():
                 Tooltip(label_config_excludes, channel_config["c_exclude_video_ids"])
 
             # includes
-            label_config_includes = customtkinter.CTkLabel(app, text="incl", height=row_height, text_color=COLORS.gray)
+            label_config_includes = customtkinter.CTkLabel(main_frame, text="incl", height=row_height, text_color=COLORS.gray)
             label_config_includes.grid(row=i + row_factor, column=11, padx=padding_x, pady=padding_y, sticky="nswe")
             elements_to_destroy.append(label_config_includes)
             if channel_config["c_include_video_ids"] != "":
@@ -192,7 +192,7 @@ def list_channels_work():
                 Tooltip(label_config_includes, channel_config["c_include_video_ids"])
 
             # Filter words
-            label_config_filter_words = customtkinter.CTkLabel(app, text="", height=row_height)
+            label_config_filter_words = customtkinter.CTkLabel(main_frame, text="", height=row_height)
             if channel_config["c_filter_words"] != "":
                 word_length = 17
                 label_config_filter_words.configure(text=channel_config["c_filter_words"][:word_length] +
@@ -206,7 +206,7 @@ def list_channels_work():
 
         update_log("Fetching channel... " + channel.replace(youtube_url, "")[1:])
 
-        label_video_count = customtkinter.CTkLabel(app, text="", height=row_height, text_color=COLORS.gray)
+        label_video_count = customtkinter.CTkLabel(main_frame, text="", height=row_height, text_color=COLORS.gray)
         state_show_latest_video_checkbox = False
         counter_color = COLORS.gray
         if c_show_latest_video_date.get() == 1 or c_filters_on_in_channels_list.get() == 1:
@@ -289,15 +289,11 @@ def list_channels_work():
                 youtube_vo_age_restricted = youtube_video_object.age_restricted
                 youtube_vo_publish_date = youtube_video_object.publish_date
 
-                update_log("Find match:  " + str(counter) + " / " + str(len(size)) + "     |     " +
-                           str(youtube_vo_publish_date.strftime(AppConfig.DATE_FORMAT_DISPLAY)) + "     |     " +
-                                                    format_time(youtube_vo_length) + "     |     " +
-                                        ("R" if youtube_vo_age_restricted else "_") + "     |     " + youtube_vo_title)
-                # update_download_log("Find match:  " + str(v_counter) + "/" + str(len(video_watch_urls)) + "  |  " +
-                #                     ("R" if video.age_restricted else "_") + "  |  " +
-                #                     str(video.publish_date.strftime(AppConfig.date_format_display)) + "  |  " +
-                #                     format_time(video.length) + "  |  " +
-                #                     v_title, (COLORS.violet if do_not_download == 1 else COLORS.green))
+                update_log("Find match:  " + str(counter) + " / " + str(len(size)) + "    |    " +
+                           str(youtube_vo_publish_date.strftime(AppConfig.DATE_FORMAT_DISPLAY)) + "    |    " +
+                                                    format_time(youtube_vo_length) + "    |    " +
+                                        ("R" if youtube_vo_age_restricted else "_") + "    |    " +
+                                        format_view_count(youtube_vo_views) + "    |    " + youtube_vo_title)
 
                 if (youtube_vo_vid_info.get('playabilityStatus', {}).get('status') != 'UNPLAYABLE' and
                         youtube_vo_vid_info.get('playabilityStatus', {}).get(
@@ -334,19 +330,19 @@ def list_channels_work():
                     color_video_id = COLORS.gray
                 color_else = COLORS.gray
 
-            button_channel_name.configure(text_color=color_else)
+            button_channel_name.configure(text_color=color_video_date)
 
             if color_video_date == COLORS.red:
-                button_latest_video_date = customtkinter.CTkButton(app, text=latest_date, height=row_height, width=70,
+                button_latest_video_date = customtkinter.CTkButton(main_frame, text=latest_date, height=row_height, width=70,
                                                                    fg_color=COLORS.log_bg,
-                                                                   text_color=COLORS.red,
+                                                                   text_color=color_video_date,
                                                                    command=lambda i=latest_video_id_text: open_script(
                                                                        i))
                 button_latest_video_date.grid(row=i + row_factor, column=14, padx=padding_x, pady=padding_y,
                                               sticky="nswe")
                 elements_to_destroy.append(button_latest_video_date)
             else:
-                label_latest_video_date = customtkinter.CTkLabel(app, text=latest_date, text_color=color_video_date,
+                label_latest_video_date = customtkinter.CTkLabel(main_frame, text=latest_date, text_color=color_video_date,
                                                                  height=row_height)
                 label_latest_video_date.grid(row=i + row_factor, column=14, padx=padding_x, pady=padding_y,
                                              sticky="nswe")
@@ -357,13 +353,13 @@ def list_channels_work():
             # video_thumbnail_label.grid(row=i + row_factor, column=15, padx=int(padding_x / 3), pady=0, sticky="nswe")
             # elements_to_destroy.append(video_thumbnail_label)
 
-            label_latest_video_id = customtkinter.CTkLabel(app, text=latest_video_id_text, text_color=color_video_id,
+            label_latest_video_id = customtkinter.CTkLabel(main_frame, text=latest_video_id_text, text_color=color_video_id,
                                                            height=row_height)
             label_latest_video_id.grid(row=i + row_factor, column=16, padx=padding_x, pady=padding_y, sticky="w")
             elements_to_destroy.append(label_latest_video_id)
 
-            title_width = 27
-            label_latest_video_title = customtkinter.CTkLabel(app,
+            title_width = 25
+            label_latest_video_title = customtkinter.CTkLabel(main_frame,
                                                               text=latest_video_title_text[:title_width] + "..." if len(
                                                                   latest_video_title_text) > title_width else latest_video_title_text,
                                                               text_color=color_else, height=row_height)
@@ -378,7 +374,7 @@ def list_channels_work():
 
         if state_show_latest_video_checkbox and not state_filters_on_checkbox:
             # Latest updated
-            label_last_updated = customtkinter.CTkLabel(app, text=channel_last_updated, width=160, height=row_height,
+            label_last_updated = customtkinter.CTkLabel(main_frame, text=channel_last_updated, width=160, height=row_height,
                                                         text_color=COLORS.gray)
             elements_to_destroy.append(label_last_updated)
 
@@ -386,11 +382,12 @@ def list_channels_work():
             elements_to_destroy.append(label_last_updated)
 
         row_factor += 1
-        separator_label = customtkinter.CTkFrame(app, height=2, fg_color=COLORS.separator)
+        separator_label = customtkinter.CTkFrame(main_frame, height=2, fg_color=COLORS.separator)
         separator_label.grid(row=i + row_factor, column=0, columnspan=18, sticky="ew", padx=0, pady=padding_y)
         elements_to_destroy.append(separator_label)
 
         update_log("")
+
     update_app_title()
 
     add_button_and_checkboxes()
@@ -443,9 +440,12 @@ app.configure(bg_color=COLORS.black)
 header_frame = customtkinter.CTkFrame(app, fg_color=COLORS.frame_bg)
 header_frame.grid(row=0, column=0, columnspan=18, padx=0, pady=padding_y, sticky="nw")
 
+main_frame = customtkinter.CTkScrollableFrame(app, height=AppConfig.WIN_HEIGHT - 57, fg_color="#272727")
+main_frame.grid(row=1, column=0, columnspan=18, padx=0, pady=0, sticky="nwe")
+
 logo = customtkinter.CTkImage(light_image=Image.open(AppConfig.LOGO_PATH), size=(60, 40)) # 180x120
 logo_label = customtkinter.CTkLabel(header_frame, text="", image=logo)
-logo_label.grid(row=0, column=0, padx=padding_x, pady=padding_y, sticky="nw")
+logo_label.grid(row=0, column=0, padx=padding_x, pady=(padding_y, padding_y * 2), sticky="nw")
 
 channel_lines = read_channel_txt_lines("channels.txt")
 
@@ -464,7 +464,7 @@ c_filters_on_in_channels_list.grid(row=0, column=2, columnspan=6, padx=padding_x
 log_label = customtkinter.CTkLabel(header_frame, text="", text_color=COLORS.violet, anchor="w")
 log_label.grid(row=0, column=9, columnspan=8, padx=padding_x, pady=padding_y, sticky="w")
 
-separator1 = customtkinter.CTkFrame(app, height=2, fg_color=COLORS.separator)
+separator1 = customtkinter.CTkFrame(main_frame, height=2, fg_color=COLORS.separator)
 
 header_frame.grid_columnconfigure(0, minsize=210)    # Channel Name
 header_frame.grid_columnconfigure(1, minsize=50)     # Resolution
@@ -483,25 +483,25 @@ header_frame.grid_columnconfigure(13, minsize=80)     # Video count
 header_frame.grid_columnconfigure(14, minsize=100)    # Latest updated 160 / Latest video date
 header_frame.grid_columnconfigure(15, minsize=0)    # Thumbnail 40
 header_frame.grid_columnconfigure(16, minsize=110)    # Latest video ID
-header_frame.grid_columnconfigure(17, minsize=210)    # Latest video title 164
+header_frame.grid_columnconfigure(17, minsize=200)    # Latest video title 164
 
-app.grid_columnconfigure(0, minsize=210)    # Channel Name
-app.grid_columnconfigure(1, minsize=50)     # Resolution
-app.grid_columnconfigure(2, minsize=50)     # Min duration
-app.grid_columnconfigure(3, minsize=50)     # Max duration
-app.grid_columnconfigure(4, minsize=25)     # Skip restricted
-app.grid_columnconfigure(5, minsize=25)     # Restricted
-app.grid_columnconfigure(6, minsize=60)     # Min views
-app.grid_columnconfigure(7, minsize=25)     # Year subs
-app.grid_columnconfigure(8, minsize=50)     # Min year
-app.grid_columnconfigure(9, minsize=50)     # Max year
-app.grid_columnconfigure(10, minsize=50)     # excludes
-app.grid_columnconfigure(11, minsize=50)     # includes
-app.grid_columnconfigure(12, minsize=90)    # Filter words
-app.grid_columnconfigure(13, minsize=80)     # Video count
-app.grid_columnconfigure(14, minsize=100)    # Latest updated 160 / Latest video date
-app.grid_columnconfigure(15, minsize=0)    # Thumbnail 40
-app.grid_columnconfigure(16, minsize=110)    # Latest video ID
-app.grid_columnconfigure(17, minsize=200)    # Latest video title 164
+main_frame.grid_columnconfigure(0, minsize=210)    # Channel Name
+main_frame.grid_columnconfigure(1, minsize=50)     # Resolution
+main_frame.grid_columnconfigure(2, minsize=50)     # Min duration
+main_frame.grid_columnconfigure(3, minsize=50)     # Max duration
+main_frame.grid_columnconfigure(4, minsize=25)     # Skip restricted
+main_frame.grid_columnconfigure(5, minsize=25)     # Restricted
+main_frame.grid_columnconfigure(6, minsize=60)     # Min views
+main_frame.grid_columnconfigure(7, minsize=25)     # Year subs
+main_frame.grid_columnconfigure(8, minsize=50)     # Min year
+main_frame.grid_columnconfigure(9, minsize=50)     # Max year
+main_frame.grid_columnconfigure(10, minsize=50)     # excludes
+main_frame.grid_columnconfigure(11, minsize=50)     # includes
+main_frame.grid_columnconfigure(12, minsize=90)    # Filter words
+main_frame.grid_columnconfigure(13, minsize=80)     # Video count
+main_frame.grid_columnconfigure(14, minsize=100)    # Latest updated 160 / Latest video date
+main_frame.grid_columnconfigure(15, minsize=0)    # Thumbnail 40
+main_frame.grid_columnconfigure(16, minsize=110)    # Latest video ID
+main_frame.grid_columnconfigure(17, minsize=190)    # Latest video title 164
 
 app.mainloop()
