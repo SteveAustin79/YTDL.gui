@@ -942,7 +942,7 @@ def get_information_work():
         skip_videos.grid(row=13, column=3, padx=PADDING_X, pady=PADDING_Y * PADDING_Y_FACTOR * 2, sticky="w")
         elements_to_destroy.append(skip_videos)
 
-        loop_with_download_button.configure(text="DwBtn")
+        loop_with_download_button.configure(text="DwBtn", text_color=COLORS.gray)
         loop_with_download_button.grid(row=13, column=3, padx=PADDING_X, pady=PADDING_Y * PADDING_Y_FACTOR * 2, sticky="e")
 
     ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON
