@@ -944,6 +944,7 @@ def get_information_work():
 
         loop_with_download_button.configure(text="DwBtn", text_color=COLORS.gray)
         loop_with_download_button.grid(row=13, column=3, padx=PADDING_X, pady=PADDING_Y * PADDING_Y_FACTOR * 2, sticky="e")
+        elements_to_destroy.append(loop_with_download_button)
 
     ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON
     ##### AUDIO OR VIDEO BUTTON #####                             AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON
