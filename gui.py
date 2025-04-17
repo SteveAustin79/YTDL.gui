@@ -15,6 +15,7 @@ from functions import (AppConfig, COLORS, CcConfig, JSONConfig, load_config, fin
 
 # dropdown with int for loop mode exit after int loops
 # delete partly converted file in channel target dir if aborted during conversion
+# "download button in loop mode" switch, skip button
 
 APP_TITLE = "YTDL.video"
 ENTRY_WIDTH = 460
@@ -941,6 +942,9 @@ def get_information_work():
         skip_videos.grid(row=13, column=3, padx=PADDING_X, pady=PADDING_Y * PADDING_Y_FACTOR * 2, sticky="w")
         elements_to_destroy.append(skip_videos)
 
+        loop_with_download_button.configure(text="DwBtn")
+        loop_with_download_button.grid(row=13, column=3, padx=PADDING_X, pady=PADDING_Y * PADDING_Y_FACTOR * 2, sticky="e")
+
     ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON
     ##### AUDIO OR VIDEO BUTTON #####                             AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON
     ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON
@@ -1643,6 +1647,8 @@ video_button = customtkinter.CTkButton(channel_frame, text="Video (mp4)")
 skip_videos_value = tkinter.StringVar(value="")
 skip_videos = customtkinter.CTkEntry(channel_frame, textvariable=skip_videos_value)
 skip_videos_label = customtkinter.CTkLabel(channel_frame, text="Skip", text_color=COLORS.gray)
+
+loop_with_download_button = customtkinter.CTkCheckBox(channel_frame)
 
 yt_video_counter_label = customtkinter.CTkLabel(app, text="")
 yt_video_id = customtkinter.CTkEntry(app)
