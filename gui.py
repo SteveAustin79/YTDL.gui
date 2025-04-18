@@ -1591,7 +1591,7 @@ channel_dropdown = customtkinter.CTkComboBox(app, values=read_channel_txt_lines(
 channel_dropdown.grid(row=0, column=2, padx=PADDING_X, pady=PADDING_Y, sticky="w")
 
 web_client_checkbox = customtkinter.CTkCheckBox(app, text="WebClient", text_color=COLORS.gray)
-web_client_checkbox.grid(row=0, column=1, padx=PADDING_X, pady=PADDING_Y, sticky="e")
+web_client_checkbox.grid(row=0, column=0, padx=PADDING_X, pady=PADDING_Y, sticky="e")
 
 title = customtkinter.CTkLabel(app, text="YouTube Channel, Video-, or Playlist URL:", text_color=COLORS.gray)
 title.grid(row=1, column=1, padx=PADDING_X, pady=PADDING_Y, sticky="se")
