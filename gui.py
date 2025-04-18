@@ -16,6 +16,7 @@ from functions import (AppConfig, COLORS, CcConfig, JSONConfig, load_config, fin
 # dropdown with int for loop mode exit after int loops
 # delete partly converted file in channel target dir if aborted during conversion
 # "download button in loop mode" switch, skip button
+# switch in gui for web_client
 
 APP_TITLE = "YTDL.video"
 ENTRY_WIDTH = 460
@@ -946,6 +947,7 @@ def get_information_work():
         loop_with_download_button.grid(row=13, column=3, padx=PADDING_X, pady=PADDING_Y * PADDING_Y_FACTOR * 2, sticky="e")
         elements_to_destroy.append(loop_with_download_button)
 
+
     ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON
     ##### AUDIO OR VIDEO BUTTON #####                             AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON
     ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON ##### AUDIO OR VIDEO BUTTON
@@ -1587,6 +1589,9 @@ logo_label.grid(row=0, column=0, rowspan=2, padx=PADDING_X, pady=PADDING_Y, stic
 
 channel_dropdown = customtkinter.CTkComboBox(app, values=read_channel_txt_lines("channels.txt"), width=350)
 channel_dropdown.grid(row=0, column=2, padx=PADDING_X, pady=PADDING_Y, sticky="w")
+
+web_client_checkbox = customtkinter.CTkCheckBox(app, text="WebClient", text_color=COLORS.gray)
+web_client_checkbox.grid(row=0, column=1, padx=PADDING_X, pady=PADDING_Y, sticky="e")
 
 title = customtkinter.CTkLabel(app, text="YouTube Channel, Video-, or Playlist URL:", text_color=COLORS.gray)
 title.grid(row=1, column=1, padx=PADDING_X, pady=PADDING_Y, sticky="se")
