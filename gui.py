@@ -729,6 +729,12 @@ def get_information_work():
     global total_channel_videos
     global total_channel_name
     global elements_to_destroy
+    global web_client
+
+    if web_client_checkbox.get() == 1:
+        web_client = True
+    else:
+        web_client = False
 
     update_app_title()
     looper = False
