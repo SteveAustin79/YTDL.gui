@@ -685,7 +685,7 @@ def update_video_counts(text: str):
 
 
 def get_yt_channel(channel_url) -> Channel:
-    if web_client:
+    if web_client_checkbox.get() == 1:
         channel = Channel(channel_url, 'WEB')
     else:
         channel = Channel(channel_url)
@@ -749,21 +749,21 @@ def get_information_work():
     yt_channel = channel_url
     video_id_from_single_video = ""
     if youtube_watch_url in yt_channel:
-        if web_client:
+        if web_client_checkbox.get() == 1:
             ytv = YouTube(yt_channel, 'WEB', on_progress_callback=on_progress)
         else:
             ytv = YouTube(yt_channel)
         yt_channel = ytv.channel_url
         video_id_from_single_video = ytv.video_id
     elif "https://" not in yt_channel:
-        if web_client:
+        if web_client_checkbox.get() == 1:
             ytv = YouTube(youtube_watch_url + yt_channel, 'WEB', on_progress_callback=on_progress)
         else:
             ytv = YouTube(youtube_watch_url + yt_channel)
         yt_channel = ytv.channel_url
         video_id_from_single_video = ytv.video_id
     elif "list=" in yt_channel:
-        if web_client:
+        if web_client_checkbox.get() == 1:
             playlist = Playlist(yt_channel, 'WEB')
         else:
             playlist = Playlist(yt_channel)
@@ -1038,7 +1038,7 @@ def loop_download_work(audio_or_video_bool, default_max_res, default_filter_word
                 reset_config_entry_box_colors()
             else:
                 do_not_download = 0
-                if web_client:
+                if web_client_checkbox.get() == 1:
                     video = YouTube(youtube_watch_url + only_video_id, 'WEB', on_progress_callback=on_progress)
                 else:
                     video = YouTube(youtube_watch_url + only_video_id, on_progress_callback=on_progress)
@@ -1158,14 +1158,14 @@ def start_download_work(audio_or_video_bool: bool, restricted: bool, video_id: s
     elements_to_destroy_loop.append(download_console_label)
 
     if restricted:
-        if web_client:
+        if web_client_checkbox.get() == 1:
             y_tube = YouTube(youtube_watch_url + video_id, 'WEB', use_oauth=True, allow_oauth_cache=True,
                      on_progress_callback=on_progress)
         else:
             y_tube = YouTube(youtube_watch_url + video_id, use_oauth=True, allow_oauth_cache=True,
                              on_progress_callback=on_progress)
     else:
-        if web_client:
+        if web_client_checkbox.get() == 1:
             y_tube = YouTube(youtube_watch_url + video_id, 'WEB', on_progress_callback=on_progress)
         else:
             y_tube = YouTube(youtube_watch_url + video_id, on_progress_callback=on_progress)
