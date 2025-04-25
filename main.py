@@ -4,6 +4,7 @@ import subprocess
 import threading
 from pytubefix import Channel
 from PIL import Image
+from datetime import datetime
 from functions import (AppConfig, COLORS, CcConfig, Tooltip, load_config, find_file_by_string, count_files, format_time,
                        get_free_space, clean_string_regex, string_to_list, destroy_elements)
 
@@ -29,7 +30,8 @@ def checkbox_filter_on_clicked():
 
 
 def update_app_title():
-    app.title(app_title + AppConfig.VERSION + " - Free disk space: " + get_free_space(output_dir))
+    now = datetime.now()
+    app.title(app_title + AppConfig.VERSION + " - Free disk space: " + get_free_space(output_dir) + " - " + now.strftime(AppConfig.DATE_TIME_FORMAT))
 
 
 def read_channel_txt_lines(filename: str) -> list[str]:

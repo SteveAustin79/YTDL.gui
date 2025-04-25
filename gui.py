@@ -16,6 +16,9 @@ from functions import (AppConfig, COLORS, CcConfig, JSONConfig, load_config, fin
 # dropdown with int for loop mode exit after int loops
 # delete partly converted file in channel target dir if aborted during conversion
 # "download button in loop mode" switch, skip button
+# date/time start time in title
+# disable download button during download (abort button phase)
+
 # switch in gui for web_client
 
 APP_TITLE = "YTDL.video"
@@ -1316,6 +1319,7 @@ def download_video_process(audio_or_video_bool: bool, yt: YouTube, res: str, mor
     abort_button.configure(fg_color=COLORS.dark_red, command=abort_download)
     abort_button.grid(row=22, column=3, rowspan=2, padx=PADDING_X, pady=PADDING_Y, sticky="nw")
     elements_to_destroy_loop.append(abort_button)
+    download_button.configure(state="disabled")
 
     progress_percent.configure(text="0%")
     progress_percent.grid(row=22, column=1, padx=PADDING_X, pady=PADDING_Y, sticky="e")
@@ -1354,6 +1358,7 @@ def download_video_process(audio_or_video_bool: bool, yt: YouTube, res: str, mor
 
 def after_download_action():
     abort_button.grid_remove()
+    download_button.configure(state="normal")
     # enable_buttons()
     update_video_counts(
         str(count_files(output_dir + "/" + clean_string_regex(total_channel_name).rstrip(), [".mp4", ".mp3"])) +
@@ -1520,6 +1525,7 @@ def convert_webm_to_mp4(input_file: str, output_file: str, year: str, restricted
     create_directories(restricted, year)
     update_download_log("Converting WebM to MP4... (this may take a while)", COLORS.violet)
     abort_button.grid_remove()
+    download_button.configure(state="normal")
     command = [
         "ffmpeg", "-loglevel", "quiet", "-stats", "-i", input_file,
         "-c:v", "libx264", "-preset", "fast", "-crf", "23",  # H.264 video encoding
