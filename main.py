@@ -385,8 +385,10 @@ def list_channels_work():
                 label_last_updated.grid(row=i + row_factor, column=14, padx=padding_x, pady=padding_y, sticky="w")
                 elements_to_destroy.append(label_last_updated)
         except Exception as eeeee:
-            label_latest_video_title = customtkinter.CTkLabel(main_frame, text="!!! 404 !!!", text_color=COLORS.red,
-                                                              height=row_height)
+            # label_latest_video_title = customtkinter.CTkLabel(main_frame, text="!!! 404 !!!", text_color=COLORS.red,
+            #                                                   height=row_height)
+            label_latest_video_title = customtkinter.CTkLabel(main_frame, text=str(eeeee), text_color=COLORS.red,
+                                                                                 height=row_height)
             label_latest_video_title.grid(row=i + row_factor, column=12, padx=padding_x, pady=padding_y, sticky="we")
             elements_to_destroy.append(label_latest_video_title)
 
