@@ -88,7 +88,7 @@ def list_channels_work():
 
     for i, channel in enumerate(channel_lines, start=1):
         update_log("Scanning channel... " + channel.replace(youtube_url, "")[1:])
-        channel_object = Channel(channel)
+        channel_object = Channel(channel, 'WEB')
 
         # Channel Name
         button_channel_name = customtkinter.CTkButton(main_frame, text=channel.replace(youtube_url, "")[1:], height=row_height,
