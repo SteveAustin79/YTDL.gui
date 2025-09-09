@@ -753,14 +753,14 @@ def get_information_work():
     video_id_from_single_video = ""
     if youtube_watch_url in yt_channel:
         if web_client_checkbox.get() == 1:
-            ytv = YouTube(yt_channel, 'WEB', on_progress_callback=on_progress)
+            ytv = YouTube(yt_channel, 'WEB', on_progress_callback=on_progress, allow_oauth_cache=False)
         else:
             ytv = YouTube(yt_channel)
         yt_channel = ytv.channel_url
         video_id_from_single_video = ytv.video_id
     elif "https://" not in yt_channel:
         if web_client_checkbox.get() == 1:
-            ytv = YouTube(youtube_watch_url + yt_channel, 'WEB', on_progress_callback=on_progress)
+            ytv = YouTube(youtube_watch_url + yt_channel, 'WEB', on_progress_callback=on_progress, allow_oauth_cache=False)
         else:
             ytv = YouTube(youtube_watch_url + yt_channel)
         yt_channel = ytv.channel_url
