@@ -754,6 +754,7 @@ def get_information_work():
     if youtube_watch_url in yt_channel:
         if web_client_checkbox.get() == 1:
             ytv = YouTube(yt_channel, 'WEB', on_progress_callback=on_progress, allow_oauth_cache=False)
+            print("one")
         else:
             ytv = YouTube(yt_channel)
         yt_channel = ytv.channel_url
