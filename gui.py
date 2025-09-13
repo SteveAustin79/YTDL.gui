@@ -1411,7 +1411,7 @@ def convert_m4a_to_mp3(video_id: str, publish_date: str, year: str, restricted: 
     update_download_log("MP3 downloaded", COLORS.green)
     delete_temp_files()
     after_download_action()
-    print()
+    #print()
 
 
 def merge_video_audio(video_id: str, publish_date: str, vid_res: str, year: str, restricted: bool) -> None:
@@ -1457,7 +1457,7 @@ def merge_video_audio(video_id: str, publish_date: str, vid_res: str, year: str,
 
         delete_temp_files()
         after_download_action()
-        print()
+        #print()
 
     except Exception as ee:
         print(f"❌ Error merging files: {ee}")
@@ -1554,7 +1554,7 @@ def convert_webm_to_mp4(input_file: str, output_file: str, year: str, restricted
         update_download_log("Video downloaded", COLORS.green)
 
     after_download_action()
-    print()
+    #print()
 
 
 
