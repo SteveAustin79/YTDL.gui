@@ -6,7 +6,6 @@ import shutil
 import subprocess
 import sys
 import threading
-import yt_dlp
 from pytubefix import YouTube, Channel, Playlist
 from pytubefix.cli import on_progress
 from PIL import Image
@@ -968,32 +967,16 @@ def get_information_work():
     enable_buttons()
 
 
-#def print_resolutions(yt: YouTube) -> list[str]:
-#    streams = yt.streams.filter(file_extension='mp4')  # StreamQuery object
-#    # Convert StreamQuery to a formatted string
-#    stream_string = "\n".join([str(stream) for stream in streams])
-#    # Extract resolutions using regex
-#    resolutions = re.findall(r'res="(\d+p)"', stream_string)
-#    # Remove duplicates and sort in descending order
-#    unique_resolutions = sorted(set(resolutions), key=lambda x: int(x[:-1]), reverse=True)
-#
-#    return unique_resolutions
-def print_resolutions(url: str):
-    """Return a list of available MP4 resolutions for the given YouTube video."""
-    ydl_opts = {"quiet": True, "skip_download": True}
-    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-        info = ydl.extract_info(url, download=False)
-    formats = info.get("formats", [])
+def print_resolutions(yt: YouTube) -> list[str]:
+    streams = yt.streams.filter(file_extension='mp4')  # StreamQuery object
+    # Convert StreamQuery to a formatted string
+    stream_string = "\n".join([str(stream) for stream in streams])
+    # Extract resolutions using regex
+    resolutions = re.findall(r'res="(\d+p)"', stream_string)
+    # Remove duplicates and sort in descending order
+    unique_resolutions = sorted(set(resolutions), key=lambda x: int(x[:-1]), reverse=True)
 
-    video_streams = [
-        f for f in formats
-        if f.get("vcodec") != "none"
-           and f.get("ext") == "mp4"
-           and f.get("height")
-    ]
-
-    resolutions = [f"{f['height']}p" for f in video_streams]
-    return sorted(set(resolutions), key=lambda x: int(x.rstrip("p")))
+    return unique_resolutions
 
 
 def limit_resolution(resolution: str, limit: str) -> str:
